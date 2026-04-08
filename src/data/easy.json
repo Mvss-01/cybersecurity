@@ -1,0 +1,152 @@
+[
+    {
+        "question": "Which of the following describes 'phishing'?",
+        "options": [
+            "A physical attack on a server room",
+            "Deceptive emails designed to trick users into revealing sensitive information",
+            "A software program that speeds up your computer",
+            "A method of securely storing passwords"
+        ],
+        "correct_answer": "Deceptive emails designed to trick users into revealing sensitive information"
+    },
+    {
+        "question": "Which of the following is an example of a strong password?",
+        "options": [
+            "password123",
+            "Admin2024!",
+            "T$r9#kLp2@q",
+            "qwertyuiop"
+        ],
+        "correct_answer": "T$r9#kLp2@q"
+    },
+    {
+        "question": "What does VPN stand for?",
+        "options": [
+            "Visual Public Node",
+            "Variable Private Network",
+            "Virtual Private Network",
+            "Virtual Personal Node"
+        ],
+        "correct_answer": "Virtual Private Network"
+    },
+    {
+        "question": "What is the primary function of a firewall?",
+        "options": [
+            "To back up your data to the cloud",
+            "To prevent physical fires in server rooms",
+            "To monitor and control incoming and outgoing network traffic",
+            "To permanently delete old files"
+        ],
+        "correct_answer": "To monitor and control incoming and outgoing network traffic"
+    },
+    {
+        "question": "What does the 'S' in HTTPS stand for?",
+        "options": [
+            "Standard",
+            "Secure",
+            "System",
+            "Software"
+        ],
+        "correct_answer": "Secure"
+    },
+    {
+        "question": "What is malware?",
+        "options": [
+            "A type of computer hardware",
+            "Malicious software designed to cause damage or gain unauthorized access",
+            "A secure protocol for transferring files",
+            "A protective antivirus program"
+        ],
+        "correct_answer": "Malicious software designed to cause damage or gain unauthorized access"
+    },
+    {
+        "question": "What is the purpose of Multi-Factor Authentication (MFA)?",
+        "options": [
+            "To speed up the login process",
+            "To require multiple users to log in at the same time",
+            "To add an extra layer of security beyond just a username and password",
+            "To share your password with trusted friends"
+        ],
+        "correct_answer": "To add an extra layer of security beyond just a username and password"
+    },
+    {
+        "question": "How does ransomware typically affect a victim?",
+        "options": [
+            "It makes the computer run faster",
+            "It encrypts the victim's files and demands payment for the decryption key",
+            "It uninstalls the operating system",
+            "It forces the computer to mine cryptocurrency silently"
+        ],
+        "correct_answer": "It encrypts the victim's files and demands payment for the decryption key"
+    },
+    {
+        "question": "What is social engineering in the context of cybersecurity?",
+        "options": [
+            "Developing social media applications",
+            "Manipulating people into giving up confidential information",
+            "Connecting multiple computers together in a network",
+            "Attending networking events for IT professionals"
+        ],
+        "correct_answer": "Manipulating people into giving up confidential information"
+    },
+    {
+        "question": "Why is it important to regularly back up your data?",
+        "options": [
+            "To prevent viruses from entering your computer",
+            "To make your internet connection faster",
+            "To ensure you can recover your files if they are lost, stolen, or corrupted",
+            "To stop hackers from seeing your browsing history"
+        ],
+        "correct_answer": "To ensure you can recover your files if they are lost, stolen, or corrupted"
+    },
+    {
+        "question": "What is the main purpose of antivirus software?",
+        "options": [
+            "To detect, prevent, and remove malicious software",
+            "To encrypt your hard drive",
+            "To bypass corporate firewalls",
+            "To generate strong passwords"
+        ],
+        "correct_answer": "To detect, prevent, and remove malicious software"
+    },
+    {
+        "question": "What is 'shoulder surfing'?",
+        "options": [
+            "Hacking into someone's webcam",
+            "Stealing a laptop from a public place",
+            "Secretly observing someone typing their password or PIN",
+            "Eavesdropping on a phone call using a radio scanner"
+        ],
+        "correct_answer": "Secretly observing someone typing their password or PIN"
+    },
+    {
+        "question": "Which of the following is an example of a biometric security measure?",
+        "options": [
+            "A smart card",
+            "A fingerprint scan",
+            "A complex password",
+            "A security token"
+        ],
+        "correct_answer": "A fingerprint scan"
+    },
+    {
+        "question": "Why are software updates and patches critical?",
+        "options": [
+            "They fix security vulnerabilities that hackers could exploit",
+            "They change the physical hardware of the device",
+            "They automatically delete your old files to save space",
+            "They make the software open-source"
+        ],
+        "correct_answer": "They fix security vulnerabilities that hackers could exploit"
+    },
+    {
+        "question": "What is the primary risk of using unsecured public Wi-Fi?",
+        "options": [
+            "It will drain your device's battery quickly",
+            "Your data and browsing activity can be easily intercepted by others on the network",
+            "It will automatically download antivirus software",
+            "Your device will permanently lock"
+        ],
+        "correct_answer": "Your data and browsing activity can be easily intercepted by others on the network"
+    }
+]

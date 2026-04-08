@@ -12,11 +12,11 @@ interface MapNode {
 type HexMap = MapNode[][];
 
 const INITIAL_MAP: HexMap = [
-    [{ id: 'node-0', status: 'secure' }, { id: 'node-1', status: 'virus' }, { id: 'node-2', status: 'secure' }],
-    [{ id: 'node-3', status: 'virus' }, { id: 'node-4', status: 'virus' }, { id: 'node-5', status: 'secure' }, { id: 'node-6', status: 'virus' }],
-    [{ id: 'node-7', status: 'secure' }, { id: 'node-8', status: 'secure' }, { id: 'node-9', status: 'virus', isBoss: true }, { id: 'node-10', status: 'virus' }, { id: 'node-11', status: 'secure' }],
-    [{ id: 'node-12', status: 'secure' }, { id: 'node-13', status: 'virus' }, { id: 'node-14', status: 'secure' }, { id: 'node-15', status: 'virus' }],
-    [{ id: 'node-16', status: 'virus' }, { id: 'node-17', status: 'secure' }, { id: 'node-18', status: 'virus' }]
+    [{ id: 'node-0', status: 'virus' }, { id: 'node-1', status: 'virus' }, { id: 'node-2', status: 'virus' }],
+    [{ id: 'node-3', status: 'virus' }, { id: 'node-4', status: 'virus' }, { id: 'node-5', status: 'virus' }, { id: 'node-6', status: 'virus' }],
+    [{ id: 'node-7', status: 'virus' }, { id: 'node-8', status: 'virus' }, { id: 'node-9', status: 'virus', isBoss: true }, { id: 'node-10', status: 'virus' }, { id: 'node-11', status: 'virus' }],
+    [{ id: 'node-12', status: 'virus' }, { id: 'node-13', status: 'virus' }, { id: 'node-14', status: 'virus' }, { id: 'node-15', status: 'virus' }],
+    [{ id: 'node-16', status: 'virus' }, { id: 'node-17', status: 'virus' }, { id: 'node-18', status: 'virus' }]
 ];
 
 export default function HexGrid() {
@@ -30,7 +30,7 @@ export default function HexGrid() {
 
         if (node.isBoss) {
             const virusCount = mapNodes.flat().filter(n => n.status === 'virus' && !n.isBoss).length;
-            if (virusCount > 2) {
+            if (virusCount !== 0) {
                 console.log(`ACCESS DENIED. Core Node is heavily shielded. Clear surrounding threats first.`);
                 return;
             }
