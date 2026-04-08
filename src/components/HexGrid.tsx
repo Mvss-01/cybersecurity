@@ -94,8 +94,8 @@ export default function HexGrid() {
                             const isBoss = node.isBoss;
 
                             // Determine colors based on difficulty
-                            let bgColor = '#083344';
-                            let shadowColor = 'rgba(6, 182, 212, 0.5)';
+                            let bgColor = '#10a62bff';
+                            let shadowColor = 'rgba(40, 174, 65, 0.5)';
                             let iconColorClass = 'text-cyan-600';
                             let textColorClass = 'text-cyan-600';
                             let label = 'SECURE';
@@ -151,8 +151,8 @@ export default function HexGrid() {
                                                 </>
                                             ) : (
                                                 <>
-                                                    <Lock className="w-6 h-6 md:w-8 md:h-8 text-cyan-600 mb-1" />
-                                                    <span className="text-[10px] md:text-xs font-bold text-cyan-600">SECURE</span>
+                                                    <Lock className="w-6 h-6 md:w-8 md:h-8 text-green-600 mb-1" />
+                                                    <span className="text-[10px] md:text-xs font-bold text-green-600">SECURE</span>
                                                 </>
                                             )}
                                         </div>
@@ -170,7 +170,7 @@ export default function HexGrid() {
                     <div className="bg-cyan-900/50 border-b border-cyan-500 p-4 flex justify-between items-center shrink-0">
                         <div className="flex items-center gap-2">
                             <TerminalIcon className="w-5 h-5 text-cyan-400" />
-                            <span className="text-cyan-300 font-bold tracking-widest text-sm md:text-base">NODE {activeQuiz.node.id.replace('node-', '')} OVERRIDE PROTOCOL</span>
+                            <span className="text-cyan-300 font-bold tracking-widest text-sm md:text-base">NODE {activeQuiz.node.id.replace('node-', '')}</span>
                         </div>
                         <button
                             onClick={() => setActiveQuiz(null)}
@@ -183,7 +183,6 @@ export default function HexGrid() {
                     <div className="flex-1 p-4 md:p-8 flex flex-col gap-6 overflow-y-auto">
 
                         <div className="bg-[#0f172a] border border-cyan-800/50 rounded p-6 relative shadow-inner">
-                            <div className="absolute top-0 right-0 bg-cyan-900/40 text-cyan-500 text-[10px] px-2 py-1 rounded-bl">system_prompt</div>
                             <div className="text-cyan-100 text-lg md:text-xl font-bold">
                                 <ChevronRight className="inline text-purple-500 mr-2" />
                                 {activeQuiz.questionData.question}
