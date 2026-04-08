@@ -1,26 +1,34 @@
 import React, { useState } from 'react';
-import { ShieldAlert, Lock } from 'lucide-react';
+import { ShieldAlert, Lock, Terminal as TerminalIcon, ChevronRight } from 'lucide-react';
+import EASY_QUESTIONS from '../data/easy.json';
+import MEDIUM_QUESTIONS from '../data/medium.json';
+import HARD_QUESTIONS from '../data/hard.json';
 
 type NodeStatus = 'secure' | 'virus';
+type NodeDifficulty = 'easy' | 'medium' | 'hard';
 
 interface MapNode {
     id: string;
     status: NodeStatus;
+    difficulty: NodeDifficulty;
     isBoss?: boolean;
 }
 
 type HexMap = MapNode[][];
 
 const INITIAL_MAP: HexMap = [
-    [{ id: 'node-0', status: 'virus' }, { id: 'node-1', status: 'virus' }, { id: 'node-2', status: 'virus' }],
-    [{ id: 'node-3', status: 'virus' }, { id: 'node-4', status: 'virus' }, { id: 'node-5', status: 'virus' }, { id: 'node-6', status: 'virus' }],
-    [{ id: 'node-7', status: 'virus' }, { id: 'node-8', status: 'virus' }, { id: 'node-9', status: 'virus', isBoss: true }, { id: 'node-10', status: 'virus' }, { id: 'node-11', status: 'virus' }],
-    [{ id: 'node-12', status: 'virus' }, { id: 'node-13', status: 'virus' }, { id: 'node-14', status: 'virus' }, { id: 'node-15', status: 'virus' }],
-    [{ id: 'node-16', status: 'virus' }, { id: 'node-17', status: 'virus' }, { id: 'node-18', status: 'virus' }]
+    [{ id: 'node-0', status: 'virus', difficulty: 'easy' }, { id: 'node-1', status: 'virus', difficulty: 'easy' }, { id: 'node-2', status: 'virus', difficulty: 'easy' }],
+    [{ id: 'node-3', status: 'virus', difficulty: 'easy' }, { id: 'node-4', status: 'virus', difficulty: 'medium' }, { id: 'node-5', status: 'virus', difficulty: 'medium' }, { id: 'node-6', status: 'virus', difficulty: 'easy' }],
+    [{ id: 'node-7', status: 'virus', difficulty: 'easy' }, { id: 'node-8', status: 'virus', difficulty: 'medium' }, { id: 'node-9', status: 'virus', difficulty: 'hard', isBoss: true }, { id: 'node-10', status: 'virus', difficulty: 'medium' }, { id: 'node-11', status: 'virus', difficulty: 'easy' }],
+    [{ id: 'node-12', status: 'virus', difficulty: 'easy' }, { id: 'node-13', status: 'virus', difficulty: 'medium' }, { id: 'node-14', status: 'virus', difficulty: 'medium' }, { id: 'node-15', status: 'virus', difficulty: 'easy' }],
+    [{ id: 'node-16', status: 'virus', difficulty: 'easy' }, { id: 'node-17', status: 'virus', difficulty: 'easy' }, { id: 'node-18', status: 'virus', difficulty: 'easy' }]
 ];
 
 export default function HexGrid() {
     const [mapNodes, setMapNodes] = useState<HexMap>(INITIAL_MAP);
+    const [activeQuiz, setActiveQuiz] = useState<{ node: MapNode, questionData: any } | null>(null);
+
+    const [clearedQuestions, setClearedQuestions] = useState<string[]>([]);
 
     const handleNodeClick = (node: MapNode): void => {
         if (node.status === 'secure') {
@@ -36,16 +44,45 @@ export default function HexGrid() {
             }
         }
 
-        setMapNodes(prevMap => {
-            const newMap = prevMap.map(row =>
-                row.map((n): MapNode => n.id === node.id ? { ...n, status: 'secure' } : n)
-            );
-            return newMap;
-        });
+        const questions = node.difficulty === 'easy' ? EASY_QUESTIONS : node.difficulty === 'medium' ? MEDIUM_QUESTIONS : HARD_QUESTIONS;
+
+        // Filter out questions that are already in the clearedQuestions array
+        let availableQuestions = questions.filter(q => !clearedQuestions.includes(q.question));
+
+        // If they play so much they run out of questions, reset the pool to prevent a crash
+        if (availableQuestions.length === 0) {
+            availableQuestions = questions;
+        }
+
+        // Pick a random question from the remaining available ones
+        const randomQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+        setActiveQuiz({ node, questionData: randomQuestion });
+    };
+
+    const handleAnswerSelection = (selectedOption: string) => {
+        if (!activeQuiz) return;
+
+        if (selectedOption === activeQuiz.questionData.correct_answer) {
+
+            // Add the question to the cleared list so it doesn't appear again
+            setClearedQuestions(prev => [...prev, activeQuiz.questionData.question]);
+            console.log(clearedQuestions);
+
+            setMapNodes(prevMap => {
+                const newMap = prevMap.map(row =>
+                    row.map((n): MapNode => n.id === activeQuiz.node.id ? { ...n, status: 'secure' } : n)
+                );
+                return newMap;
+            });
+        } else {
+            console.log("Incorrect answer. Node remains infected.");
+        }
+
+        setActiveQuiz(null);
     };
 
     return (
-        <div className="flex-1 relative border border-cyan-800 bg-slate-950/80 rounded overflow-hidden flex items-center justify-center p-2 min-h-[500px]">
+        <div className="flex-1 relative border border-cyan-800 bg-slate-950/80 rounded overflow-hidden flex items-center justify-center p-2 min-h-[500px] font-mono">
 
             <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
 
@@ -55,6 +92,33 @@ export default function HexGrid() {
                         {row.map((node) => {
                             const isVirus = node.status === 'virus';
                             const isBoss = node.isBoss;
+
+                            // Determine colors based on difficulty
+                            let bgColor = '#083344';
+                            let shadowColor = 'rgba(6, 182, 212, 0.5)';
+                            let iconColorClass = 'text-cyan-600';
+                            let textColorClass = 'text-cyan-600';
+                            let label = 'SECURE';
+
+                            if (isVirus) {
+                                label = isBoss ? 'CORE' : 'VIRUS';
+                                if (node.difficulty === 'easy') {
+                                    bgColor = '#854d0e';
+                                    shadowColor = 'rgba(234, 179, 8, 0.5)';
+                                    iconColorClass = 'text-yellow-500';
+                                    textColorClass = 'text-yellow-400';
+                                } else if (node.difficulty === 'medium') {
+                                    bgColor = '#9a3412';
+                                    shadowColor = 'rgba(249, 115, 22, 0.5)';
+                                    iconColorClass = 'text-orange-500';
+                                    textColorClass = 'text-orange-400';
+                                } else if (node.difficulty === 'hard') {
+                                    bgColor = '#7f1d1d';
+                                    shadowColor = 'rgba(239, 68, 68, 0.5)';
+                                    iconColorClass = 'text-red-500 animate-pulse';
+                                    textColorClass = 'text-red-400';
+                                }
+                            }
 
                             return (
                                 <div
@@ -66,8 +130,8 @@ export default function HexGrid() {
                                     `}
                                     style={{
                                         clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                                        backgroundColor: isVirus ? (isBoss ? '#450a0a' : '#7f1d1d') : '#083344',
-                                        boxShadow: isVirus ? 'inset 0 0 20px rgba(220, 38, 38, 0.5)' : 'inset 0 0 20px rgba(6, 182, 212, 0.5)'
+                                        backgroundColor: bgColor,
+                                        boxShadow: `inset 0 0 20px ${shadowColor}`
                                     }}
                                 >
                                     <div
@@ -80,8 +144,8 @@ export default function HexGrid() {
                                         <div className="flex flex-col items-center justify-center opacity-80 group-hover:opacity-100">
                                             {isVirus ? (
                                                 <>
-                                                    <ShieldAlert className={`w-6 h-6 md:w-8 md:h-8 mb-1 ${isBoss ? 'text-purple-500 animate-pulse' : 'text-red-500'}`} />
-                                                    <span className={`text-[10px] md:text-xs font-bold ${isBoss ? 'text-purple-400' : 'text-red-400'}`}>{isBoss ? 'CORE' : 'VIRUS'}</span>
+                                                    <ShieldAlert className={`w-6 h-6 md:w-8 md:h-8 mb-1 ${iconColorClass}`} />
+                                                    <span className={`text-[10px] md:text-xs font-bold ${textColorClass}`}>{label}</span>
                                                 </>
                                             ) : (
                                                 <>
@@ -97,6 +161,48 @@ export default function HexGrid() {
                     </div>
                 ))}
             </div>
+
+            {activeQuiz && (
+                <div className="absolute inset-4 md:inset-8 border-2 border-cyan-500 bg-slate-950/95 z-[100] flex flex-col shadow-[0_0_50px_rgba(6,182,212,0.4)] backdrop-blur-md rounded-lg overflow-hidden">
+
+                    <div className="bg-cyan-900/50 border-b border-cyan-500 p-4 flex justify-between items-center shrink-0">
+                        <div className="flex items-center gap-2">
+                            <TerminalIcon className="w-5 h-5 text-cyan-400" />
+                            <span className="text-cyan-300 font-bold tracking-widest text-sm md:text-base">NODE {activeQuiz.node.id.replace('node-', '')} OVERRIDE PROTOCOL</span>
+                        </div>
+                        <button
+                            onClick={() => setActiveQuiz(null)}
+                            className="text-cyan-500 hover:text-cyan-300 font-bold px-2"
+                        >
+                            [X] ABORT
+                        </button>
+                    </div>
+
+                    <div className="flex-1 p-4 md:p-8 flex flex-col gap-6 overflow-y-auto">
+
+                        <div className="bg-[#0f172a] border border-cyan-800/50 rounded p-6 relative shadow-inner">
+                            <div className="absolute top-0 right-0 bg-cyan-900/40 text-cyan-500 text-[10px] px-2 py-1 rounded-bl">system_prompt</div>
+                            <div className="text-cyan-100 text-lg md:text-xl font-bold">
+                                <ChevronRight className="inline text-purple-500 mr-2" />
+                                {activeQuiz.questionData.question}
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-3 mt-2">
+                            {activeQuiz.questionData.options.map((option: string, idx: number) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => handleAnswerSelection(option)}
+                                    className="p-4 border border-slate-600 bg-slate-800 text-slate-300 rounded text-sm md:text-base text-left transition-all hover:translate-x-2 hover:border-cyan-500 hover:text-cyan-400 hover:bg-slate-800/80"
+                                >
+                                    <span className="mr-3 font-bold text-cyan-700">[{String.fromCharCode(65 + idx)}]</span>
+                                    {option}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
