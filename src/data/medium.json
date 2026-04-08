@@ -1,0 +1,82 @@
+[
+    {
+        "question": "What is the primary goal of a Distributed Denial of Service (DDoS) attack?",
+        "options": [
+            "To steal encrypted database records",
+            "To overwhelm a system or network with traffic, making it unavailable to legitimate users",
+            "To inject malicious code into a website's frontend",
+            "To decrypt intercepted network traffic"
+        ],
+        "correct_answer": "To overwhelm a system or network with traffic, making it unavailable to legitimate users"
+    },
+    {
+        "question": "What does a SQL Injection attack primarily target?",
+        "options": [
+            "A computer's physical memory (RAM)",
+            "A user's web browser cache",
+            "An application's backend database",
+            "The network router"
+        ],
+        "correct_answer": "An application's backend database"
+    },
+    {
+        "question": "What describes a 'zero-day' vulnerability?",
+        "options": [
+            "A flaw that has been patched for zero days",
+            "A vulnerability that is unknown to the software vendor and has no patch available",
+            "An attack that takes zero days to execute",
+            "A virus that deletes itself at midnight"
+        ],
+        "correct_answer": "A vulnerability that is unknown to the software vendor and has no patch available"
+    },
+    {
+        "question": "What is the 'Principle of Least Privilege'?",
+        "options": [
+            "Giving administrative rights to all employees to boost productivity",
+            "Granting users only the bare minimum permissions necessary to perform their jobs",
+            "Ensuring that the lowest-paid employees have the least network access",
+            "Using the weakest encryption algorithm to save processing power"
+        ],
+        "correct_answer": "Granting users only the bare minimum permissions necessary to perform their jobs"
+    },
+    {
+        "question": "Which of the following is a key characteristic of a cryptographic hash function?",
+        "options": [
+            "It is a two-way function that can be easily reversed",
+            "It requires a private key to view the output",
+            "It converts data of arbitrary size into a fixed-size string of characters",
+            "It is primarily used for symmetric data encryption"
+        ],
+        "correct_answer": "It converts data of arbitrary size into a fixed-size string of characters"
+    },
+    {
+        "question": "What is a botnet?",
+        "options": [
+            "A network of infected, internet-connected devices controlled by a centralized attacker",
+            "An automated customer service chat program",
+            "A secure network used by government agencies",
+            "A tool used to scan for network vulnerabilities"
+        ],
+        "correct_answer": "A network of infected, internet-connected devices controlled by a centralized attacker"
+    },
+    {
+        "question": "How does a Man-in-the-Middle (MitM) attack work?",
+        "options": [
+            "By guessing a user's password through brute force",
+            "By secretly intercepting and possibly altering communications between two parties who believe they are communicating directly",
+            "By physically stealing a server from a data center",
+            "By sending millions of ping requests to a single IP address"
+        ],
+        "correct_answer": "By secretly intercepting and possibly altering communications between two parties who believe they are communicating directly"
+    },
+    {
+        "question": "Which statement correctly describes symmetric encryption?",
+        "options": [
+            "It uses a public key for encryption and a private key for decryption",
+            "It uses the exact same key for both encryption and decryption",
+            "It does not use keys at all",
+            "It is significantly slower than asymmetric encryption"
+        ],
+        "correct_answer": "It uses the exact same key for both encryption and decryption"
+    }
+]
