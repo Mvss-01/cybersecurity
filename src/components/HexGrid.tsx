@@ -99,24 +99,26 @@ export default function HexGrid() {
                             let iconColorClass = 'text-cyan-600';
                             let textColorClass = 'text-cyan-600';
                             let label = 'SECURE';
-
                             if (isVirus) {
                                 label = isBoss ? 'CORE' : 'VIRUS';
+
                                 if (node.difficulty === 'easy') {
-                                    bgColor = '#854d0e';
-                                    shadowColor = 'rgba(234, 179, 8, 0.5)';
-                                    iconColorClass = 'text-yellow-500';
-                                    textColorClass = 'text-yellow-400';
+                                    bgColor = '#891919ff'; // Tailwind red-950: Very dark, almost black-red (low threat)
+                                    shadowColor = 'rgba(248, 113, 113, 0.15)'; // Faint, subtle glow
+                                    iconColorClass = 'text-red-400 opacity-50';
+                                    textColorClass = 'text-red-400 opacity-80';
+
                                 } else if (node.difficulty === 'medium') {
-                                    bgColor = '#9a3412';
-                                    shadowColor = 'rgba(249, 115, 22, 0.5)';
-                                    iconColorClass = 'text-orange-500';
-                                    textColorClass = 'text-orange-400';
+                                    bgColor = '#7f1d1d'; // Tailwind red-900: Standard dark red (moderate threat)
+                                    shadowColor = 'rgba(239, 68, 68, 0.5)'; // Medium red glow
+                                    iconColorClass = 'text-red-400';
+                                    textColorClass = 'text-red-300';
+
                                 } else if (node.difficulty === 'hard') {
-                                    bgColor = '#7f1d1d';
-                                    shadowColor = 'rgba(239, 68, 68, 0.5)';
-                                    iconColorClass = 'text-red-500 animate-pulse';
-                                    textColorClass = 'text-red-400';
+                                    bgColor = '#991b1b'; // Tailwind red-800: Brighter, aggressive red base (high threat)
+                                    shadowColor = 'rgba(220, 38, 38, 0.9)'; // Intense, harsh red glow
+                                    iconColorClass = 'text-red-500 animate-pulse drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]';
+                                    textColorClass = 'text-red-200 font-bold';
                                 }
                             }
 
