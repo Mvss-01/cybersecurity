@@ -113,6 +113,7 @@ export default function IntegratedNeuralHeist() {
     const [health, setHealth] = useState<number>(100);
     const [logMessage, setLogMessage] = useState<string>("Awaiting Node Selection...");
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
+    const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
     const [mapNodes, setMapNodes] = useState<HexMap>(INITIAL_MAP);
     const [activeQuiz, setActiveQuiz] = useState<{ node: MapNode, questionData: any } | null>(null);
@@ -125,8 +126,20 @@ export default function IntegratedNeuralHeist() {
     const [username, setUsername] = useState('OPERATIVE');
     useEffect(() => {
         const stored = localStorage.getItem('neural_heist_user');
-        if (stored) setUsername(stored);
-    }, []);
+        if (stored) {
+            setUsername(stored);
+            setIsAuthorized(true);
+        } else {
+            router.replace('/');
+            setIsAuthorized(false);
+        }
+    }, [router]);
+
+    useEffect(() => {
+        if (isGameOver || gameComplete) {
+            localStorage.removeItem('neural_heist_user');
+        }
+    }, [isGameOver, gameComplete]);
 
     const elapsedRef = useRef(elapsedSeconds);
     useEffect(() => {
@@ -265,6 +278,18 @@ export default function IntegratedNeuralHeist() {
         setElapsedSeconds(0);
         setFinalTime(0);
     }, [router]);
+
+    if (isAuthorized === null) {
+        return (
+            <div className="min-h-screen bg-[#090d18] flex items-center justify-center font-mono p-4">
+                <div className="text-cyan-500 animate-pulse tracking-[0.2em] uppercase text-center text-sm sm:text-base">
+                    Verifying Neural Link Integrity...
+                </div>
+            </div>
+        );
+    }
+
+    if (isAuthorized === false) return null;
 
     let healthStateText = "STABLE";
     let healthColor = "#29d36a";
