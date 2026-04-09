@@ -1,0 +1,148 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: #090d18;
+    font-family: 'Courier New', monospace;
+    
+}
+
+.panel {
+    width: 360px;
+    padding: 12px 15px;
+    background: linear-gradient(180deg, #11101a 0%, #120d18 100%);
+    border: 1px solid rgba(0, 180, 255, 0.18);
+    border-radius: 5px;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 0, 80, 0.05),
+        0 0 18px rgba(0, 180, 255, 0.06);
+}
+div{
+    margin-bottom:20px ;
+}
+.title {
+    color: #0d7ea0;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+}
+.title2 {
+    color: #95e6fee4;
+    font-size: 18px;
+    font-weight:bold ;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+}
+.row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.icon {
+    font-size: 46px;
+    color: #d9434f;
+}
+
+.value-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.percent {
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1;
+    color: #d9434f;
+}
+
+.state {
+    font-size: 18px;
+    color: #d9434f;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.right{
+    padding:0 ;
+    margin: 0;
+}
+.bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #2a2331;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+}
+
+.bar-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #e14d59 0%, #d9434f 100%);
+    transition: width 0.35s ease;
+    box-shadow: 0 0 10px rgba(217,67,79,0.2);
+}
+.line{
+    background-color:#163849 ;
+    height: 2px;
+    margin:15px;
+}
+.threatsAc{
+    background-color: #ab131332;
+    border-radius:8px ;
+    color: red;
+    padding: 12px;
+    font-size: 0.87rem;
+}
+/* flatline screen (endPage)*/
+.flatline-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #2a0000, #120000);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    color: #ff4d4d;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+}
+
+.flatline-title {
+    font-size: 64px;
+    letter-spacing: 4px;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.flatline-text {
+    width: 80%;
+    color: #ffd6d6;
+    font-size: 20px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.reboot-btn {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 14px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.flatline-icon {
+    width: 120px;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neural Link Integrity</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="panel">
+    <div class="title">NEURAL LINK INTEGRITY</div>
+
+    <div class="row">
+        <div class="icon">
+            <img src="img/brain.png" alt="">
+        </div>
+        <div class="right">
+            <div class="value-wrap">
+                <div class="percent" id="healthText">100%</div>
+                <div class="state" id="healthState">STABLE</div>
+            </div>
+            <div class="bar-bg">
+                <div class="bar-fill" id="healthFill"></div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div class="panel">
+    <div class="title">SERVER ARCHITECTURE</div>
+
+    <div id="currentNode" class="title title2">
+        NODE 01-B [MAINFRAME]
+    </div>
+
+    <div id="threatBox" class="activeThreat">
+        <div id="threatText" class="threatsAc">
+            HOSTILE CODE DETECTED: 10 ACTIVE THREATS
+        </div>
+    </div>
+</div>
+<div class="panel">
+    <div class="title"> CHALLENGE LOG</div>
+    <div class="line"></div>
+    <div class="title" id="challengeLog">
+        Awaiting Node Selection...
+    </div>
+
+</div>
+/*End Page */
+<div id="flatlineScreen" class="flatline-screen" style="display: none;">
+    <div class="flatline-icon"><img class="flatline-icon" src="img/cardiogram.png" alt=""></div>
+    <div class="flatline-title">FLATLINE</div>
+
+    <div class="flatline-text">
+        Neural integrity depleted. Your consciousness has been
+        permanently fragmented on the server.
+    </div>
+
+    <button class="reboot-btn" onclick="rebootSystem()">
+        REBOOT SYSTEM
+    </button>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
