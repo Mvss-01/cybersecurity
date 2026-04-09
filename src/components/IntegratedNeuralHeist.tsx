@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { ShieldAlert, Lock, Terminal as TerminalIcon, ChevronRight, Clock, Trophy, RotateCcw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -35,6 +35,81 @@ function formatTime(totalSeconds: number): string {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
+// --- Memoized Hex Node Component ---
+// Extracted so timer ticks don't force re-render of every hex node
+const HexNode = React.memo(function HexNode({
+    node,
+    onClick
+}: {
+    node: MapNode;
+    onClick: (node: MapNode) => void;
+}) {
+    const isVirus = node.status === 'virus';
+    const isBoss = node.isBoss;
+
+    let bgColor = '#10a62bff';
+    let shadowColor = 'rgba(40, 174, 65, 0.5)';
+    let iconColorClass = 'text-cyan-600';
+    let textColorClass = 'text-cyan-600';
+    let label = 'SECURE';
+
+    if (isVirus) {
+        label = isBoss ? 'CORE' : 'VIRUS';
+
+        if (node.difficulty === 'easy') {
+            bgColor = '#891919ff';
+            shadowColor = 'rgba(248, 113, 113, 0.15)';
+            iconColorClass = 'text-red-400 opacity-50';
+            textColorClass = 'text-red-400 opacity-80';
+        } else if (node.difficulty === 'medium') {
+            bgColor = '#7f1d1d';
+            shadowColor = 'rgba(239, 68, 68, 0.5)';
+            iconColorClass = 'text-red-400';
+            textColorClass = 'text-red-300';
+        } else if (node.difficulty === 'hard') {
+            bgColor = '#991b1b';
+            shadowColor = 'rgba(220, 38, 38, 0.9)';
+            iconColorClass = 'text-red-500 animate-pulse drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]';
+            textColorClass = 'text-red-200 font-bold';
+        }
+    }
+
+    return (
+        <div
+            onClick={() => onClick(node)}
+            className="relative hex-node cursor-pointer transition-transform duration-200 hover:scale-105 group flex items-center justify-center text-center"
+            style={{
+                clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                backgroundColor: bgColor,
+                boxShadow: `inset 0 0 20px ${shadowColor}`,
+                willChange: 'transform',
+            }}
+        >
+            <div
+                className="absolute inset-[2px] sm:inset-[3px] flex flex-col items-center justify-center z-10"
+                style={{
+                    clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+                    backgroundColor: '#020617',
+                }}
+            >
+                <div className="flex flex-col items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
+                    {isVirus ? (
+                        <>
+                            <ShieldAlert className={`hex-icon mb-0.5 sm:mb-1 ${iconColorClass}`} />
+                            <span className={`hex-label font-bold ${textColorClass}`}>{label}</span>
+                        </>
+                    ) : (
+                        <>
+                            <Lock className="hex-icon text-green-600 mb-0.5 sm:mb-1" />
+                            <span className="hex-label font-bold text-green-600">SECURE</span>
+                        </>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+});
+
 export default function IntegratedNeuralHeist() {
     const router = useRouter();
 
@@ -53,10 +128,28 @@ export default function IntegratedNeuralHeist() {
     const [finalTime, setFinalTime] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    // Derived state
-    const totalNodes = mapNodes.flat().length;
-    const securedNodes = mapNodes.flat().filter(n => n.status === 'secure').length;
-    const activeThreats = mapNodes.flat().filter(n => n.status === 'virus').length;
+    // Fix hydration mismatch: defer localStorage read to client-side effect
+    const [username, setUsername] = useState('OPERATIVE');
+    useEffect(() => {
+        const stored = localStorage.getItem('neural_heist_user');
+        if (stored) setUsername(stored);
+    }, []);
+
+    // Use ref to avoid stale closure in checkWinCondition
+    const elapsedRef = useRef(elapsedSeconds);
+    useEffect(() => {
+        elapsedRef.current = elapsedSeconds;
+    }, [elapsedSeconds]);
+
+    // Memoize derived state to avoid recalculating on every render
+    const { totalNodes, securedNodes, activeThreats } = useMemo(() => {
+        const flat = mapNodes.flat();
+        return {
+            totalNodes: flat.length,
+            securedNodes: flat.filter(n => n.status === 'secure').length,
+            activeThreats: flat.filter(n => n.status === 'virus').length,
+        };
+    }, [mapNodes]);
 
     // --- Effects ---
 
@@ -91,30 +184,43 @@ export default function IntegratedNeuralHeist() {
         return () => clearInterval(healthDrainTimer);
     }, [isGameOver, gameComplete]);
 
-    // Check for win condition
+    // Check for win condition - uses ref to avoid stale closure
     const checkWinCondition = useCallback((map: HexMap) => {
         const allSecure = map.flat().every(node => node.status === 'secure');
         if (allSecure) {
-            setFinalTime(elapsedSeconds);
+            setFinalTime(elapsedRef.current);
             setGameComplete(true);
             if (timerRef.current) clearInterval(timerRef.current);
         }
-    }, [elapsedSeconds]);
+    }, []);
 
     // --- Handlers ---
 
-    const handleNodeClick = (node: MapNode): void => {
+    const handleNodeClick = useCallback((node: MapNode): void => {
         if (node.status === 'secure') {
             setLogMessage(`NODE ${node.id.replace('node-', '')} ALREADY SECURE.`);
             return;
         }
 
         if (node.isBoss) {
-            const virusCount = mapNodes.flat().filter(n => n.status === 'virus' && !n.isBoss).length;
-            if (virusCount !== 0) {
-                setLogMessage("ACCESS DENIED: CLEAR SURROUNDING THREATS FIRST.");
-                return;
-            }
+            setMapNodes(currentMap => {
+                const virusCount = currentMap.flat().filter(n => n.status === 'virus' && !n.isBoss).length;
+                if (virusCount !== 0) {
+                    setLogMessage("ACCESS DENIED: CLEAR SURROUNDING THREATS FIRST.");
+                    return currentMap;
+                }
+
+                setNodeName(`TARGETING: ${node.id.toUpperCase()}`);
+                setLogMessage("DECRYPTING CHALLENGE DATA...");
+
+                const questions = HARD_QUESTIONS;
+                let availableQuestions = questions.filter(q => !clearedQuestions.includes(q.question));
+                if (availableQuestions.length === 0) availableQuestions = questions;
+                const randomQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+                setActiveQuiz({ node, questionData: randomQuestion });
+                return currentMap;
+            });
+            return;
         }
 
         setNodeName(`TARGETING: ${node.id.toUpperCase()}`);
@@ -129,9 +235,9 @@ export default function IntegratedNeuralHeist() {
 
         const randomQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
         setActiveQuiz({ node, questionData: randomQuestion });
-    };
+    }, [clearedQuestions]);
 
-    const handleAnswerSelection = (selectedOption: string) => {
+    const handleAnswerSelection = useCallback((selectedOption: string) => {
         if (!activeQuiz) return;
 
         if (selectedOption === activeQuiz.questionData.correct_answer) {
@@ -166,9 +272,9 @@ export default function IntegratedNeuralHeist() {
         }
 
         setActiveQuiz(null);
-    };
+    }, [activeQuiz, checkWinCondition]);
 
-    const rebootSystem = () => {
+    const rebootSystem = useCallback(() => {
         setMapNodes(INITIAL_MAP);
         setClearedQuestions([]);
         setHealth(100);
@@ -179,9 +285,7 @@ export default function IntegratedNeuralHeist() {
         setElapsedSeconds(0);
         setFinalTime(0);
         router.push("/");
-    };
-
-    const username = typeof window !== 'undefined' ? localStorage.getItem('neural_heist_user') || 'OPERATIVE' : 'OPERATIVE';
+    }, [router]);
 
     // --- UI Colors ---
     let healthStateText = "STABLE";
@@ -202,36 +306,36 @@ export default function IntegratedNeuralHeist() {
     }
 
     return (
-        <div className="min-h-screen bg-[#090d18] font-mono m-0 p-4 lg:p-8 select-none flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-6">
+        <div className="min-h-screen bg-[#090d18] font-mono m-0 p-3 sm:p-4 lg:p-8 select-none flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-4 lg:gap-6">
 
-            {/* LEFT PANEL: NEURAL LINK DASHBOARD */}
-            <div className="w-[360px] shrink-0 flex flex-col gap-5">
+            {/* LEFT PANEL: NEURAL LINK DASHBOARD - becomes compact top strip on mobile */}
+            <div className="w-full lg:w-[360px] shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 lg:gap-5">
 
                 {/* Panel 1: Integrity */}
-                <div className="p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
-                    <div className="text-[#0d7ea0] text-sm tracking-[3px] uppercase mb-4 text-center">
+                <div className="flex-1 lg:flex-none p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
+                    <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[3px] uppercase mb-2 lg:mb-4 text-center">
                         NEURAL LINK INTEGRITY
                     </div>
-                    <div className="flex items-center gap-4 mb-2">
-                        <div className="text-[46px] text-[#d9434f] shrink-0 w-[50px] flex justify-center">
+                    <div className="flex items-center gap-3 sm:gap-4 mb-2">
+                        <div className="text-[#d9434f] shrink-0 w-[36px] sm:w-[50px] flex justify-center">
                             <img src="brain.png" alt="Brain Icon" className="max-w-full" />
                         </div>
-                        <div className="m-0 p-0 flex-grow">
-                            <div className="flex items-baseline gap-3">
+                        <div className="m-0 p-0 flex-grow min-w-0">
+                            <div className="flex items-baseline gap-2 sm:gap-3">
                                 <div
-                                    className="text-[58px] font-bold leading-none transition-colors duration-300"
+                                    className="text-3xl sm:text-5xl lg:text-[58px] font-bold leading-none transition-colors duration-300"
                                     style={{ color: healthColor }}
                                 >
                                     {health}%
                                 </div>
                                 <div
-                                    className="text-lg tracking-[2px] uppercase transition-colors duration-300"
+                                    className="text-xs sm:text-lg tracking-[2px] uppercase transition-colors duration-300 hidden xs:block"
                                     style={{ color: healthColor }}
                                 >
                                     {healthStateText}
                                 </div>
                             </div>
-                            <div className="w-full h-3 bg-[#2a2331] rounded-full overflow-hidden shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)] mt-2">
+                            <div className="w-full h-2 sm:h-3 bg-[#2a2331] rounded-full overflow-hidden shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)] mt-1.5 sm:mt-2">
                                 <div
                                     className="h-full transition-all duration-[350ms] ease-in-out shadow-[0_0_10px_rgba(217,67,79,0.2)]"
                                     style={{ width: `${health}%`, backgroundColor: healthColor }}
@@ -242,173 +346,114 @@ export default function IntegratedNeuralHeist() {
                 </div>
 
                 {/* Panel 2: Server Architecture Status */}
-                <div className="p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
-                    <div className="text-[#0d7ea0] text-sm tracking-[3px] uppercase mb-4 text-center">
+                <div className="flex-1 lg:flex-none p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
+                    <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[2px] sm:tracking-[3px] uppercase mb-2 lg:mb-4 text-center">
                         SERVER ARCHITECTURE
                     </div>
-                    <div className="text-[#95e6fee4] text-lg font-bold tracking-[3px] uppercase mb-4 text-center">
+                    <div className="text-[#95e6fee4] text-xs sm:text-lg font-bold tracking-[2px] sm:tracking-[3px] uppercase mb-2 lg:mb-4 text-center truncate">
                         {nodeName}
                     </div>
                     <div>
-                        <div className={`rounded-lg p-3 text-sm text-center font-bold tracking-wider transition-colors ${activeThreats > 0 ? 'bg-[#ab131332] text-red-500' : 'bg-green-900/30 text-green-400'}`}>
-                            {activeThreats > 0 ? `HOSTILE CODE DETECTED: ${activeThreats} ACTIVE THREATS` : 'ALL THREATS ELIMINATED'}
+                        <div className={`rounded-lg p-2 sm:p-3 text-[10px] sm:text-sm text-center font-bold tracking-wider transition-colors ${activeThreats > 0 ? 'bg-[#ab131332] text-red-500' : 'bg-green-900/30 text-green-400'}`}>
+                            {activeThreats > 0 ? `HOSTILE CODE: ${activeThreats} THREATS` : 'ALL THREATS ELIMINATED'}
                         </div>
                     </div>
                 </div>
 
-                {/* Panel 3: Challenge Log */}
-                <div className="flex-1 p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
-                    <div className="text-[#0d7ea0] text-sm tracking-[3px] uppercase text-center mt-2">
+                {/* Panel 3: Challenge Log - hidden on very small screens to save space */}
+                <div className="hidden sm:flex flex-1 p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)] flex-col">
+                    <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[3px] uppercase text-center mt-2">
                         SYSTEM LOG
                     </div>
-                    <div className="bg-[#163849] h-[2px] my-[15px] mx-0" />
-                    <div className="text-[#95e6fee4] text-sm tracking-[1px] uppercase text-center mb-2 leading-relaxed">
+                    <div className="bg-[#163849] h-[2px] my-[10px] sm:my-[15px] mx-0" />
+                    <div className="text-[#95e6fee4] text-xs sm:text-sm tracking-[1px] uppercase text-center mb-2 leading-relaxed">
                         {logMessage}
                     </div>
                 </div>
             </div>
 
             {/* RIGHT PANEL: HEX GRID SERVER MAP */}
-            <div className="flex-1 w-full max-w-4xl relative border border-cyan-800 bg-slate-950/80 rounded-lg overflow-hidden flex items-center justify-center p-2 min-h-[500px] lg:min-h-full shadow-[0_0_30px_rgba(0,180,255,0.1)]">
+            <div className="flex-1 w-full max-w-4xl relative border border-cyan-800 bg-slate-950/80 rounded-lg overflow-hidden flex items-center justify-center p-2 min-h-[320px] sm:min-h-[400px] lg:min-h-full shadow-[0_0_30px_rgba(0,180,255,0.1)]">
 
-                {/* Background Grid Pattern */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+                {/* Background Grid Pattern - use CSS containment so it doesn't cause repaints */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" style={{ contain: 'strict' }}></div>
 
                 {/* Timer HUD */}
-                <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-50 pointer-events-none">
-                    <div className="flex items-center gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-3 py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
-                        <span className="text-cyan-600 text-[10px] uppercase tracking-widest">Nodes</span>
-                        <span className="text-cyan-300 font-bold text-sm">{securedNodes}/{totalNodes}</span>
+                <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-center z-50 pointer-events-none">
+                    <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
+                        <span className="text-cyan-600 text-[8px] sm:text-[10px] uppercase tracking-widest">Nodes</span>
+                        <span className="text-cyan-300 font-bold text-xs sm:text-sm">{securedNodes}/{totalNodes}</span>
                     </div>
-                    <div className="flex items-center gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-3 py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
-                        <Clock className="w-4 h-4 text-cyan-500" />
-                        <span className="text-cyan-300 font-bold text-sm tabular-nums tracking-wider">{formatTime(elapsedSeconds)}</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
+                        <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500" />
+                        <span className="text-cyan-300 font-bold text-xs sm:text-sm tabular-nums tracking-wider">{formatTime(elapsedSeconds)}</span>
                     </div>
                 </div>
 
-                {/* Hex Map */}
-                <div className="flex flex-col items-center justify-center scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100 transition-transform origin-center">
+                {/* Hex Map - responsive sizing via CSS custom properties */}
+                <div className="flex flex-col items-center justify-center hex-grid-container">
                     {mapNodes.map((row, rowIndex) => (
-                        <div key={rowIndex} className="flex justify-center -mb-5 md:-mb-7 relative z-10" style={{ zIndex: 10 - rowIndex }}>
-                            {row.map((node) => {
-                                const isVirus = node.status === 'virus';
-                                const isBoss = node.isBoss;
-
-                                let bgColor = '#10a62bff';
-                                let shadowColor = 'rgba(40, 174, 65, 0.5)';
-                                let iconColorClass = 'text-cyan-600';
-                                let textColorClass = 'text-cyan-600';
-                                let label = 'SECURE';
-
-                                if (isVirus) {
-                                    label = isBoss ? 'CORE' : 'VIRUS';
-
-                                    if (node.difficulty === 'easy') {
-                                        bgColor = '#891919ff';
-                                        shadowColor = 'rgba(248, 113, 113, 0.15)';
-                                        iconColorClass = 'text-red-400 opacity-50';
-                                        textColorClass = 'text-red-400 opacity-80';
-                                    } else if (node.difficulty === 'medium') {
-                                        bgColor = '#7f1d1d';
-                                        shadowColor = 'rgba(239, 68, 68, 0.5)';
-                                        iconColorClass = 'text-red-400';
-                                        textColorClass = 'text-red-300';
-                                    } else if (node.difficulty === 'hard') {
-                                        bgColor = '#991b1b';
-                                        shadowColor = 'rgba(220, 38, 38, 0.9)';
-                                        iconColorClass = 'text-red-500 animate-pulse drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]';
-                                        textColorClass = 'text-red-200 font-bold';
-                                    }
-                                }
-
-                                return (
-                                    <div
-                                        key={node.id}
-                                        onClick={() => handleNodeClick(node)}
-                                        className="relative w-16 h-20 md:w-24 md:h-28 mx-1 md:mx-2 cursor-pointer transition-all duration-300 hover:scale-105 group flex items-center justify-center text-center"
-                                        style={{
-                                            clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                                            backgroundColor: bgColor,
-                                            boxShadow: `inset 0 0 20px ${shadowColor}`
-                                        }}
-                                    >
-                                        <div
-                                            className="absolute inset-[2px] md:inset-[3px] flex flex-col items-center justify-center z-10"
-                                            style={{
-                                                clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                                                backgroundColor: '#020617',
-                                            }}
-                                        >
-                                            <div className="flex flex-col items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
-                                                {isVirus ? (
-                                                    <>
-                                                        <ShieldAlert className={`w-6 h-6 md:w-8 md:h-8 mb-1 ${iconColorClass}`} />
-                                                        <span className={`text-[10px] md:text-xs font-bold ${textColorClass}`}>{label}</span>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Lock className="w-6 h-6 md:w-8 md:h-8 text-green-600 mb-1" />
-                                                        <span className="text-[10px] md:text-xs font-bold text-green-600">SECURE</span>
-                                                    </>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                        <div key={rowIndex} className="flex justify-center hex-row relative z-10" style={{ zIndex: 10 - rowIndex }}>
+                            {row.map((node) => (
+                                <HexNode
+                                    key={node.id}
+                                    node={node}
+                                    onClick={handleNodeClick}
+                                />
+                            ))}
                         </div>
                     ))}
                 </div>
 
                 {/* MODAL: Active Quiz */}
                 {activeQuiz && (
-                    <div className="absolute inset-0 z-[100] flex items-center justify-center backdrop-blur-md bg-black/60 p-4">
-                        <div className="relative w-full max-w-xl border border-cyan-500/70 bg-slate-950/98 rounded-xl overflow-hidden shadow-[0_0_80px_rgba(6,182,212,0.25),inset_0_1px_0_rgba(6,182,212,0.1)]"
+                    <div className="absolute inset-0 z-[100] flex items-center justify-center backdrop-blur-md bg-black/60 p-2 sm:p-4">
+                        <div className="relative w-full max-w-xl border border-cyan-500/70 bg-slate-950/98 rounded-xl overflow-hidden shadow-[0_0_80px_rgba(6,182,212,0.25),inset_0_1px_0_rgba(6,182,212,0.1)] max-h-[90vh] overflow-y-auto"
                             style={{ animation: 'modalSlideIn 0.3s ease-out' }}
                         >
                             <div className="pointer-events-none absolute inset-0 rounded-xl bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.12)_50%)] bg-[size:100%_4px] opacity-20 z-[5]"></div>
 
-                            <div className="relative bg-gradient-to-r from-cyan-950/80 via-slate-900/80 to-cyan-950/80 border-b border-cyan-500/40 px-5 py-3 flex justify-between items-center">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded px-2.5 py-1">
-                                        <TerminalIcon className="w-4 h-4 text-cyan-400" />
-                                        <span className="text-cyan-300 font-bold tracking-widest text-xs md:text-sm">NODE {activeQuiz.node.id.replace('node-', '')}</span>
+                            <div className="relative bg-gradient-to-r from-cyan-950/80 via-slate-900/80 to-cyan-950/80 border-b border-cyan-500/40 px-3 sm:px-5 py-2 sm:py-3 flex justify-between items-center">
+                                <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                                    <div className="flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded px-2 sm:px-2.5 py-1">
+                                        <TerminalIcon className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400" />
+                                        <span className="text-cyan-300 font-bold tracking-widest text-[10px] sm:text-xs md:text-sm">NODE {activeQuiz.node.id.replace('node-', '')}</span>
                                     </div>
-                                    <span className={`text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-full border ${activeQuiz.node.difficulty === 'easy'
+                                    <span className={`text-[8px] sm:text-[10px] uppercase tracking-widest font-bold px-1.5 sm:px-2 py-0.5 rounded-full border ${activeQuiz.node.difficulty === 'easy'
                                         ? 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10'
                                         : activeQuiz.node.difficulty === 'medium'
                                             ? 'text-amber-400 border-amber-500/40 bg-amber-500/10'
                                             : 'text-red-400 border-red-500/40 bg-red-500/10'
                                         }`}>
-                                        {activeQuiz.node.difficulty === 'easy' ? '● LOW THREAT' : activeQuiz.node.difficulty === 'medium' ? '●● MED THREAT' : '●●● HIGH THREAT'}
+                                        {activeQuiz.node.difficulty === 'easy' ? '● LOW' : activeQuiz.node.difficulty === 'medium' ? '●● MED' : '●●● HIGH'}
                                     </span>
                                 </div>
                                 <button
                                     onClick={() => setActiveQuiz(null)}
-                                    className="text-slate-500 hover:text-red-400 transition-colors text-xs font-bold tracking-wider px-2 py-1 rounded hover:bg-red-500/10"
+                                    className="text-slate-500 hover:text-red-400 transition-colors text-[10px] sm:text-xs font-bold tracking-wider px-1.5 sm:px-2 py-1 rounded hover:bg-red-500/10 shrink-0"
                                 >
-                                    [X] ABORT
+                                    [X]
                                 </button>
                             </div>
 
-                            <div className="p-5 md:p-8 flex flex-col gap-5">
-                                <div className="relative bg-gradient-to-br from-[#0c1425] to-[#0f172a] border border-cyan-800/40 rounded-lg p-5 md:p-6 shadow-[inset_0_2px_20px_rgba(6,182,212,0.05)]">
-                                    <div className="absolute top-3 left-3 text-cyan-700/50 text-[10px] uppercase tracking-[0.2em] font-bold">Decrypt Query</div>
-                                    <div className="text-cyan-100 text-base md:text-lg font-semibold leading-relaxed mt-4">
-                                        <ChevronRight className="inline text-cyan-500 mr-2 w-5 h-5" />
+                            <div className="p-3 sm:p-5 md:p-8 flex flex-col gap-3 sm:gap-5">
+                                <div className="relative bg-gradient-to-br from-[#0c1425] to-[#0f172a] border border-cyan-800/40 rounded-lg p-3 sm:p-5 md:p-6 shadow-[inset_0_2px_20px_rgba(6,182,212,0.05)]">
+                                    <div className="absolute top-2 sm:top-3 left-2 sm:left-3 text-cyan-700/50 text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-bold">Decrypt Query</div>
+                                    <div className="text-cyan-100 text-sm sm:text-base md:text-lg font-semibold leading-relaxed mt-4">
+                                        <ChevronRight className="inline text-cyan-500 mr-1 sm:mr-2 w-4 h-4 sm:w-5 sm:h-5" />
                                         {activeQuiz.questionData.question}
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col gap-2.5">
+                                <div className="flex flex-col gap-2 sm:gap-2.5">
                                     {activeQuiz.questionData.options.map((option: string, idx: number) => (
                                         <button
                                             key={idx}
                                             onClick={() => handleAnswerSelection(option)}
-                                            className="group relative p-4 border border-slate-700/60 bg-slate-900/60 text-slate-300 rounded-lg text-sm md:text-base text-left transition-all duration-200 hover:translate-x-1.5 hover:border-cyan-500/70 hover:text-cyan-300 hover:bg-cyan-950/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.1),inset_0_0_20px_rgba(6,182,212,0.05)] active:scale-[0.99]"
+                                            className="group relative p-2.5 sm:p-4 border border-slate-700/60 bg-slate-900/60 text-slate-300 rounded-lg text-xs sm:text-sm md:text-base text-left transition-all duration-200 hover:translate-x-1.5 hover:border-cyan-500/70 hover:text-cyan-300 hover:bg-cyan-950/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.1),inset_0_0_20px_rgba(6,182,212,0.05)] active:scale-[0.99]"
                                         >
                                             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-cyan-400 rounded-full transition-all duration-300 group-hover:h-3/4 shadow-[0_0_8px_rgba(6,182,212,0.8)]"></div>
-                                            <span className="mr-3 font-bold text-cyan-600 group-hover:text-cyan-400 transition-colors text-xs md:text-sm">[{String.fromCharCode(65 + idx)}]</span>
+                                            <span className="mr-2 sm:mr-3 font-bold text-cyan-600 group-hover:text-cyan-400 transition-colors text-[10px] sm:text-xs md:text-sm">[{String.fromCharCode(65 + idx)}]</span>
                                             {option}
                                         </button>
                                     ))}
@@ -421,18 +466,18 @@ export default function IntegratedNeuralHeist() {
 
             {/* OVERLAY: GAME OVER / FLATLINE */}
             {isGameOver && (
-                <div className="fixed inset-0 bg-gradient-to-b from-[#2a0000] to-[#120000] flex flex-col justify-center items-center z-[999] text-[#ff4d4d] text-center font-mono">
-                    <div className="w-[120px] mb-5">
+                <div className="fixed inset-0 bg-gradient-to-b from-[#2a0000] to-[#120000] flex flex-col justify-center items-center z-[999] text-[#ff4d4d] text-center font-mono p-4">
+                    <div className="w-[80px] sm:w-[120px] mb-5">
                         <img src="cardiogram.png" alt="Cardiogram Flatline" className="max-w-full" />
                     </div>
-                    <div className="text-6xl tracking-[4px] mb-5 font-bold animate-pulse">
+                    <div className="text-4xl sm:text-6xl tracking-[4px] mb-5 font-bold animate-pulse">
                         FLATLINE
                     </div>
-                    <div className="w-4/5 md:w-1/2 max-w-[600px] text-[#ffd6d6] text-xl leading-relaxed mb-10">
+                    <div className="w-full max-w-[600px] text-[#ffd6d6] text-base sm:text-xl leading-relaxed mb-8 sm:mb-10 px-4">
                         Neural integrity depleted. Your consciousness has been permanently fragmented on the server.
                     </div>
                     <button
-                        className="bg-transparent border border-[#ff4d4d] text-[#ff4d4d] px-[30px] py-[14px] text-xl cursor-pointer transition-colors hover:bg-[rgba(255,77,77,0.1)] focus:outline-none focus:ring-2 focus:ring-[#ff4d4d]"
+                        className="bg-transparent border border-[#ff4d4d] text-[#ff4d4d] px-6 sm:px-[30px] py-3 sm:py-[14px] text-base sm:text-xl cursor-pointer transition-colors hover:bg-[rgba(255,77,77,0.1)] focus:outline-none focus:ring-2 focus:ring-[#ff4d4d]"
                         onClick={rebootSystem}
                     >
                         REBOOT SYSTEM
@@ -442,43 +487,43 @@ export default function IntegratedNeuralHeist() {
 
             {/* OVERLAY: WIN SCREEN */}
             {gameComplete && (
-                <div className="fixed inset-0 z-[999] flex items-center justify-center backdrop-blur-md bg-black/80 font-mono">
+                <div className="fixed inset-0 z-[999] flex items-center justify-center backdrop-blur-md bg-black/80 font-mono p-4">
                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-cyan-500/10 via-green-500/10 to-cyan-500/10 animate-pulse blur-3xl"></div>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] rounded-full bg-gradient-to-r from-cyan-500/10 via-green-500/10 to-cyan-500/10 animate-pulse blur-3xl"></div>
                     </div>
-                    <div className="relative border-2 border-green-500/70 bg-slate-950/95 rounded-xl shadow-[0_0_80px_rgba(34,197,94,0.3)] p-8 md:p-12 max-w-lg w-full mx-4 text-center">
+                    <div className="relative border-2 border-green-500/70 bg-slate-950/95 rounded-xl shadow-[0_0_80px_rgba(34,197,94,0.3)] p-6 sm:p-8 md:p-12 max-w-lg w-full mx-4 text-center">
                         <div className="pointer-events-none absolute inset-0 rounded-xl bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.15)_50%)] bg-[length:100%_4px] opacity-30"></div>
 
-                        <div className="flex justify-center mb-6">
+                        <div className="flex justify-center mb-4 sm:mb-6">
                             <div className="relative">
-                                <Trophy className="w-20 h-20 text-green-400 drop-shadow-[0_0_20px_rgba(34,197,94,0.6)]" />
+                                <Trophy className="w-14 h-14 sm:w-20 sm:h-20 text-green-400 drop-shadow-[0_0_20px_rgba(34,197,94,0.6)]" />
                                 <div className="absolute inset-0 animate-ping">
-                                    <Trophy className="w-20 h-20 text-green-400 opacity-20" />
+                                    <Trophy className="w-14 h-14 sm:w-20 sm:h-20 text-green-400 opacity-20" />
                                 </div>
                             </div>
                         </div>
 
-                        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 mb-2">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 mb-2">
                             NETWORK SECURED
                         </h2>
-                        <p className="text-green-500/80 text-sm mb-8 tracking-widest uppercase">
+                        <p className="text-green-500/80 text-xs sm:text-sm mb-6 sm:mb-8 tracking-widest uppercase">
                             All threats eliminated
                         </p>
 
-                        <div className="bg-slate-900/80 border border-green-800/50 rounded-lg p-6 mb-8 space-y-4">
+                        <div className="bg-slate-900/80 border border-green-800/50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 space-y-3 sm:space-y-4">
                             <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                                <span className="text-slate-400 text-sm uppercase tracking-wider">Username</span>
-                                <span className="text-cyan-300 font-bold">{username}</span>
+                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Username</span>
+                                <span className="text-cyan-300 font-bold text-sm sm:text-base">{username}</span>
                             </div>
                             <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                                <span className="text-slate-400 text-sm uppercase tracking-wider">Nodes Secured</span>
-                                <span className="text-green-400 font-bold">{totalNodes}/{totalNodes}</span>
+                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Nodes</span>
+                                <span className="text-green-400 font-bold text-sm sm:text-base">{totalNodes}/{totalNodes}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-slate-400 text-sm uppercase tracking-wider">Time Elapsed</span>
+                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Time</span>
                                 <div className="flex items-center gap-2">
-                                    <Clock className="w-4 h-4 text-cyan-500" />
-                                    <span className="text-cyan-300 font-bold text-lg tabular-nums">{formatTime(finalTime)}</span>
+                                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500" />
+                                    <span className="text-cyan-300 font-bold text-base sm:text-lg tabular-nums">{formatTime(finalTime)}</span>
                                 </div>
                             </div>
                         </div>
@@ -486,14 +531,14 @@ export default function IntegratedNeuralHeist() {
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
                             <button
                                 onClick={rebootSystem}
-                                className="flex items-center justify-center gap-2 px-6 py-3 bg-green-950/50 border border-green-500 text-green-400 hover:bg-green-900/50 hover:text-green-200 transition-all uppercase tracking-widest text-sm shadow-[0_0_15px_rgba(34,197,94,0.3)] rounded"
+                                className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-green-950/50 border border-green-500 text-green-400 hover:bg-green-900/50 hover:text-green-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(34,197,94,0.3)] rounded"
                             >
-                                <RotateCcw className="w-4 h-4" />
+                                <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                 Play Again
                             </button>
                             <button
                                 onClick={() => router.push('/')}
-                                className="flex items-center justify-center gap-2 px-6 py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900/50 hover:text-cyan-200 transition-all uppercase tracking-widest text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] rounded"
+                                className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900/50 hover:text-cyan-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] rounded"
                             >
                                 Main Menu
                             </button>
