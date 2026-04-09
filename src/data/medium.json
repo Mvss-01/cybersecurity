@@ -1,82 +1,52 @@
 [
     {
-        "question": "What is the primary goal of a Distributed Denial of Service (DDoS) attack?",
+        "question": "Que permet de faire une attaque 'XSS' (Cross-Site Scripting) ?",
         "options": [
-            "To steal encrypted database records",
-            "To overwhelm a system or network with traffic, making it unavailable to legitimate users",
-            "To inject malicious code into a website's frontend",
-            "To decrypt intercepted network traffic"
+            "Supprimer la base de données",
+            "Exécuter des scripts malveillants dans le navigateur d'une victime",
+            "Deviner le mot de passe administrateur",
+            "Scanner le réseau pour trouver des ports ouverts"
         ],
-        "correct_answer": "To overwhelm a system or network with traffic, making it unavailable to legitimate users"
+        "correct_answer": "Exécuter des scripts malveillants dans le navigateur d'une victime"
     },
     {
-        "question": "What does a SQL Injection attack primarily target?",
+        "question": "Quelle est la différence entre le 'Hachage' (Hashing) et le 'Chiffrement' (Encryption) ?",
         "options": [
-            "A computer's physical memory (RAM)",
-            "A user's web browser cache",
-            "An application's backend database",
-            "The network router"
+            "Le chiffrement est plus rapide",
+            "Le hachage est à sens unique, le chiffrement est réversible",
+            "Le hachage nécessite une clé privée",
+            "Il n'y a aucune différence"
         ],
-        "correct_answer": "An application's backend database"
+        "correct_answer": "Le hachage est à sens unique, le chiffrement est réversible"
     },
     {
-        "question": "What describes a 'zero-day' vulnerability?",
+        "question": "Dans un 'TCP handshake', quel est l'ordre correct des paquets ?",
         "options": [
-            "A flaw that has been patched for zero days",
-            "A vulnerability that is unknown to the software vendor and has no patch available",
-            "An attack that takes zero days to execute",
-            "A virus that deletes itself at midnight"
+            "SYN, ACK, SYN-ACK",
+            "SYN, SYN-ACK, ACK",
+            "ACK, SYN, SYN-ACK",
+            "SYN, SYN, ACK"
         ],
-        "correct_answer": "A vulnerability that is unknown to the software vendor and has no patch available"
+        "correct_answer": "SYN, SYN-ACK, ACK"
     },
     {
-        "question": "What is the 'Principle of Least Privilege'?",
+        "question": "Qu'est-ce qu'un 'Reverse Shell' ?",
         "options": [
-            "Giving administrative rights to all employees to boost productivity",
-            "Granting users only the bare minimum permissions necessary to perform their jobs",
-            "Ensuring that the lowest-paid employees have the least network access",
-            "Using the weakest encryption algorithm to save processing power"
+            "Un shell qui exécute le code à l'envers",
+            "Quand la cible se connecte en retour à la machine de l'attaquant",
+            "Une sauvegarde sécurisée d'un terminal",
+            "Un terminal qui ne permet que la suppression de fichiers"
         ],
-        "correct_answer": "Granting users only the bare minimum permissions necessary to perform their jobs"
+        "correct_answer": "Quand la cible se connecte en retour à la machine de l'attaquant"
     },
     {
-        "question": "Which of the following is a key characteristic of a cryptographic hash function?",
+        "question": "Quelle est la principale différence entre le chiffrement symétrique et asymétrique ?",
         "options": [
-            "It is a two-way function that can be easily reversed",
-            "It requires a private key to view the output",
-            "It converts data of arbitrary size into a fixed-size string of characters",
-            "It is primarily used for symmetric data encryption"
+            "L'asymétrique utilise deux clés différentes (publique/privée)",
+            "Le symétrique est réservé à l'usage militaire",
+            "L'asymétrique est plus rapide que le symétrique",
+            "Le symétrique n'utilise pas de clés"
         ],
-        "correct_answer": "It converts data of arbitrary size into a fixed-size string of characters"
-    },
-    {
-        "question": "What is a botnet?",
-        "options": [
-            "A network of infected, internet-connected devices controlled by a centralized attacker",
-            "An automated customer service chat program",
-            "A secure network used by government agencies",
-            "A tool used to scan for network vulnerabilities"
-        ],
-        "correct_answer": "A network of infected, internet-connected devices controlled by a centralized attacker"
-    },
-    {
-        "question": "How does a Man-in-the-Middle (MitM) attack work?",
-        "options": [
-            "By guessing a user's password through brute force",
-            "By secretly intercepting and possibly altering communications between two parties who believe they are communicating directly",
-            "By physically stealing a server from a data center",
-            "By sending millions of ping requests to a single IP address"
-        ],
-        "correct_answer": "By secretly intercepting and possibly altering communications between two parties who believe they are communicating directly"
-    },
-    {
-        "question": "Which statement correctly describes symmetric encryption?",
-        "options": [
-            "It uses a public key for encryption and a private key for decryption",
-            "It uses the exact same key for both encryption and decryption",
-            "It does not use keys at all",
-            "It is significantly slower than asymmetric encryption"
-        ],
-        "correct_answer": "It uses the exact same key for both encryption and decryption"
+        "correct_answer": "L'asymétrique utilise deux clés différentes (publique/privée)"
     }
 ]

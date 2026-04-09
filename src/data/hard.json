@@ -1,32 +1,12 @@
 [
     {
-        "question": "What is the mechanism of a Cross-Site Scripting (XSS) attack?",
+        "question": "Quelle attaque utilise un 'gadget' pour contourner la protection NX/DEP ?",
         "options": [
-            "Injecting malicious SQL queries into user input fields to extract database information",
-            "Injecting malicious client-side scripts into web pages viewed by other users",
-            "Flooding a network with ICMP echo requests",
-            "Exploiting buffer overflows in the operating system kernel"
+            "SQLi",
+            "ROP",
+            "XSS",
+            "Brute-force"
         ],
-        "correct_answer": "Injecting malicious client-side scripts into web pages viewed by other users"
-    },
-    {
-        "question": "What is the purpose of a rainbow table in cybersecurity?",
-        "options": [
-            "To map network topologies visually",
-            "To provide a precomputed dictionary of plaintext passwords and their corresponding hash values for rapid password cracking",
-            "To assign different security clearances (represented by colors) to network users",
-            "To encrypt data using multiple layers of asymmetric algorithms"
-        ],
-        "correct_answer": "To provide a precomputed dictionary of plaintext passwords and their corresponding hash values for rapid password cracking"
-    },
-    {
-        "question": "In the context of password security, what does 'salting' refer to?",
-        "options": [
-            "Adding random data to a password before it is hashed to defend against dictionary and rainbow table attacks",
-            "Encrypting the password database twice using different algorithms",
-            "Removing special characters from a user's password to prevent database errors",
-            "Rotating the encryption keys used by the server every 30 days"
-        ],
-        "correct_answer": "Adding random data to a password before it is hashed to defend against dictionary and rainbow table attacks"
+        "correct_answer": "ROP"
     }
 ]
