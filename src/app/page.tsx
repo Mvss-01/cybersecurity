@@ -17,25 +17,26 @@ export default function StartPage() {
   };
 
   return (
-    <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-black/90 p-6 font-mono">
-      <Brain className="w-24 h-24 text-cyan-500 animate-pulse mb-6" />
+    <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-black/90 p-4 sm:p-6 font-mono">
+      <Brain className="w-16 h-16 sm:w-24 sm:h-24 text-cyan-500 animate-pulse mb-4 sm:mb-6" />
 
-      <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-4 text-center">
+      <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-3 sm:mb-4 text-center">
         NEURAL HEIST
       </h1>
 
-      <p className="text-red-500 max-w-lg text-center mb-8 border border-red-900/50 bg-red-950/30 p-4 rounded-md shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+      <p className="text-red-500 max-w-lg text-center mb-6 sm:mb-8 border border-red-900/50 bg-red-950/30 p-3 sm:p-4 rounded-md shadow-[0_0_15px_rgba(239,68,68,0.2)] text-sm sm:text-base">
         WARNING: CONSCIOUSNESS TRAPPED.<br />
         Lethal cyber-attack in progress. Neural sync degrading.<br />
         Identify the culprit and patch the network to survive.
       </p>
 
-      <div className="flex flex-col mb-8 w-full max-w-xs">
+      <div className="flex flex-col mb-6 sm:mb-8 w-full max-w-xs">
         <label className="text-cyan-600 text-xs uppercase mb-2 tracking-tighter">Enter Username:</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleStart()}
           placeholder="USERNAME..."
           className="bg-black/50 border-b border-cyan-500/50 p-2 text-cyan-400 focus:outline-none focus:border-cyan-400 transition-colors text-center"
         />
@@ -43,7 +44,7 @@ export default function StartPage() {
 
       <button
         onClick={handleStart}
-        className="px-8 py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900 hover:text-cyan-200 transition-all uppercase tracking-widest shadow-[0_0_15px_rgba(6,182,212,0.4)] disabled:opacity-50"
+        className="px-6 sm:px-8 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900 hover:text-cyan-200 transition-all uppercase tracking-widest text-sm sm:text-base shadow-[0_0_15px_rgba(6,182,212,0.4)] disabled:opacity-50"
         disabled={!name.trim()}
       >
         INITIALIZE CONNECTION

@@ -24,3 +24,154 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ============================================
+   Responsive Hex Grid System
+   ============================================ */
+
+/* Hex node base size */
+.hex-node {
+  width: 52px;
+  height: 64px;
+  margin: 0 3px;
+}
+
+.hex-row {
+  margin-bottom: -16px;
+}
+
+.hex-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.hex-label {
+  font-size: 7px;
+}
+
+/* Small phones (375px+) */
+@media (min-width: 375px) {
+  .hex-node {
+    width: 56px;
+    height: 70px;
+    margin: 0 4px;
+  }
+  .hex-row {
+    margin-bottom: -18px;
+  }
+  .hex-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .hex-label {
+    font-size: 8px;
+  }
+}
+
+/* Larger phones (480px+) */
+@media (min-width: 480px) {
+  .hex-node {
+    width: 68px;
+    height: 84px;
+    margin: 0 5px;
+  }
+  .hex-row {
+    margin-bottom: -22px;
+  }
+  .hex-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .hex-label {
+    font-size: 9px;
+  }
+}
+
+/* Tablets (640px+) */
+@media (min-width: 640px) {
+  .hex-node {
+    width: 76px;
+    height: 94px;
+    margin: 0 6px;
+  }
+  .hex-row {
+    margin-bottom: -24px;
+  }
+  .hex-icon {
+    width: 26px;
+    height: 26px;
+  }
+  .hex-label {
+    font-size: 10px;
+  }
+}
+
+/* Medium screens (768px+) */
+@media (min-width: 768px) {
+  .hex-node {
+    width: 84px;
+    height: 104px;
+    margin: 0 7px;
+  }
+  .hex-row {
+    margin-bottom: -26px;
+  }
+  .hex-icon {
+    width: 28px;
+    height: 28px;
+  }
+  .hex-label {
+    font-size: 11px;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .hex-node {
+    width: 96px;
+    height: 112px;
+    margin: 0 8px;
+  }
+  .hex-row {
+    margin-bottom: -28px;
+  }
+  .hex-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .hex-label {
+    font-size: 12px;
+  }
+}
+
+/* Performance: GPU-accelerate hex nodes for smooth hover transitions */
+.hex-node {
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .hex-node {
+    transition: none !important;
+    will-change: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
