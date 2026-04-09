@@ -1,9 +1,9 @@
 'use client'
 
-import HexGrid from "@/components/HexGrid";
+import IntegratedNeuralHeist from "@/components/IntegratedNeuralHeist";
 
 export default function Main() {
     return (
-        <HexGrid />
+        <IntegratedNeuralHeist />
     );
 }
