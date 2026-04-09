@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { ShieldAlert, Lock, Terminal as TerminalIcon, ChevronRight, Clock, Trophy, RotateCcw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-// Ensure these point to your actual JSON data paths
 import EASY_QUESTIONS from '../data/easy.json';
 import MEDIUM_QUESTIONS from '../data/medium.json';
 import HARD_QUESTIONS from '../data/hard.json';
@@ -35,8 +34,6 @@ function formatTime(totalSeconds: number): string {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-// --- Memoized Hex Node Component ---
-// Extracted so timer ticks don't force re-render of every hex node
 const HexNode = React.memo(function HexNode({
     node,
     onClick
@@ -113,13 +110,10 @@ const HexNode = React.memo(function HexNode({
 export default function IntegratedNeuralHeist() {
     const router = useRouter();
 
-    // --- Dashboard State ---
     const [health, setHealth] = useState<number>(100);
-    const [nodeName, setNodeName] = useState<string>("NODE 01-B [MAINFRAME]");
     const [logMessage, setLogMessage] = useState<string>("Awaiting Node Selection...");
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
-    // --- Grid & Game State ---
     const [mapNodes, setMapNodes] = useState<HexMap>(INITIAL_MAP);
     const [activeQuiz, setActiveQuiz] = useState<{ node: MapNode, questionData: any } | null>(null);
     const [clearedQuestions, setClearedQuestions] = useState<string[]>([]);
@@ -128,20 +122,17 @@ export default function IntegratedNeuralHeist() {
     const [finalTime, setFinalTime] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    // Fix hydration mismatch: defer localStorage read to client-side effect
     const [username, setUsername] = useState('OPERATIVE');
     useEffect(() => {
         const stored = localStorage.getItem('neural_heist_user');
         if (stored) setUsername(stored);
     }, []);
 
-    // Use ref to avoid stale closure in checkWinCondition
     const elapsedRef = useRef(elapsedSeconds);
     useEffect(() => {
         elapsedRef.current = elapsedSeconds;
     }, [elapsedSeconds]);
 
-    // Memoize derived state to avoid recalculating on every render
     const { totalNodes, securedNodes, activeThreats } = useMemo(() => {
         const flat = mapNodes.flat();
         return {
@@ -151,9 +142,6 @@ export default function IntegratedNeuralHeist() {
         };
     }, [mapNodes]);
 
-    // --- Effects ---
-
-    // Main game timer
     useEffect(() => {
         timerRef.current = setInterval(() => {
             if (!isGameOver && !gameComplete) {
@@ -166,7 +154,6 @@ export default function IntegratedNeuralHeist() {
         };
     }, [isGameOver, gameComplete]);
 
-    // Automatic health drain
     useEffect(() => {
         if (isGameOver || gameComplete) return;
 
@@ -179,12 +166,11 @@ export default function IntegratedNeuralHeist() {
                 }
                 return nextHealth;
             });
-        }, 1500); // Slightly slower drain so it's playable with quizzes
+        }, 1500);
 
         return () => clearInterval(healthDrainTimer);
     }, [isGameOver, gameComplete]);
 
-    // Check for win condition - uses ref to avoid stale closure
     const checkWinCondition = useCallback((map: HexMap) => {
         const allSecure = map.flat().every(node => node.status === 'secure');
         if (allSecure) {
@@ -193,8 +179,6 @@ export default function IntegratedNeuralHeist() {
             if (timerRef.current) clearInterval(timerRef.current);
         }
     }, []);
-
-    // --- Handlers ---
 
     const handleNodeClick = useCallback((node: MapNode): void => {
         if (node.status === 'secure') {
@@ -210,7 +194,6 @@ export default function IntegratedNeuralHeist() {
                     return currentMap;
                 }
 
-                setNodeName(`TARGETING: ${node.id.toUpperCase()}`);
                 setLogMessage("DECRYPTING CHALLENGE DATA...");
 
                 const questions = HARD_QUESTIONS;
@@ -223,7 +206,6 @@ export default function IntegratedNeuralHeist() {
             return;
         }
 
-        setNodeName(`TARGETING: ${node.id.toUpperCase()}`);
         setLogMessage("DECRYPTING CHALLENGE DATA...");
 
         const questions = node.difficulty === 'easy' ? EASY_QUESTIONS : node.difficulty === 'medium' ? MEDIUM_QUESTIONS : HARD_QUESTIONS;
@@ -260,7 +242,6 @@ export default function IntegratedNeuralHeist() {
             });
         } else {
             setLogMessage(`INCORRECT OVERRIDE. INTEGRITY COMPROMISED.`);
-            // Deduct health penalty for wrong answer
             setHealth(prev => {
                 const newHealth = prev - 10;
                 if (newHealth <= 0) {
@@ -275,19 +256,16 @@ export default function IntegratedNeuralHeist() {
     }, [activeQuiz, checkWinCondition]);
 
     const rebootSystem = useCallback(() => {
+        router.push("/");
         setMapNodes(INITIAL_MAP);
         setClearedQuestions([]);
         setHealth(100);
-        setNodeName("NODE 01-B [MAINFRAME]");
-        setLogMessage("SYSTEM REBOOTED. AWAITING INPUT...");
         setGameComplete(false);
         setIsGameOver(false);
         setElapsedSeconds(0);
         setFinalTime(0);
-        router.push("/");
     }, [router]);
 
-    // --- UI Colors ---
     let healthStateText = "STABLE";
     let healthColor = "#29d36a";
 
@@ -308,10 +286,8 @@ export default function IntegratedNeuralHeist() {
     return (
         <div className="min-h-screen bg-[#090d18] font-mono m-0 p-3 sm:p-4 lg:p-8 select-none flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-4 lg:gap-6">
 
-            {/* LEFT PANEL: NEURAL LINK DASHBOARD - becomes compact top strip on mobile */}
             <div className="w-full lg:w-[360px] shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 lg:gap-5">
 
-                {/* Panel 1: Integrity */}
                 <div className="flex-1 lg:flex-none p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
                     <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[3px] uppercase mb-2 lg:mb-4 text-center">
                         NEURAL LINK INTEGRITY
@@ -345,22 +321,17 @@ export default function IntegratedNeuralHeist() {
                     </div>
                 </div>
 
-                {/* Panel 2: Server Architecture Status */}
                 <div className="flex-1 lg:flex-none p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
                     <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[2px] sm:tracking-[3px] uppercase mb-2 lg:mb-4 text-center">
                         SERVER ARCHITECTURE
                     </div>
-                    <div className="text-[#95e6fee4] text-xs sm:text-lg font-bold tracking-[2px] sm:tracking-[3px] uppercase mb-2 lg:mb-4 text-center truncate">
-                        {nodeName}
-                    </div>
                     <div>
                         <div className={`rounded-lg p-2 sm:p-3 text-[10px] sm:text-sm text-center font-bold tracking-wider transition-colors ${activeThreats > 0 ? 'bg-[#ab131332] text-red-500' : 'bg-green-900/30 text-green-400'}`}>
-                            {activeThreats > 0 ? `HOSTILE CODE: ${activeThreats} THREATS` : 'ALL THREATS ELIMINATED'}
+                            {activeThreats > 0 ? `Threats Remaining: ${activeThreats}` : 'ALL THREATS ELIMINATED'}
                         </div>
                     </div>
                 </div>
 
-                {/* Panel 3: Challenge Log - hidden on very small screens to save space */}
                 <div className="hidden sm:flex flex-1 p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)] flex-col">
                     <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[3px] uppercase text-center mt-2">
                         SYSTEM LOG
@@ -372,13 +343,10 @@ export default function IntegratedNeuralHeist() {
                 </div>
             </div>
 
-            {/* RIGHT PANEL: HEX GRID SERVER MAP */}
             <div className="flex-1 w-full max-w-4xl relative border border-cyan-800 bg-slate-950/80 rounded-lg overflow-hidden flex items-center justify-center p-2 min-h-[320px] sm:min-h-[400px] lg:min-h-full shadow-[0_0_30px_rgba(0,180,255,0.1)]">
 
-                {/* Background Grid Pattern - use CSS containment so it doesn't cause repaints */}
                 <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" style={{ contain: 'strict' }}></div>
 
-                {/* Timer HUD */}
                 <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-center z-50 pointer-events-none">
                     <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
                         <span className="text-cyan-600 text-[8px] sm:text-[10px] uppercase tracking-widest">Nodes</span>
@@ -390,7 +358,6 @@ export default function IntegratedNeuralHeist() {
                     </div>
                 </div>
 
-                {/* Hex Map - responsive sizing via CSS custom properties */}
                 <div className="flex flex-col items-center justify-center hex-grid-container">
                     {mapNodes.map((row, rowIndex) => (
                         <div key={rowIndex} className="flex justify-center hex-row relative z-10" style={{ zIndex: 10 - rowIndex }}>
@@ -405,7 +372,6 @@ export default function IntegratedNeuralHeist() {
                     ))}
                 </div>
 
-                {/* MODAL: Active Quiz */}
                 {activeQuiz && (
                     <div className="absolute inset-0 z-[100] flex items-center justify-center backdrop-blur-md bg-black/60 p-2 sm:p-4">
                         <div className="relative w-full max-w-xl border border-cyan-500/70 bg-slate-950/98 rounded-xl overflow-hidden shadow-[0_0_80px_rgba(6,182,212,0.25),inset_0_1px_0_rgba(6,182,212,0.1)] max-h-[90vh] overflow-y-auto"
@@ -436,7 +402,7 @@ export default function IntegratedNeuralHeist() {
                                 </button>
                             </div>
 
-                            <div className="p-3 sm:p-5 md:p-8 flex flex-col gap-3 sm:gap-5">
+                            <div className="p-3 sm:p-5 md:p-10 flex flex-col gap-3 sm:gap-5">
                                 <div className="relative bg-gradient-to-br from-[#0c1425] to-[#0f172a] border border-cyan-800/40 rounded-lg p-3 sm:p-5 md:p-6 shadow-[inset_0_2px_20px_rgba(6,182,212,0.05)]">
                                     <div className="absolute top-2 sm:top-3 left-2 sm:left-3 text-cyan-700/50 text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-bold">Decrypt Query</div>
                                     <div className="text-cyan-100 text-sm sm:text-base md:text-lg font-semibold leading-relaxed mt-4">
@@ -464,7 +430,6 @@ export default function IntegratedNeuralHeist() {
                 )}
             </div>
 
-            {/* OVERLAY: GAME OVER / FLATLINE */}
             {isGameOver && (
                 <div className="fixed inset-0 bg-gradient-to-b from-[#2a0000] to-[#120000] flex flex-col justify-center items-center z-[999] text-[#ff4d4d] text-center font-mono p-4">
                     <div className="w-[80px] sm:w-[120px] mb-5">
@@ -485,7 +450,6 @@ export default function IntegratedNeuralHeist() {
                 </div>
             )}
 
-            {/* OVERLAY: WIN SCREEN */}
             {gameComplete && (
                 <div className="fixed inset-0 z-[999] flex items-center justify-center backdrop-blur-md bg-black/80 font-mono p-4">
                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
