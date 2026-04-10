@@ -124,6 +124,43 @@ export default function IntegratedNeuralHeist() {
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     const [username, setUsername] = useState('OPERATIVE');
+
+    // Audio Refs
+    const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
+
+    const playSound = (path: string) => {
+        const audio = new Audio(path);
+        audio.play().catch(err => console.error("Audio play failed:", err));
+    };
+
+    // Initialize Ambient Sound
+    useEffect(() => {
+        ambientAudioRef.current = new Audio('/ambient sound.mp3');
+        ambientAudioRef.current.loop = true;
+        ambientAudioRef.current.volume = 0.4;
+
+        const playAmbient = () => {
+            ambientAudioRef.current?.play().catch(err => {
+                console.log("Autoplay blocked, waiting for user interaction");
+            });
+        };
+
+        playAmbient();
+
+        // Handle browser autoplay policy (play on first click if blocked)
+        const handleFirstClick = () => {
+            playAmbient();
+            window.removeEventListener('click', handleFirstClick);
+        };
+        window.addEventListener('click', handleFirstClick);
+
+        return () => {
+            ambientAudioRef.current?.pause();
+            if (ambientAudioRef.current) ambientAudioRef.current.src = "";
+            window.removeEventListener('click', handleFirstClick);
+        };
+    }, []);
+
     useEffect(() => {
         const stored = localStorage.getItem('neural_heist_user');
         if (stored) {
@@ -236,6 +273,7 @@ export default function IntegratedNeuralHeist() {
         if (!activeQuiz) return;
 
         if (selectedOption === activeQuiz.questionData.correct_answer) {
+            playSound('/secured.mp3');
             setLogMessage(`NODE ${activeQuiz.node.id.replace('node-', '')} SECURED SUCCESSFULLY.`);
             setClearedQuestions(prev => [...prev, activeQuiz.questionData.question]);
             setHealth(prev => {
@@ -254,6 +292,7 @@ export default function IntegratedNeuralHeist() {
                 return newMap;
             });
         } else {
+            playSound('/error.mp3');
             setLogMessage(`INCORRECT OVERRIDE. INTEGRITY COMPROMISED.`);
             setHealth(prev => {
                 const newHealth = prev - 10;
@@ -269,6 +308,7 @@ export default function IntegratedNeuralHeist() {
     }, [activeQuiz, checkWinCondition]);
 
     const rebootSystem = useCallback(() => {
+        playSound("/abort.mp3");
         router.push("/");
         setMapNodes(INITIAL_MAP);
         setClearedQuestions([]);
@@ -420,7 +460,10 @@ export default function IntegratedNeuralHeist() {
                                     </span>
                                 </div>
                                 <button
-                                    onClick={() => setActiveQuiz(null)}
+                                    onClick={() => {
+                                        playSound('/abort.mp3');
+                                        setActiveQuiz(null);
+                                    }}
                                     className="text-slate-500 hover:text-red-400 transition-colors text-[10px] sm:text-xs font-bold tracking-wider px-1.5 sm:px-2 py-1 rounded hover:bg-red-500/10 shrink-0"
                                 >
                                     [X]

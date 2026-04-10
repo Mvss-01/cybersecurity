@@ -1,15 +1,47 @@
 'use client'
 import { Brain } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function StartPage() {
   const router = useRouter();
   const [name, setName] = useState('');
 
+  const playSound = (path: string) => {
+    const audio = new Audio(path);
+    audio.play().catch(err => console.error("Audio play failed:", err));
+  };
+
+  useEffect(() => {
+    const startAudio = new Audio('/start.mp3');
+    startAudio.loop = true;
+    startAudio.volume = 0.5;
+    
+    const playAudio = () => {
+      startAudio.play().catch(err => {
+        console.log("Autoplay blocked, waiting for interaction");
+      });
+    };
+
+    playAudio();
+
+    const handleFirstClick = () => {
+      playAudio();
+      window.removeEventListener('click', handleFirstClick);
+    };
+    window.addEventListener('click', handleFirstClick);
+
+    return () => {
+      startAudio.pause();
+      startAudio.src = "";
+      window.removeEventListener('click', handleFirstClick);
+    };
+  }, []);
+
   const handleStart = () => {
     if (name.trim()) {
       localStorage.setItem('neural_heist_user', name);
+      playSound("/abort.mp3");
       router.push('/main');
     } else {
       alert("Identify yourself, Operative.");
