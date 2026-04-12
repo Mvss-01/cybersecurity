@@ -48,5 +48,155 @@
             "Le symétrique n'utilise pas de clés"
         ],
         "correct_answer": "L'asymétrique utilise deux clés différentes (publique/privée)"
+    },
+    {
+        "question": "Qu'est-ce qu'une attaque CSRF (Cross-Site Request Forgery) ?",
+        "options": [
+            "Une attaque qui vole des fichiers sur le serveur",
+            "Une attaque qui force un utilisateur authentifié à exécuter des actions non désirées sur une application web",
+            "Une attaque qui devine les mots de passe par force brute",
+            "Une attaque qui ralentit le réseau"
+        ],
+        "correct_answer": "Une attaque qui force un utilisateur authentifié à exécuter des actions non désirées sur une application web"
+    },
+    {
+        "question": "Que signifie IDOR (Insecure Direct Object Reference) ?",
+        "options": [
+            "Une faille permettant d'accéder à des ressources d'autres utilisateurs en modifiant un identifiant dans une URL ou une requête",
+            "Un type de virus qui se propage par email",
+            "Une mauvaise configuration du pare-feu",
+            "Une erreur de syntaxe dans le code JavaScript"
+        ],
+        "correct_answer": "Une faille permettant d'accéder à des ressources d'autres utilisateurs en modifiant un identifiant dans une URL ou une requête"
+    },
+    {
+        "question": "Dans le modèle OSI, à quelle couche travaille le protocole IP ?",
+        "options": [
+            "Couche 2 (Liaison de données)",
+            "Couche 3 (Réseau)",
+            "Couche 4 (Transport)",
+            "Couche 7 (Application)"
+        ],
+        "correct_answer": "Couche 3 (Réseau)"
+    },
+    {
+        "question": "À quoi sert principalement l'outil 'Nmap' ?",
+        "options": [
+            "À éditer des fichiers texte",
+            "À scanner des réseaux pour découvrir des hôtes et des services ouverts",
+            "À craquer des mots de passe Wi-Fi",
+            "À créer des sites web"
+        ],
+        "correct_answer": "À scanner des réseaux pour découvrir des hôtes et des services ouverts"
+    },
+    {
+        "question": "Qu'est-ce que 'Metasploit' ?",
+        "options": [
+            "Un framework pour le développement et l'exécution d'exploits contre une cible",
+            "Un navigateur web sécurisé",
+            "Un service de stockage cloud",
+            "Un type de disque dur"
+        ],
+        "correct_answer": "Un framework pour le développement et l'exécution d'exploits contre une cible"
+    },
+    {
+        "question": "Pourquoi ajoute-t-on un 'Sel' (Salt) lors du hachage des mots de passe ?",
+        "options": [
+            "Pour rendre le hachage plus rapide",
+            "Pour empêcher l'utilisation de Rainbow Tables (tables de correspondance pré-calculées)",
+            "Pour compresser la taille du mot de passe",
+            "C'est une tradition sans utilité réelle"
+        ],
+        "correct_answer": "Pour empêcher l'utilisation de Rainbow Tables (tables de correspondance pré-calculées)"
+    },
+    {
+        "question": "Quelle est la meilleure technique pour prévenir les injections SQL ?",
+        "options": [
+            "Utiliser des expressions régulières complexes",
+            "Utiliser des requêtes préparées (Prepared Statements) avec paramétrage",
+            "Interdire les caractères spéciaux comme ' et ;",
+            "Chiffrer toute la base de données"
+        ],
+        "correct_answer": "Utiliser des requêtes préparées (Prepared Statements) avec paramétrage"
+    },
+    {
+        "question": "Quelle est la différence fondamentale entre une adresse MAC et une adresse IP ?",
+        "options": [
+            "L'adresse MAC est logique, l'adresse IP est physique",
+            "L'adresse MAC identifie le matériel de manière permanente, l'adresse IP identifie la connexion au réseau",
+            "L'adresse IP est plus courte que l'adresse MAC",
+            "Il n'y a pas de différence"
+        ],
+        "correct_answer": "L'adresse MAC identifie le matériel de manière permanente, l'adresse IP identifie la connexion au réseau"
+    },
+    {
+        "question": "Qu'est-ce qu'une attaque DDoS ?",
+        "options": [
+            "Une attaque par dictionnaire",
+            "Une attaque par déni de service distribué visant à rendre un service indisponible",
+            "Un vol de données confidentielles",
+            "Une technique pour déchiffrer des emails"
+        ],
+        "correct_answer": "Une attaque par déni de service distribué visant à rendre un service indisponible"
+    },
+    {
+        "question": "À quoi sert l'outil 'Burp Suite' ?",
+        "options": [
+            "À gérer des bases de données",
+            "À effectuer des tests de pénétration sur des applications web (Proxy/Scanner)",
+            "À compiler du code C++",
+            "À nettoyer le registre Windows"
+        ],
+        "correct_answer": "À effectuer des tests de pénétration sur des applications web (Proxy/Scanner)"
+    },
+    {
+        "question": "Sur quel port écoute par défaut un serveur web sécurisé (HTTPS) ?",
+        "options": [
+            "80",
+            "21",
+            "443",
+            "22"
+        ],
+        "correct_answer": "443"
+    },
+    {
+        "question": "Quelle est la différence entre un IDS et un IPS ?",
+        "options": [
+            "L'IDS détecte l'intrusion, l'IPS peut aussi la bloquer activement",
+            "L'IPS est plus ancien que l'IDS",
+            "L'IDS est matériel, l'IPS est logiciel",
+            "Il n'y a aucune différence"
+        ],
+        "correct_answer": "L'IDS détecte l'intrusion, l'IPS peut aussi la bloquer activement"
+    },
+    {
+        "question": "Que permet de faire 'Wireshark' ?",
+        "options": [
+            "Analyser le trafic réseau en capturant des paquets",
+            "Générer des certificats SSL",
+            "Scanner des vulnérabilités web",
+            "Supprimer des virus"
+        ],
+        "correct_answer": "Analyser le trafic réseau en capturant des paquets"
+    },
+    {
+        "question": "Qu'est-ce que la 'SOP' (Same-Origin Policy) ?",
+        "options": [
+            "Une règle de sécurité empêchant un script d'un site d'accéder aux données d'un autre site",
+            "Une méthode de chiffrement asymétrique",
+            "Un protocole de routage",
+            "Un type de pare-feu"
+        ],
+        "correct_answer": "Une règle de sécurité empêchant un script d'un site d'accéder aux données d'un autre site"
+    },
+    {
+        "question": "Que stipule le Principe du Moindre Privilège ?",
+        "options": [
+            "Donner tous les accès à tout le monde pour gagner du temps",
+            "N'accorder que les droits strictement nécessaires à l'accomplissement d'une tâche",
+            "Interdire tout accès internet aux employés",
+            "Utiliser uniquement des logiciels gratuits"
+        ],
+        "correct_answer": "N'accorder que les droits strictement nécessaires à l'accomplissement d'une tâche"
     }
 ]

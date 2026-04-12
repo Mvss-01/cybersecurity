@@ -48,10 +48,10 @@ const HexNode = React.memo(function HexNode({
     let shadowColor = 'rgba(40, 174, 65, 0.5)';
     let iconColorClass = 'text-cyan-600';
     let textColorClass = 'text-cyan-600';
-    let label = 'SECURE';
+    let label = 'SÉCURISÉ';
 
     if (isVirus) {
-        label = isBoss ? 'CORE' : 'VIRUS';
+        label = isBoss ? 'CŒUR' : 'VIRUS';
 
         if (node.difficulty === 'easy') {
             bgColor = '#891919ff';
@@ -98,7 +98,7 @@ const HexNode = React.memo(function HexNode({
                     ) : (
                         <>
                             <Lock className="hex-icon text-green-600 mb-0.5 sm:mb-1" />
-                            <span className="hex-label font-bold text-green-600">SECURE</span>
+                            <span className="hex-label font-bold text-green-600">SÉCURISÉ</span>
                         </>
                     )}
                 </div>
@@ -111,7 +111,7 @@ export default function IntegratedNeuralHeist() {
     const router = useRouter();
 
     const [health, setHealth] = useState<number>(100);
-    const [logMessage, setLogMessage] = useState<string>("Awaiting Node Selection...");
+    const [logMessage, setLogMessage] = useState<string>("En attente de sélection de nœud...");
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
     const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
@@ -123,7 +123,7 @@ export default function IntegratedNeuralHeist() {
     const [finalTime, setFinalTime] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    const [username, setUsername] = useState('OPERATIVE');
+    const [username, setUsername] = useState('AGENT');
 
     // Audio Refs
     const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -232,7 +232,7 @@ export default function IntegratedNeuralHeist() {
 
     const handleNodeClick = useCallback((node: MapNode): void => {
         if (node.status === 'secure') {
-            setLogMessage(`NODE ${node.id.replace('node-', '')} ALREADY SECURE.`);
+            setLogMessage(`NŒUD ${node.id.replace('node-', '')} DÉJÀ SÉCURISÉ.`);
             return;
         }
 
@@ -240,11 +240,11 @@ export default function IntegratedNeuralHeist() {
             setMapNodes(currentMap => {
                 const virusCount = currentMap.flat().filter(n => n.status === 'virus' && !n.isBoss).length;
                 if (virusCount !== 0) {
-                    setLogMessage("ACCESS DENIED: CLEAR SURROUNDING THREATS FIRST.");
+                    setLogMessage("ACCÈS REFUSÉ : ÉLIMINEZ D'ABORD LES MENACES ENVIRONNANTES.");
                     return currentMap;
                 }
 
-                setLogMessage("DECRYPTING CHALLENGE DATA...");
+                setLogMessage("DÉCRYPTAGE DES DONNÉES DU DÉFI...");
 
                 const questions = HARD_QUESTIONS;
                 let availableQuestions = questions.filter(q => !clearedQuestions.includes(q.question));
@@ -256,7 +256,7 @@ export default function IntegratedNeuralHeist() {
             return;
         }
 
-        setLogMessage("DECRYPTING CHALLENGE DATA...");
+        setLogMessage("DÉCRYPTAGE DES DONNÉES DU DÉFI...");
 
         const questions = node.difficulty === 'easy' ? EASY_QUESTIONS : node.difficulty === 'medium' ? MEDIUM_QUESTIONS : HARD_QUESTIONS;
 
@@ -274,7 +274,7 @@ export default function IntegratedNeuralHeist() {
 
         if (selectedOption === activeQuiz.questionData.correct_answer) {
             playSound('/secured.mp3');
-            setLogMessage(`NODE ${activeQuiz.node.id.replace('node-', '')} SECURED SUCCESSFULLY.`);
+            setLogMessage(`NŒUD ${activeQuiz.node.id.replace('node-', '')} SÉCURISÉ AVEC SUCCÈS.`);
             setClearedQuestions(prev => [...prev, activeQuiz.questionData.question]);
             setHealth(prev => {
                 const newHealth = prev + 5;
@@ -293,7 +293,7 @@ export default function IntegratedNeuralHeist() {
             });
         } else {
             playSound('/error.mp3');
-            setLogMessage(`INCORRECT OVERRIDE. INTEGRITY COMPROMISED.`);
+            setLogMessage(`SURCHARGE INCORRECTE. INTÉGRITÉ COMPROMISE.`);
             setHealth(prev => {
                 const newHealth = prev - 10;
                 if (newHealth <= 0) {
@@ -323,7 +323,7 @@ export default function IntegratedNeuralHeist() {
         return (
             <div className="min-h-screen bg-[#090d18] flex items-center justify-center font-mono p-4">
                 <div className="text-cyan-500 animate-pulse tracking-[0.2em] uppercase text-center text-sm sm:text-base">
-                    Verifying Neural Link Integrity...
+                    Vérification de l'intégrité du lien neural...
                 </div>
             </div>
         );
@@ -338,13 +338,13 @@ export default function IntegratedNeuralHeist() {
         healthStateText = "STABLE";
         healthColor = "#29d36a";
     } else if (health > 30) {
-        healthStateText = "WARNING";
+        healthStateText = "AVERTISSEMENT";
         healthColor = "#ffb000";
     } else if (health > 0) {
-        healthStateText = "CRITICAL";
+        healthStateText = "CRITIQUE";
         healthColor = "#d9434f";
     } else {
-        healthStateText = "FLATLINE";
+        healthStateText = "HORS SERVICE";
         healthColor = "#d9434f";
     }
 
@@ -355,11 +355,11 @@ export default function IntegratedNeuralHeist() {
 
                 <div className="flex-1 lg:flex-none p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
                     <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[3px] uppercase mb-2 lg:mb-4 text-center">
-                        NEURAL LINK INTEGRITY
+                        INTÉGRITÉ DU LIEN NEURAL
                     </div>
                     <div className="flex items-center gap-3 sm:gap-4 mb-2">
                         <div className="text-[#d9434f] shrink-0 w-[36px] sm:w-[50px] flex justify-center">
-                            <img src="brain.png" alt="Brain Icon" className="max-w-full" />
+                            <img src="brain.png" alt="Icône de cerveau" className="max-w-full" />
                         </div>
                         <div className="m-0 p-0 flex-grow min-w-0">
                             <div className="flex items-baseline gap-2 sm:gap-3">
@@ -388,18 +388,18 @@ export default function IntegratedNeuralHeist() {
 
                 <div className="flex-1 lg:flex-none p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)]">
                     <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[2px] sm:tracking-[3px] uppercase mb-2 lg:mb-4 text-center">
-                        SERVER ARCHITECTURE
+                        ARCHITECTURE SERVEUR
                     </div>
                     <div>
                         <div className={`rounded-lg p-2 sm:p-3 text-[10px] sm:text-sm text-center font-bold tracking-wider transition-colors ${activeThreats > 0 ? 'bg-[#ab131332] text-red-500' : 'bg-green-900/30 text-green-400'}`}>
-                            {activeThreats > 0 ? `Threats Remaining: ${activeThreats}` : 'ALL THREATS ELIMINATED'}
+                            {activeThreats > 0 ? `Menaces restantes : ${activeThreats}` : 'TOUTES LES MENACES ÉLIMINÉES'}
                         </div>
                     </div>
                 </div>
 
                 <div className="hidden sm:flex flex-1 p-3 pb-4 bg-gradient-to-b from-[#11101a] to-[#120d18] border border-[rgba(0,180,255,0.18)] rounded-[5px] shadow-[inset_0_0_0_1px_rgba(255,0,80,0.05),0_0_18px_rgba(0,180,255,0.06)] flex-col">
                     <div className="text-[#0d7ea0] text-[10px] sm:text-sm tracking-[3px] uppercase text-center mt-2">
-                        SYSTEM LOG
+                        JOURNAL SYSTÈME
                     </div>
                     <div className="bg-[#163849] h-[2px] my-[10px] sm:my-[15px] mx-0" />
                     <div className="text-[#95e6fee4] text-xs sm:text-sm tracking-[1px] uppercase text-center mb-2 leading-relaxed">
@@ -414,8 +414,6 @@ export default function IntegratedNeuralHeist() {
 
                 <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-center z-50 pointer-events-none">
                     <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
-                        <span className="text-cyan-600 text-[8px] sm:text-[10px] uppercase tracking-widest">Nodes</span>
-                        <span className="text-cyan-300 font-bold text-xs sm:text-sm">{securedNodes}/{totalNodes}</span>
                     </div>
                     <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
                         <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500" />
@@ -448,7 +446,7 @@ export default function IntegratedNeuralHeist() {
                                 <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                                     <div className="flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded px-2 sm:px-2.5 py-1">
                                         <TerminalIcon className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-400" />
-                                        <span className="text-cyan-300 font-bold tracking-widest text-[10px] sm:text-xs md:text-sm">NODE {activeQuiz.node.id.replace('node-', '')}</span>
+                                        <span className="text-cyan-300 font-bold tracking-widest text-[10px] sm:text-xs md:text-sm">NŒUD {activeQuiz.node.id.replace('node-', '')}</span>
                                     </div>
                                     <span className={`text-[8px] sm:text-[10px] uppercase tracking-widest font-bold px-1.5 sm:px-2 py-0.5 rounded-full border ${activeQuiz.node.difficulty === 'easy'
                                         ? 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10'
@@ -456,7 +454,7 @@ export default function IntegratedNeuralHeist() {
                                             ? 'text-amber-400 border-amber-500/40 bg-amber-500/10'
                                             : 'text-red-400 border-red-500/40 bg-red-500/10'
                                         }`}>
-                                        {activeQuiz.node.difficulty === 'easy' ? '● LOW' : activeQuiz.node.difficulty === 'medium' ? '●● MED' : '●●● HIGH'}
+                                        {activeQuiz.node.difficulty === 'easy' ? '● BAS' : activeQuiz.node.difficulty === 'medium' ? '●● MOY' : '●●● HAUT'}
                                     </span>
                                 </div>
                                 <button
@@ -472,7 +470,7 @@ export default function IntegratedNeuralHeist() {
 
                             <div className="p-3 sm:p-5 md:p-10 flex flex-col gap-3 sm:gap-5">
                                 <div className="relative bg-gradient-to-br from-[#0c1425] to-[#0f172a] border border-cyan-800/40 rounded-lg p-3 sm:p-5 md:p-6 shadow-[inset_0_2px_20px_rgba(6,182,212,0.05)]">
-                                    <div className="absolute top-2 sm:top-3 left-2 sm:left-3 text-cyan-700/50 text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-bold">Decrypt Query</div>
+                                    <div className="absolute top-2 sm:top-3 left-2 sm:left-3 text-cyan-700/50 text-[8px] sm:text-[10px] uppercase tracking-[0.2em] font-bold">Requête de décryptage</div>
                                     <div className="text-cyan-100 text-sm sm:text-base md:text-lg font-semibold leading-relaxed mt-4">
                                         <ChevronRight className="inline text-cyan-500 mr-1 sm:mr-2 w-4 h-4 sm:w-5 sm:h-5" />
                                         {activeQuiz.questionData.question}
@@ -501,19 +499,19 @@ export default function IntegratedNeuralHeist() {
             {isGameOver && (
                 <div className="fixed inset-0 bg-gradient-to-b from-[#2a0000] to-[#120000] flex flex-col justify-center items-center z-[999] text-[#ff4d4d] text-center font-mono p-4">
                     <div className="w-[80px] sm:w-[120px] mb-5">
-                        <img src="cardiogram.png" alt="Cardiogram Flatline" className="max-w-full" />
+                        <img src="cardiogram.png" alt="Encéphalogramme plat" className="max-w-full" />
                     </div>
                     <div className="text-4xl sm:text-6xl tracking-[4px] mb-5 font-bold animate-pulse">
-                        FLATLINE
+                        ENCÉPHALOGRAMME PLAT
                     </div>
                     <div className="w-full max-w-[600px] text-[#ffd6d6] text-base sm:text-xl leading-relaxed mb-8 sm:mb-10 px-4">
-                        Neural integrity depleted. Your consciousness has been permanently fragmented on the server.
+                        Intégrité neurale épuisée. Votre conscience a été définitivement fragmentée sur le serveur.
                     </div>
                     <button
                         className="bg-transparent border border-[#ff4d4d] text-[#ff4d4d] px-6 sm:px-[30px] py-3 sm:py-[14px] text-base sm:text-xl cursor-pointer transition-colors hover:bg-[rgba(255,77,77,0.1)] focus:outline-none focus:ring-2 focus:ring-[#ff4d4d]"
                         onClick={rebootSystem}
                     >
-                        REBOOT SYSTEM
+                        REDÉMARRER LE SYSTÈME
                     </button>
                 </div>
             )}
@@ -536,23 +534,23 @@ export default function IntegratedNeuralHeist() {
                         </div>
 
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-green-400 mb-2">
-                            NETWORK SECURED
+                            RÉSEAU SÉCURISÉ
                         </h2>
                         <p className="text-green-500/80 text-xs sm:text-sm mb-6 sm:mb-8 tracking-widest uppercase">
-                            All threats eliminated
+                            Toutes les menaces éliminées
                         </p>
 
                         <div className="bg-slate-900/80 border border-green-800/50 rounded-lg p-4 sm:p-6 mb-6 sm:mb-8 space-y-3 sm:space-y-4">
                             <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Username</span>
+                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Nom d'utilisateur</span>
                                 <span className="text-cyan-300 font-bold text-sm sm:text-base">{username}</span>
                             </div>
                             <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Nodes</span>
+                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Nœuds</span>
                                 <span className="text-green-400 font-bold text-sm sm:text-base">{totalNodes}/{totalNodes}</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Time</span>
+                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Temps</span>
                                 <div className="flex items-center gap-2">
                                     <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500" />
                                     <span className="text-cyan-300 font-bold text-base sm:text-lg tabular-nums">{formatTime(finalTime)}</span>
@@ -566,13 +564,13 @@ export default function IntegratedNeuralHeist() {
                                 className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-green-950/50 border border-green-500 text-green-400 hover:bg-green-900/50 hover:text-green-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(34,197,94,0.3)] rounded"
                             >
                                 <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                                Play Again
+                                Rejouer
                             </button>
                             <button
                                 onClick={() => router.push('/')}
                                 className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900/50 hover:text-cyan-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] rounded"
                             >
-                                Main Menu
+                                Menu principal
                             </button>
                         </div>
                     </div>
