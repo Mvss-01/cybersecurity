@@ -2,20 +2,20 @@
     {
         "question": "Que permet de faire une attaque 'XSS' (Cross-Site Scripting) ?",
         "options": [
-            "Supprimer la base de données",
+            "Injecter des commandes SQL pour extraire des données sensibles",
             "Exécuter des scripts malveillants dans le navigateur d'une victime",
-            "Deviner le mot de passe administrateur",
-            "Scanner le réseau pour trouver des ports ouverts"
+            "Détourner le certificat SSL/TLS d'un serveur web",
+            "Désactiver le pare-feu d'un hôte distant"
         ],
         "correct_answer": "Exécuter des scripts malveillants dans le navigateur d'une victime"
     },
     {
         "question": "Quelle est la différence entre le 'Hachage' (Hashing) et le 'Chiffrement' (Encryption) ?",
         "options": [
-            "Le chiffrement est plus rapide",
+            "Le hachage est utilisé pour la compression, le chiffrement pour la sécurité",
             "Le hachage est à sens unique, le chiffrement est réversible",
-            "Le hachage nécessite une clé privée",
-            "Il n'y a aucune différence"
+            "Le hachage utilise des clés asymétriques, le chiffrement des clés symétriques",
+            "Le hachage modifie la taille des données, le chiffrement la garde identique"
         ],
         "correct_answer": "Le hachage est à sens unique, le chiffrement est réversible"
     },
@@ -24,18 +24,18 @@
         "options": [
             "SYN, ACK, SYN-ACK",
             "SYN, SYN-ACK, ACK",
-            "ACK, SYN, SYN-ACK",
-            "SYN, SYN, ACK"
+            "FIN, ACK, FIN-ACK",
+            "RST, SYN, ACK"
         ],
         "correct_answer": "SYN, SYN-ACK, ACK"
     },
     {
         "question": "Qu'est-ce qu'un 'Reverse Shell' ?",
         "options": [
-            "Un shell qui exécute le code à l'envers",
+            "Un terminal qui exécute les commandes dans l'ordre inverse",
             "Quand la cible se connecte en retour à la machine de l'attaquant",
-            "Une sauvegarde sécurisée d'un terminal",
-            "Un terminal qui ne permet que la suppression de fichiers"
+            "Un système de sauvegarde chiffré pour les administrateurs",
+            "Une méthode de contournement de l'authentification biométrique"
         ],
         "correct_answer": "Quand la cible se connecte en retour à la machine de l'attaquant"
     },
@@ -43,10 +43,160 @@
         "question": "Quelle est la principale différence entre le chiffrement symétrique et asymétrique ?",
         "options": [
             "L'asymétrique utilise deux clés différentes (publique/privée)",
-            "Le symétrique est réservé à l'usage militaire",
-            "L'asymétrique est plus rapide que le symétrique",
-            "Le symétrique n'utilise pas de clés"
+            "Le symétrique est utilisé uniquement pour les communications sans fil",
+            "L'asymétrique est beaucoup plus rapide que le symétrique pour les gros volumes",
+            "Le symétrique utilise une clé publique et l'asymétrique une clé privée"
         ],
         "correct_answer": "L'asymétrique utilise deux clés différentes (publique/privée)"
+    },
+    {
+        "question": "Qu'est-ce qu'une attaque CSRF (Cross-Site Request Forgery) ?",
+        "options": [
+            "Une attaque par force brute sur les formulaires de connexion",
+            "Une attaque qui force un utilisateur authentifié à exécuter des actions non désirées sur une application web",
+            "Une technique pour intercepter le trafic entre deux routeurs",
+            "Une méthode pour craquer les clés WPA2 d'un réseau Wi-Fi"
+        ],
+        "correct_answer": "Une attaque qui force un utilisateur authentifié à exécuter des actions non désirées sur une application web"
+    },
+    {
+        "question": "Que signifie IDOR (Insecure Direct Object Reference) ?",
+        "options": [
+            "Une faille permettant d'accéder à des ressources d'autres utilisateurs en modifiant un identifiant dans une URL ou une requête",
+            "Une vulnérabilité liée à l'utilisation de protocoles réseau non sécurisés comme Telnet",
+            "Une erreur de configuration qui expose le fichier web.config d'un serveur",
+            "Un débordement de tampon dans le noyau du système d'exploitation"
+        ],
+        "correct_answer": "Une faille permettant d'accéder à des ressources d'autres utilisateurs en modifiant un identifiant dans une URL ou une requête"
+    },
+    {
+        "question": "Dans le modèle OSI, à quelle couche travaille le protocole IP ?",
+        "options": [
+            "Couche 2 (Liaison de données)",
+            "Couche 3 (Réseau)",
+            "Couche 4 (Transport)",
+            "Couche 5 (Session)"
+        ],
+        "correct_answer": "Couche 3 (Réseau)"
+    },
+    {
+        "question": "À quoi sert principalement l'outil 'Nmap' ?",
+        "options": [
+            "À analyser le code source pour trouver des vulnérabilités logicielles",
+            "À scanner des réseaux pour découvrir des hôtes et des services ouverts",
+            "À crypter les communications entre deux serveurs distants",
+            "À simuler des attaques par déni de service distribué (DDoS)"
+        ],
+        "correct_answer": "À scanner des réseaux pour découvrir des hôtes et des services ouverts"
+    },
+    {
+        "question": "Qu'est-ce que 'Metasploit' ?",
+        "options": [
+            "Un framework pour le développement et l'exécution d'exploits contre une cible",
+            "Un antivirus spécialisé dans la détection de rootkits",
+            "Un protocole de communication sécurisé pour l'Internet des Objets (IoT)",
+            "Un logiciel de supervision réseau en temps réel"
+        ],
+        "correct_answer": "Un framework pour le développement et l'exécution d'exploits contre une cible"
+    },
+    {
+        "question": "Pourquoi ajoute-t-on un 'Sel' (Salt) lors du hachage des mots de passe ?",
+        "options": [
+            "Pour augmenter la vitesse de calcul du hachage",
+            "Pour empêcher l'utilisation de Rainbow Tables (tables de correspondance pré-calculées)",
+            "Pour réduire la longueur finale de la chaîne hachée",
+            "Pour permettre la récupération du mot de passe en cas de perte"
+        ],
+        "correct_answer": "Pour empêcher l'utilisation de Rainbow Tables (tables de correspondance pré-calculées)"
+    },
+    {
+        "question": "Quelle est la meilleure technique pour prévenir les injections SQL ?",
+        "options": [
+            "Filtrer manuellement tous les caractères spéciaux (', --, ;)",
+            "Utiliser des requêtes préparées (Prepared Statements) avec paramétrage",
+            "Chiffrer les données sensibles avant de les insérer en base",
+            "Utiliser uniquement des serveurs de bases de données NoSQL"
+        ],
+        "correct_answer": "Utiliser des requêtes préparées (Prepared Statements) avec paramétrage"
+    },
+    {
+        "question": "Quelle est la différence fondamentale entre une adresse MAC et une adresse IP ?",
+        "options": [
+            "L'adresse MAC est utilisée uniquement en local, l'IP uniquement sur Internet",
+            "L'adresse MAC identifie le matériel de manière permanente, l'adresse IP identifie la connexion au réseau",
+            "L'adresse MAC peut changer dynamiquement, l'IP est gravée dans la puce",
+            "L'adresse IP appartient à la couche physique, la MAC à la couche transport"
+        ],
+        "correct_answer": "L'adresse MAC identifie le matériel de manière permanente, l'adresse IP identifie la connexion au réseau"
+    },
+    {
+        "question": "Qu'est-ce qu'une attaque DDoS ?",
+        "options": [
+            "Une technique pour craquer les fichiers ZIP protégés par mot de passe",
+            "Une attaque par déni de service distribué visant à rendre un service indisponible",
+            "Un vol de base de données par injection de commandes",
+            "Une mise à jour forcée d'un pilote système malveillant"
+        ],
+        "correct_answer": "Une attaque par déni de service distribué visant à rendre un service indisponible"
+    },
+    {
+        "question": "À quoi sert l'outil 'Burp Suite' ?",
+        "options": [
+            "À gérer l'infrastructure cloud d'une entreprise",
+            "À effectuer des tests de pénétration sur des applications web (Proxy/Scanner)",
+            "À compiler des binaires pour différentes architectures processeur",
+            "À automatiser la sauvegarde des journaux d'événements système"
+        ],
+        "correct_answer": "À effectuer des tests de pénétration sur des applications web (Proxy/Scanner)"
+    },
+    {
+        "question": "Sur quel port écoute par défaut un serveur web sécurisé (HTTPS) ?",
+        "options": [
+            "80 (HTTP)",
+            "445 (SMB)",
+            "443 (HTTPS)",
+            "8443 (Proxy)"
+        ],
+        "correct_answer": "443 (HTTPS)"
+    },
+    {
+        "question": "Quelle est la différence entre un IDS et un IPS ?",
+        "options": [
+            "L'IDS détecte l'intrusion, l'IPS peut aussi la bloquer activement",
+            "L'IDS est utilisé pour l'interne, l'IPS pour le périmètre externe",
+            "L'IPS est une version logicielle de l'IDS qui lui est matériel",
+            "L'IDS s'appuie sur des signatures, l'IPS uniquement sur l'IA"
+        ],
+        "correct_answer": "L'IDS détecte l'intrusion, l'IPS peut aussi la bloquer activement"
+    },
+    {
+        "question": "Que permet de faire 'Wireshark' ?",
+        "options": [
+            "Analyser le trafic réseau en capturant des paquets",
+            "Envoyer des emails de phishing de manière automatisée",
+            "Auditer la sécurité des mots de passe dans l'Active Directory",
+            "Chiffrer les partitions de disque dur"
+        ],
+        "correct_answer": "Analyser le trafic réseau en capturant des paquets"
+    },
+    {
+        "question": "Qu'est-ce que la 'SOP' (Same-Origin Policy) ?",
+        "options": [
+            "Une règle de sécurité empêchant un script d'un site d'accéder aux données d'un autre site",
+            "Un standard de chiffrement pour les transactions bancaires",
+            "Une politique d'entreprise sur l'utilisation des périphériques USB",
+            "Un protocole de résolution d'adresses réseau"
+        ],
+        "correct_answer": "Une règle de sécurité empêchant un script d'un site d'accéder aux données d'un autre site"
+    },
+    {
+        "question": "Que stipule le Principe du Moindre Privilège ?",
+        "options": [
+            "Limiter le nombre d'administrateurs à une seule personne",
+            "N'accorder que les droits strictement nécessaires à l'accomplissement d'une tâche",
+            "Utiliser les mots de passe les plus courts possible pour faciliter l'accès",
+            "Réduire la puissance de calcul allouée aux services non critiques"
+        ],
+        "correct_answer": "N'accorder que les droits strictement nécessaires à l'accomplissement d'une tâche"
     }
 ]

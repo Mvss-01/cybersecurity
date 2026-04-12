@@ -2,11 +2,161 @@
     {
         "question": "Quelle attaque utilise un 'gadget' pour contourner la protection NX/DEP ?",
         "options": [
-            "SQLi",
-            "ROP",
-            "XSS",
-            "Brute-force"
+            "SQLi (Injection SQL)",
+            "ROP (Return-Oriented Programming)",
+            "SEH Overwrite",
+            "Return-to-libc"
         ],
-        "correct_answer": "ROP"
+        "correct_answer": "ROP (Return-Oriented Programming)"
+    },
+    {
+        "question": "Qu'est-ce qu'un 'Heap Overflow' ?",
+        "options": [
+            "Une corruption de la pile d'exécution (Stack)",
+            "Un débordement de tampon dans la zone de mémoire dynamique (le tas)",
+            "Un dépassement d'entier (Integer Overflow) menant à une erreur de segmentation",
+            "Une vulnérabilité de type 'Use-After-Free' dans un objet global"
+        ],
+        "correct_answer": "Un débordement de tampon dans la zone de mémoire dynamique (le tas)"
+    },
+    {
+        "question": "Quel est l'objectif principal de l'ASLR (Address Space Layout Randomization) ?",
+        "options": [
+            "Vérifier la validité des signatures de code lors de l'exécution",
+            "Rendre l'emplacement des zones clés de la mémoire (pile, tas, bibliothèques) imprévisible",
+            "Isoler chaque processus dans un espace d'adressage virtuel séparé",
+            "Chiffrer les données stockées dans la mémoire vive (RAM)"
+        ],
+        "correct_answer": "Rendre l'emplacement des zones clés de la mémoire (pile, tas, bibliothèques) imprévisible"
+    },
+    {
+        "question": "Qu'est-ce qu'une faille 'Zero-Day' ?",
+        "options": [
+            "Une faille découverte et corrigée par l'éditeur en moins de 24 heures",
+            "Une vulnérabilité inconnue de l'éditeur du logiciel et pour laquelle aucun correctif n'existe",
+            "Une vulnérabilité qui n'affecte que les systèmes n'ayant pas redémarré depuis leur installation",
+            "Une attaque par force brute qui réussit dès la première tentative"
+        ],
+        "correct_answer": "Une vulnérabilité inconnue de l'éditeur du logiciel et pour laquelle aucun correctif n'existe"
+    },
+    {
+        "question": "En quoi consiste l'attaque 'Kerberoasting' dans un environnement Active Directory ?",
+        "options": [
+            "Une saturation du centre de distribution de clés (KDC) par des requêtes factices",
+            "L'extraction de tickets de service chiffrés pour tenter de craquer les mots de passe des comptes de service hors ligne",
+            "L'interception de hashs NTLM via le protocole LLMNR ou NetBIOS",
+            "L'usurpation d'un ticket TGT pour obtenir des privilèges d'administrateur du domaine"
+        ],
+        "correct_answer": "L'extraction de tickets de service chiffrés pour tenter de craquer les mots de passe des comptes de service hors ligne"
+    },
+    {
+        "question": "À quoi sert l'algorithme de Diffie-Hellman ?",
+        "options": [
+            "À chiffrer l'intégralité d'un disque dur avec une clé symétrique",
+            "À permettre à deux parties d'établir une clé secrète partagée sur un canal non sécurisé",
+            "À valider l'identité d'un utilisateur via un certificat numérique révocable",
+            "À compresser des données avant leur transmission sur un réseau à faible débit"
+        ],
+        "correct_answer": "À permettre à deux parties d'établir une clé secrète partagée sur un canal non sécurisé"
+    },
+    {
+        "question": "Qu'est-ce qu'une 'Attaque par canal auxiliaire' (Side-channel attack) ?",
+        "options": [
+            "Une attaque utilisant un canal de communication secondaire non surveillé (WiFi, Bluetooth)",
+            "Une attaque basée sur des informations physiques (temps d'exécution, consommation électrique, émanations électromagnétiques)",
+            "Une technique d'exfiltration de données via des requêtes ICMP ou DNS",
+            "Une attaque de type 'Man-in-the-Middle' sur un réseau local commuté"
+        ],
+        "correct_answer": "Une attaque basée sur des informations physiques (temps d'exécution, consommation électrique, émanations électromagnétiques)"
+    },
+    {
+        "question": "Quelle est la cause d'une vulnérabilité 'Format String' ?",
+        "options": [
+            "L'utilisation d'une chaîne de caractères non vérifiée comme argument de format (ex: printf(user_input))",
+            "Un dépassement de tampon lors de la lecture d'un fichier de configuration mal formaté",
+            "L'absence de validation des types de données lors de la désérialisation d'un objet",
+            "L'utilisation de caractères spéciaux Unicode dans un formulaire d'inscription"
+        ],
+        "correct_answer": "L'utilisation d'une chaîne de caractères non vérifiée comme argument de format (ex: printf(user_input))"
+    },
+    {
+        "question": "Qu'est-ce que le 'BGP Hijacking' ?",
+        "options": [
+            "Le détournement physique d'un routeur de backbone internet",
+            "La manipulation des routes de routage Internet pour rediriger le trafic vers des réseaux malveillants",
+            "L'injection de fausses entrées dans le cache DNS d'un résolveur récursif",
+            "Le vol de session d'un administrateur réseau via un protocole non chiffré"
+        ],
+        "correct_answer": "La manipulation des routes de routage Internet pour rediriger le trafic vers des réseaux malveillants"
+    },
+    {
+        "question": "Quelle est la particularité d'une attaque 'Pass-the-Hash' ?",
+        "options": [
+            "Elle nécessite de capturer le mot de passe en clair via un keylogger",
+            "Elle permet de s'authentifier sur un serveur distant en utilisant uniquement le hachage du mot de passe",
+            "Elle consiste à envoyer des fichiers infectés contenant des scripts de hachage",
+            "Elle utilise une faille dans le protocole de chiffrement des emails"
+        ],
+        "correct_answer": "Elle permet de s'authentifier sur un serveur distant en utilisant uniquement le hachage du mot de passe"
+    },
+    {
+        "question": "Quelle est la différence entre une injection SQL 'Blind' (aveugle) et une injection SQL classique ?",
+        "options": [
+            "L'injection 'Blind' ne fonctionne que si la base de données est chiffrée",
+            "Dans la version 'Blind', l'attaquant ne voit pas le résultat directement et doit déduire les données par des réponses Vrai/Faux ou des délais",
+            "L'injection classique nécessite un accès physique au serveur de base de données",
+            "Il n'y a aucune différence technique, ce sont deux noms pour la même attaque"
+        ],
+        "correct_answer": "Dans la version 'Blind', l'attaquant ne voit pas le résultat directement et doit déduire les données par des réponses Vrai/Faux ou des délais"
+    },
+    {
+        "question": "Qu'est-ce qu'une 'Padding Oracle Attack' ?",
+        "options": [
+            "Une attaque qui exploite les messages d'erreur liés au remplissage (padding) lors du déchiffrement",
+            "Une attaque distribuée contre les serveurs de noms racine (Root Servers)",
+            "Une technique pour deviner la longueur d'un champ de formulaire caché",
+            "Une vulnérabilité dans les algorithmes de compression de fichiers compressés (ZIP, GZIP)"
+        ],
+        "correct_answer": "Une attaque qui exploite les messages d'erreur liés au remplissage (padding) lors du déchiffrement"
+    },
+    {
+        "question": "Quelle vulnérabilité célèbre permettait de lire la mémoire du serveur via une extension OpenSSL ?",
+        "options": [
+            "Shellshock",
+            "Heartbleed",
+            "Spectre",
+            "Meltdown"
+        ],
+        "correct_answer": "Heartbleed"
+    },
+    {
+        "question": "À quel composant s'attaquent les vulnérabilités Meltdown et Spectre ?",
+        "options": [
+            "Aux algorithmes de chiffrement AES-NI des cartes graphiques",
+            "À l'exécution spéculative des processeurs (CPU)",
+            "Aux puces de gestion d'énergie des ordinateurs portables",
+            "Au firmware BIOS/UEFI de la carte mère"
+        ],
+        "correct_answer": "À l'exécution spéculative des processeurs (CPU)"
+    },
+    {
+        "question": "Pourquoi le ver 'Stuxnet' est-il historiquement significatif ?",
+        "options": [
+            "C'était le premier malware à se propager via les réseaux sociaux",
+            "Il a été conçu spécifiquement pour saboter des infrastructures industrielles physiques (centrifugeuses)",
+            "Il utilisait une intelligence artificielle pour muter et échapper aux antivirus",
+            "Il a réussi à paralyser l'intégralité du réseau électrique mondial pendant 2 heures"
+        ],
+        "correct_answer": "Il a été conçu spécifiquement pour saboter des infrastructures industrielles physiques (centrifugeuses)"
+    },
+    {
+        "question": "Qu'est-ce que le 'Fuzzing' ?",
+        "options": [
+            "Une technique pour obscurcir le code source (offuscation)",
+            "L'envoi automatique de données aléatoires ou invalides à un programme pour trouver des bugs ou des vulnérabilités",
+            "Une méthode de chiffrement asymétrique basée sur des courbes elliptiques",
+            "L'analyse des journaux système pour détecter des comportements anormaux"
+        ],
+        "correct_answer": "L'envoi automatique de données aléatoires ou invalides à un programme pour trouver des bugs ou des vulnérabilités"
     }
 ]

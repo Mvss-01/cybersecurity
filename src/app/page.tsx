@@ -16,7 +16,7 @@ export default function StartPage() {
     const startAudio = new Audio('/start.mp3');
     startAudio.loop = true;
     startAudio.volume = 0.5;
-    
+
     const playAudio = () => {
       startAudio.play().catch(err => {
         console.log("Autoplay blocked, waiting for interaction");
@@ -44,7 +44,7 @@ export default function StartPage() {
       playSound("/abort.mp3");
       router.push('/main');
     } else {
-      alert("Identify yourself, Operative.");
+      alert("Identifiez-vous, Agent.");
     }
   };
 
@@ -57,19 +57,18 @@ export default function StartPage() {
       </h1>
 
       <p className="text-red-500 max-w-lg text-center mb-6 sm:mb-8 border border-red-900/50 bg-red-950/30 p-3 sm:p-4 rounded-md shadow-[0_0_15px_rgba(239,68,68,0.2)] text-sm sm:text-base">
-        WARNING: CONSCIOUSNESS TRAPPED.<br />
-        Lethal cyber-attack in progress. Neural sync degrading.<br />
-        Identify the culprit and patch the network to survive.
+        ALERTE : RÉSEAU INFILTRÉ.<br />
+        Attaque virale en cours. La santé du système diminue.<br />
+        Éliminez les virus et sécurisez les nœuds pour survivre.
       </p>
 
       <div className="flex flex-col mb-6 sm:mb-8 w-full max-w-xs">
-        <label className="text-cyan-600 text-xs uppercase mb-2 tracking-tighter">Enter Username:</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleStart()}
-          placeholder="USERNAME..."
+          placeholder="NOM D'UTILISATEUR..."
           className="bg-black/50 border-b border-cyan-500/50 p-2 text-cyan-400 focus:outline-none focus:border-cyan-400 transition-colors text-center"
         />
       </div>
@@ -79,10 +78,10 @@ export default function StartPage() {
         className="px-6 sm:px-8 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900 hover:text-cyan-200 transition-all uppercase tracking-widest text-sm sm:text-base shadow-[0_0_15px_rgba(6,182,212,0.4)] disabled:opacity-50"
         disabled={!name.trim()}
       >
-        INITIALIZE CONNECTION
+        INITIALISER LA CONNEXION
       </button>
 
       <div className="pointer-events-none absolute inset-0 z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] opacity-40"></div>
     </div>
   );
-};
+}

@@ -118,5 +118,155 @@
             "HEAD"
         ],
         "correct_answer": "POST"
+    },
+    {
+        "question": "Quelle est la principale différence entre HTTP et HTTPS ?",
+        "options": [
+            "HTTPS est plus rapide",
+            "HTTPS utilise le chiffrement SSL/TLS pour sécuriser les données",
+            "HTTP est uniquement pour les mobiles",
+            "Il n'y a aucune différence"
+        ],
+        "correct_answer": "HTTPS utilise le chiffrement SSL/TLS pour sécuriser les données"
+    },
+    {
+        "question": "Qu'est-ce que le 'Phishing' (Hameçonnage) ?",
+        "options": [
+            "Un sport pratiqué par les hackers",
+            "Une technique pour tromper les gens afin qu'ils révèlent des informations confidentielles",
+            "Une méthode de refroidissement des serveurs",
+            "Un type de câble réseau"
+        ],
+        "correct_answer": "Une technique pour tromper les gens afin qu'ils révèlent des informations confidentielles"
+    },
+    {
+        "question": "Que signifie '2FA' ?",
+        "options": [
+            "Two Files Access",
+            "Two-Factor Authentication (Authentification à deux facteurs)",
+            "Second Firewall Application",
+            "Two Frequency Analysis"
+        ],
+        "correct_answer": "Two-Factor Authentication (Authentification à deux facteurs)"
+    },
+    {
+        "question": "Lequel de ces termes désigne un logiciel malveillant de manière générale ?",
+        "options": [
+            "Hardware",
+            "Malware",
+            "Firmware",
+            "Shareware"
+        ],
+        "correct_answer": "Malware"
+    },
+    {
+        "question": "Quelle est la fonction principale d'un logiciel Antivirus ?",
+        "options": [
+            "Nettoyer l'écran de l'ordinateur",
+            "Détecter, prévenir et supprimer les logiciels malveillants",
+            "Augmenter la vitesse d'Internet",
+            "Rendre l'ordinateur plus silencieux"
+        ],
+        "correct_answer": "Détecter, prévenir et supprimer les logiciels malveillants"
+    },
+    {
+        "question": "Pourquoi utiliser un gestionnaire de mots de passe ?",
+        "options": [
+            "Pour avoir le même mot de passe partout",
+            "Pour stocker et générer des mots de passe complexes de manière sécurisée",
+            "Pour partager ses mots de passe sur les réseaux sociaux",
+            "Pour envoyer des emails plus rapidement"
+        ],
+        "correct_answer": "Pour stocker et générer des mots de passe complexes de manière sécurisée"
+    },
+    {
+        "question": "Qu'est-ce que l'Ingénierie Sociale (Social Engineering) ?",
+        "options": [
+            "L'étude des réseaux sociaux",
+            "La manipulation psychologique des personnes pour obtenir des informations confidentielles",
+            "La programmation de robots sociaux",
+            "La réparation de serveurs en équipe"
+        ],
+        "correct_answer": "La manipulation psychologique des personnes pour obtenir des informations confidentielles"
+    },
+    {
+        "question": "Le mode 'Navigation privée' garantit-il l'anonymat complet sur Internet ?",
+        "options": [
+            "Oui, personne ne peut voir votre activité",
+            "Non, votre fournisseur d'accès et les sites visités peuvent toujours vous suivre",
+            "Oui, il change votre adresse IP automatiquement",
+            "Seulement si vous utilisez Chrome"
+        ],
+        "correct_answer": "Non, votre fournisseur d'accès et les sites visités peuvent toujours vous suivre"
+    },
+    {
+        "question": "Que signifie 'chiffrer' une donnée ?",
+        "options": [
+            "La supprimer définitivement",
+            "La transformer pour la rendre illisible sans une clé de déchiffrement",
+            "La copier plusieurs fois",
+            "L'envoyer par courrier postal"
+        ],
+        "correct_answer": "La transformer pour la rendre illisible sans une clé de déchiffrement"
+    },
+    {
+        "question": "Pourquoi est-il crucial de mettre à jour régulièrement ses logiciels ?",
+        "options": [
+            "Pour changer l'interface graphique",
+            "Pour corriger des failles de sécurité et améliorer la stabilité",
+            "Pour ralentir l'ordinateur",
+            "Pour vider la mémoire vive"
+        ],
+        "correct_answer": "Pour corriger des failles de sécurité et améliorer la stabilité"
+    },
+    {
+        "question": "Quel est le risque principal lié à l'utilisation d'un Wi-Fi public gratuit ?",
+        "options": [
+            "Le Wi-Fi est trop lent",
+            "L'interception de vos données par un tiers malveillant (Man-in-the-Middle)",
+            "L'ordinateur risque d'exploser",
+            "Le Wi-Fi consomme trop de batterie"
+        ],
+        "correct_answer": "L'interception de vos données par un tiers malveillant (Man-in-the-Middle)"
+    },
+    {
+        "question": "Qu'est-ce qu'un 'Ransomware' (Rançongiciel) ?",
+        "options": [
+            "Un logiciel qui offre des cadeaux",
+            "Un malware qui bloque l'accès aux données et demande une rançon",
+            "Un outil de gestion de budget",
+            "Un jeu vidéo en ligne"
+        ],
+        "correct_answer": "Un malware qui bloque l'accès aux données et demande une rançon"
+    },
+    {
+        "question": "À quoi sert une sauvegarde (Backup) régulière ?",
+        "options": [
+            "À augmenter la capacité du disque dur",
+            "À pouvoir restaurer ses données en cas de perte, vol ou attaque",
+            "À décorer le bureau Windows",
+            "À supprimer les anciens fichiers automatiquement"
+        ],
+        "correct_answer": "À pouvoir restaurer ses données en cas de perte, vol ou attaque"
+    },
+    {
+        "question": "Quel protocole est couramment utilisé pour se connecter à distance et de manière sécurisée à un serveur ?",
+        "options": [
+            "FTP",
+            "SSH",
+            "Telnet",
+            "SMTP"
+        ],
+        "correct_answer": "SSH"
+    },
+    {
+        "question": "Pourquoi faut-il verrouiller sa session quand on s'éloigne de son ordinateur ?",
+        "options": [
+            "Pour économiser l'électricité",
+            "Pour empêcher un accès physique non autorisé à vos données",
+            "Pour que l'ordinateur redémarre plus vite",
+            "Pour nettoyer l'écran automatiquement"
+        ],
+        "correct_answer": "Pour empêcher un accès physique non autorisé à vos données"
     }
 ]
