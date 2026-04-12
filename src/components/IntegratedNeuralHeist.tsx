@@ -34,6 +34,18 @@ function formatTime(totalSeconds: number): string {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
+/**
+ * Shuffles an array using the Fisher-Yates algorithm.
+ */
+function shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
 const HexNode = React.memo(function HexNode({
     node,
     onClick
@@ -226,6 +238,7 @@ export default function IntegratedNeuralHeist() {
         if (allSecure) {
             setFinalTime(elapsedRef.current);
             setGameComplete(true);
+            playSound("/Network Secured.wav");
             if (timerRef.current) clearInterval(timerRef.current);
         }
     }, []);
@@ -250,13 +263,21 @@ export default function IntegratedNeuralHeist() {
                 let availableQuestions = questions.filter(q => !clearedQuestions.includes(q.question));
                 if (availableQuestions.length === 0) availableQuestions = questions;
                 const randomQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
-                setActiveQuiz({ node, questionData: randomQuestion });
+
+                const shuffledQuestion = {
+                    ...randomQuestion,
+                    options: shuffleArray(randomQuestion.options)
+                };
+
+                setActiveQuiz({ node, questionData: shuffledQuestion });
                 return currentMap;
             });
             return;
         }
 
         setLogMessage("DÉCRYPTAGE DES DONNÉES DU DÉFI...");
+
+        // playSound("/Select Node.wav");
 
         const questions = node.difficulty === 'easy' ? EASY_QUESTIONS : node.difficulty === 'medium' ? MEDIUM_QUESTIONS : HARD_QUESTIONS;
 
@@ -266,7 +287,13 @@ export default function IntegratedNeuralHeist() {
         }
 
         const randomQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
-        setActiveQuiz({ node, questionData: randomQuestion });
+
+        const shuffledQuestion = {
+            ...randomQuestion,
+            options: shuffleArray(randomQuestion.options)
+        };
+
+        setActiveQuiz({ node, questionData: shuffledQuestion });
     }, [clearedQuestions]);
 
     const handleAnswerSelection = useCallback((selectedOption: string) => {
@@ -309,7 +336,6 @@ export default function IntegratedNeuralHeist() {
 
     const rebootSystem = useCallback(() => {
         playSound("/abort.mp3");
-        router.push("/");
         setMapNodes(INITIAL_MAP);
         setClearedQuestions([]);
         setHealth(100);
@@ -332,11 +358,11 @@ export default function IntegratedNeuralHeist() {
     if (isAuthorized === false) return null;
 
     let healthStateText = "STABLE";
-    let healthColor = "#29d36a";
+    let healthColor = "#0d7ea0";
 
     if (health > 70) {
         healthStateText = "STABLE";
-        healthColor = "#29d36a";
+        healthColor = "#0d7ea0";
     } else if (health > 30) {
         healthStateText = "AVERTISSEMENT";
         healthColor = "#ffb000";
@@ -349,7 +375,7 @@ export default function IntegratedNeuralHeist() {
     }
 
     return (
-        <div className="min-h-screen bg-[#090d18] font-mono m-0 p-3 sm:p-4 lg:p-8 select-none flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-4 lg:gap-6">
+        <div className={`min-h-screen bg-[#090d18] font-mono m-0 p-3 sm:p-4 lg:p-8 select-none flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-4 lg:gap-6 ${health < 30 && !isGameOver && !gameComplete ? 'screen-glitch' : ''}`}>
 
             <div className="w-full lg:w-[360px] shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 lg:gap-5">
 
@@ -414,6 +440,8 @@ export default function IntegratedNeuralHeist() {
 
                 <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-center z-50 pointer-events-none">
                     <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
+                        <span className="text-cyan-600 text-[8px] sm:text-[10px] uppercase tracking-widest">Nœuds</span>
+                        <span className="text-cyan-300 font-bold text-xs sm:text-sm">{securedNodes}/{totalNodes}</span>
                     </div>
                     <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
                         <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500" />
@@ -509,7 +537,7 @@ export default function IntegratedNeuralHeist() {
                     </div>
                     <button
                         className="bg-transparent border border-[#ff4d4d] text-[#ff4d4d] px-6 sm:px-[30px] py-3 sm:py-[14px] text-base sm:text-xl cursor-pointer transition-colors hover:bg-[rgba(255,77,77,0.1)] focus:outline-none focus:ring-2 focus:ring-[#ff4d4d]"
-                        onClick={rebootSystem}
+                        onClick={() => { playSound("/abort.mp3"); router.push('/') }}
                     >
                         REDÉMARRER LE SYSTÈME
                     </button>
@@ -545,10 +573,6 @@ export default function IntegratedNeuralHeist() {
                                 <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Nom d'utilisateur</span>
                                 <span className="text-cyan-300 font-bold text-sm sm:text-base">{username}</span>
                             </div>
-                            <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                                <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Nœuds</span>
-                                <span className="text-green-400 font-bold text-sm sm:text-base">{totalNodes}/{totalNodes}</span>
-                            </div>
                             <div className="flex justify-between items-center">
                                 <span className="text-slate-400 text-xs sm:text-sm uppercase tracking-wider">Temps</span>
                                 <div className="flex items-center gap-2">
@@ -560,18 +584,18 @@ export default function IntegratedNeuralHeist() {
 
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
                             <button
-                                onClick={rebootSystem}
+                                onClick={() => { playSound("/abort.mp3"); router.push('/') }}
                                 className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-green-950/50 border border-green-500 text-green-400 hover:bg-green-900/50 hover:text-green-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(34,197,94,0.3)] rounded"
                             >
                                 <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                 Rejouer
                             </button>
-                            <button
-                                onClick={() => router.push('/')}
+                            {/* <button
+                                onClick={() => { playSound("/abort.mp3"); router.push('/') }}
                                 className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900/50 hover:text-cyan-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] rounded"
                             >
                                 Menu principal
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>
