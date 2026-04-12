@@ -57,13 +57,12 @@ export default function StartPage() {
       </h1>
 
       <p className="text-red-500 max-w-lg text-center mb-6 sm:mb-8 border border-red-900/50 bg-red-950/30 p-3 sm:p-4 rounded-md shadow-[0_0_15px_rgba(239,68,68,0.2)] text-sm sm:text-base">
-        ATTENTION : CONSCIENCE PIÉGÉE.<br />
-        Cyber-attaque létale en cours. Synchro neurale en dégradation.<br />
-        Identifiez le coupable et patchez le réseau pour survivre.
+        ALERTE : RÉSEAU INFILTRÉ.<br />
+        Attaque virale en cours. La santé du système diminue.<br />
+        Éliminez les virus et sécurisez les nœuds pour survivre.
       </p>
 
       <div className="flex flex-col mb-6 sm:mb-8 w-full max-w-xs">
-        {/* <label className="text-cyan-600 text-xs uppercase mb-2 tracking-tighter">Saisir le nom d'utilisateur :</label> */}
         <input
           type="text"
           value={name}
@@ -85,4 +84,4 @@ export default function StartPage() {
       <div className="pointer-events-none absolute inset-0 z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] opacity-40"></div>
     </div>
   );
-};
+}
