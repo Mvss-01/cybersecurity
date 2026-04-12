@@ -130,6 +130,10 @@ export default function IntegratedNeuralHeist() {
     const [mapNodes, setMapNodes] = useState<HexMap>(INITIAL_MAP);
     const [activeQuiz, setActiveQuiz] = useState<{ node: MapNode, questionData: any } | null>(null);
     const [clearedQuestions, setClearedQuestions] = useState<string[]>([]);
+
+    // NEW STATE: Tracks questions assigned to specific nodes
+    const [assignedQuestions, setAssignedQuestions] = useState<Record<string, any>>({});
+
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [gameComplete, setGameComplete] = useState(false);
     const [finalTime, setFinalTime] = useState(0);
@@ -249,37 +253,28 @@ export default function IntegratedNeuralHeist() {
             return;
         }
 
+        // 1. Check Boss Conditions First
         if (node.isBoss) {
-            setMapNodes(currentMap => {
-                const virusCount = currentMap.flat().filter(n => n.status === 'virus' && !n.isBoss).length;
-                if (virusCount !== 0) {
-                    setLogMessage("ACCÈS REFUSÉ : ÉLIMINEZ D'ABORD LES MENACES ENVIRONNANTES.");
-                    return currentMap;
-                }
+            const virusCount = mapNodes.flat().filter(n => n.status === 'virus' && !n.isBoss).length;
+            if (virusCount !== 0) {
+                setLogMessage("ACCÈS REFUSÉ : ÉLIMINEZ D'ABORD LES MENACES ENVIRONNANTES.");
+                return;
+            }
+        }
 
-                setLogMessage("DÉCRYPTAGE DES DONNÉES DU DÉFI...");
-
-                const questions = HARD_QUESTIONS;
-                let availableQuestions = questions.filter(q => !clearedQuestions.includes(q.question));
-                if (availableQuestions.length === 0) availableQuestions = questions;
-                const randomQuestion = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
-
-                const shuffledQuestion = {
-                    ...randomQuestion,
-                    options: shuffleArray(randomQuestion.options)
-                };
-
-                setActiveQuiz({ node, questionData: shuffledQuestion });
-                return currentMap;
-            });
+        // 2. Check if this node already has an assigned question
+        if (assignedQuestions[node.id]) {
+            setLogMessage("DÉCRYPTAGE DES DONNÉES DU DÉFI...");
+            setActiveQuiz({ node, questionData: assignedQuestions[node.id] });
             return;
         }
 
+        // 3. If no assigned question exists, generate a new one
         setLogMessage("DÉCRYPTAGE DES DONNÉES DU DÉFI...");
 
-        // playSound("/Select Node.wav");
-
-        const questions = node.difficulty === 'easy' ? EASY_QUESTIONS : node.difficulty === 'medium' ? MEDIUM_QUESTIONS : HARD_QUESTIONS;
+        const questions = node.isBoss
+            ? HARD_QUESTIONS
+            : (node.difficulty === 'easy' ? EASY_QUESTIONS : node.difficulty === 'medium' ? MEDIUM_QUESTIONS : HARD_QUESTIONS);
 
         let availableQuestions = questions.filter(q => !clearedQuestions.includes(q.question));
         if (availableQuestions.length === 0) {
@@ -293,15 +288,27 @@ export default function IntegratedNeuralHeist() {
             options: shuffleArray(randomQuestion.options)
         };
 
+        // Save it to state so it persists if aborted
+        setAssignedQuestions(prev => ({ ...prev, [node.id]: shuffledQuestion }));
         setActiveQuiz({ node, questionData: shuffledQuestion });
-    }, [clearedQuestions]);
+
+    }, [clearedQuestions, assignedQuestions, mapNodes]);
 
     const handleAnswerSelection = useCallback((selectedOption: string) => {
         if (!activeQuiz) return;
 
+        const nodeId = activeQuiz.node.id;
+
+        // Clear the cached question since it was answered (right or wrong)
+        setAssignedQuestions(prev => {
+            const next = { ...prev };
+            delete next[nodeId];
+            return next;
+        });
+
         if (selectedOption === activeQuiz.questionData.correct_answer) {
             playSound('/secured.mp3');
-            setLogMessage(`NŒUD ${activeQuiz.node.id.replace('node-', '')} SÉCURISÉ AVEC SUCCÈS.`);
+            setLogMessage(`NŒUD ${nodeId.replace('node-', '')} SÉCURISÉ AVEC SUCCÈS.`);
             setClearedQuestions(prev => [...prev, activeQuiz.questionData.question]);
             setHealth(prev => {
                 const newHealth = prev + 5;
@@ -309,11 +316,11 @@ export default function IntegratedNeuralHeist() {
                     return 100;
                 }
                 return newHealth;
-            })
+            });
 
             setMapNodes(prevMap => {
                 const newMap = prevMap.map(row =>
-                    row.map((n): MapNode => n.id === activeQuiz.node.id ? { ...n, status: 'secure' } : n)
+                    row.map((n): MapNode => n.id === nodeId ? { ...n, status: 'secure' } : n)
                 );
                 checkWinCondition(newMap);
                 return newMap;
@@ -338,6 +345,7 @@ export default function IntegratedNeuralHeist() {
         playSound("/abort.mp3");
         setMapNodes(INITIAL_MAP);
         setClearedQuestions([]);
+        setAssignedQuestions({}); // Reset assigned questions on reboot
         setHealth(100);
         setGameComplete(false);
         setIsGameOver(false);
@@ -590,12 +598,6 @@ export default function IntegratedNeuralHeist() {
                                 <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                 Rejouer
                             </button>
-                            {/* <button
-                                onClick={() => { playSound("/abort.mp3"); router.push('/') }}
-                                className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900/50 hover:text-cyan-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] rounded"
-                            >
-                                Menu principal
-                            </button> */}
                         </div>
                     </div>
                 </div>
