@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { ShieldAlert, Lock, Terminal as TerminalIcon, ChevronRight, Clock, Trophy, RotateCcw } from 'lucide-react';
+import { ShieldAlert, Lock, Terminal as TerminalIcon, ChevronRight, Clock, Trophy, RotateCcw, Home } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import EASY_QUESTIONS from '../data/easy.json';
@@ -389,10 +389,10 @@ export default function IntegratedNeuralHeist() {
         <>
             <style>{`
                 @keyframes warningSlideUpFade {
-                    0% { transform: translate(-50%, 100%); opacity: 0; }
-                    10% { transform: translate(-50%, 0); opacity: 1; }
-                    80% { transform: translate(-50%, 0); opacity: 1; }
-                    100% { transform: translate(-50%, -20px); opacity: 0; }
+                    0% { transform: translate(-50%, 20px); opacity: 0; }
+                    15% { transform: translate(-50%, 0); opacity: 1; }
+                    85% { transform: translate(-50%, 0); opacity: 1; }
+                    100% { transform: translate(-50%, -10px); opacity: 0; }
                 }
             `}</style>
 
@@ -460,9 +460,19 @@ export default function IntegratedNeuralHeist() {
                     <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" style={{ contain: 'strict' }}></div>
 
                     <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-center z-50 pointer-events-none">
-                        <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
-                            <span className="text-cyan-600 text-[8px] sm:text-[10px] uppercase tracking-widest">Nœuds</span>
-                            <span className="text-cyan-300 font-bold text-xs sm:text-sm">{securedNodes}/{totalNodes}</span>
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => { playSound("/abort.mp3"); router.push('/') }}
+                                className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-red-900/50 hover:border-red-500/80 hover:bg-red-950/50 text-red-500 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(220,38,38,0.1)] transition-all pointer-events-auto group"
+                                title="Retour à l'accueil"
+                            >
+                                <Home className="w-3 h-3 sm:w-4 sm:h-4 transition-transform group-hover:scale-110" />
+                                <span className="hidden xs:inline text-[8px] sm:text-[10px] uppercase tracking-widest font-bold">Quitter</span>
+                            </button>
+                            <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
+                                <span className="text-cyan-600 text-[8px] sm:text-[10px] uppercase tracking-widest">Nœuds</span>
+                                <span className="text-cyan-300 font-bold text-xs sm:text-sm">{securedNodes}/{totalNodes}</span>
+                            </div>
                         </div>
                         <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 border border-cyan-800/50 rounded px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-sm shadow-[0_0_10px_rgba(6,182,212,0.1)]">
                             <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-cyan-500" />
@@ -486,7 +496,7 @@ export default function IntegratedNeuralHeist() {
 
                     {showBossWarning && (
                         <div
-                            className="absolute bottom-[15%] sm:bottom-10 left-1/2 z-[200] flex items-center gap-3 px-4 py-3 bg-red-950/95 border border-red-500/80 rounded-md shadow-[0_0_30px_rgba(220,38,38,0.5)] pointer-events-none"
+                            className="absolute bottom-1/4 left-1/2 z-[200] flex items-center gap-3 px-4 py-3 bg-red-950/95 border border-red-500/80 rounded-md shadow-[0_0_30px_rgba(220,38,38,0.5)] pointer-events-none"
                             style={{ animation: 'warningSlideUpFade 3s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}
                         >
                             <ShieldAlert className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 animate-pulse shrink-0" />
@@ -563,7 +573,7 @@ export default function IntegratedNeuralHeist() {
                             <img src="cardiogram.png" alt="Encéphalogramme plat" className="max-w-full" />
                         </div>
                         <div className="text-4xl sm:text-6xl tracking-[4px] mb-5 font-bold animate-pulse">
-                            SYSTÈME HORS LIGNE
+                            Game Over
                         </div>
                         <div className="w-full max-w-[600px] text-[#ffd6d6] text-base sm:text-xl leading-relaxed mb-8 sm:mb-10 px-4">
                             Santé à zéro. Vous avez été éjecté du serveur.
