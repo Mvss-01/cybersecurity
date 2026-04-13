@@ -255,21 +255,49 @@ export default function IntegratedNeuralHeist() {
             if (timerRef.current) clearInterval(timerRef.current);
 
             try {
-                const { error } = await supabase
+                const { data: existingData, error: fetchError } = await supabase
                     .from('scores')
-                    .insert([
-                        {
-                            username: username,
-                            time: finalTimeSeconds
-                        }
-                    ]);
+                    .select('time')
+                    .eq('username', username);
 
-                if (error) {
-                    console.error('Error saving score:', error);
+                if (fetchError) {
+                    console.error('Error fetching score:', fetchError);
+                    setLogMessage("ERREUR LORS DE LA VÉRIFICATION DU SCORE.");
+                    scoreSavedRef.current = false;
+                    return;
+                }
+
+                let saveError = null;
+
+                if (existingData && existingData.length > 0) {
+                    const bestTime = existingData[0].time;
+                    if (finalTimeSeconds < bestTime) {
+                        const { error } = await supabase
+                            .from('scores')
+                            .update({ time: finalTimeSeconds })
+                            .eq('username', username);
+                        saveError = error;
+                    } else {
+                        console.log('Score not updated: previous time was better');
+                    }
+                } else {
+                    const { error } = await supabase
+                        .from('scores')
+                        .insert([
+                            {
+                                username: username,
+                                time: finalTimeSeconds
+                            }
+                        ]);
+                    saveError = error;
+                }
+
+                if (saveError) {
+                    console.error('Error saving score:', saveError);
                     setLogMessage("ERREUR LORS DE LA SAUVEGARDE DU SCORE.");
                     scoreSavedRef.current = false; // Déverrouille en cas d'erreur
                 } else {
-                    console.log('Score saved successfully');
+                    console.log('Score handled successfully');
                     setLogMessage("RÉSEAU SÉCURISÉ. SCORE ENREGISTRÉ.");
                 }
             } catch (err) {
@@ -676,6 +704,13 @@ export default function IntegratedNeuralHeist() {
                                 >
                                     <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                     Rejouer
+                                </button>
+                                <button
+                                    onClick={() => { playSound("/abort.mp3"); router.push('/'); }}
+                                    className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900/50 hover:text-cyan-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] rounded"
+                                >
+                                    <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    Menu
                                 </button>
                             </div>
                         </div>

@@ -120,7 +120,7 @@ export default function StartPage() {
           >
             <span className="uppercase">CONTINUER EN TANT QUE</span> <span className="normal-case">[{savedName}]</span>
           </button>
-          
+
           <div className="flex items-center justify-center mt-6 w-full max-w-xs">
             <div className="flex-grow border-t border-cyan-800/50"></div>
             <span className="mx-4 text-cyan-700 text-xs tracking-widest uppercase">OU</span>
@@ -159,7 +159,7 @@ export default function StartPage() {
             </button>
 
             <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-6 border-b border-cyan-900/50 pb-2">
-              MANUEL OPÉRATOIRE
+              TUTORIEL
             </h2>
 
             <div className="space-y-4 text-cyan-100/80 text-sm sm:text-base leading-relaxed">
