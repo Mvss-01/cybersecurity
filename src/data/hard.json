@@ -2,261 +2,261 @@
     {
         "question": "Quelle attaque utilise un 'gadget' pour contourner la protection NX/DEP ?",
         "options": [
-            "SQLi (Injection SQL)",
-            "ROP (Return-Oriented Programming)",
-            "SEH Overwrite",
-            "Return-to-libc"
+            "L'injection SQL classique via les requêtes web",
+            "Le ROP (Return-Oriented Programming) en mémoire",
+            "L'écrasement structuré de la pile d'exceptions",
+            "La technique d'attaque de type Return-to-libc"
         ],
-        "correct_answer": "ROP (Return-Oriented Programming)"
+        "correct_answer": "Le ROP (Return-Oriented Programming) en mémoire"
     },
     {
         "question": "Qu'est-ce qu'un 'Heap Overflow' ?",
         "options": [
-            "Une corruption de la pile d'exécution (Stack)",
-            "Un débordement de tampon dans la zone de mémoire dynamique (le tas)",
-            "Un dépassement d'entier (Integer Overflow) menant à une erreur de segmentation",
-            "Une vulnérabilité de type 'Use-After-Free' dans un objet global"
+            "Une corruption critique ciblant la pile locale (Stack)",
+            "Un débordement de tampon dans la zone dynamique (le tas)",
+            "Un dépassement d'entier causant une erreur de segmentation",
+            "Une vulnérabilité 'Use-After-Free' touchant un objet global"
         ],
-        "correct_answer": "Un débordement de tampon dans la zone de mémoire dynamique (le tas)"
+        "correct_answer": "Un débordement de tampon dans la zone dynamique (le tas)"
     },
     {
         "question": "Quel est l'objectif principal de l'ASLR (Address Space Layout Randomization) ?",
         "options": [
-            "Vérifier la validité des signatures de code lors de l'exécution",
-            "Rendre l'emplacement des zones clés de la mémoire (pile, tas, bibliothèques) imprévisible",
-            "Isoler chaque processus dans un espace d'adressage virtuel séparé",
-            "Chiffrer les données stockées dans la mémoire vive (RAM)"
+            "Vérifier la validité des signatures de code lors de l'exécution des processus",
+            "Rendre l'emplacement des zones clés de la mémoire (pile, tas, libs) imprévisible",
+            "Isoler chaque processus dans un espace d'adressage virtuel strictement séparé",
+            "Chiffrer systématiquement les données stockées dans la mémoire vive du système"
         ],
-        "correct_answer": "Rendre l'emplacement des zones clés de la mémoire (pile, tas, bibliothèques) imprévisible"
+        "correct_answer": "Rendre l'emplacement des zones clés de la mémoire (pile, tas, libs) imprévisible"
     },
     {
         "question": "Qu'est-ce qu'une faille 'Zero-Day' ?",
         "options": [
-            "Une faille découverte et corrigée par l'éditeur en moins de 24 heures",
-            "Une vulnérabilité inconnue de l'éditeur du logiciel et pour laquelle aucun correctif n'existe",
-            "Une vulnérabilité qui n'affecte que les systèmes n'ayant pas redémarré depuis leur installation",
-            "Une attaque par force brute qui réussit dès la première tentative"
+            "Une vulnérabilité récemment découverte et corrigée par l'éditeur en 24 heures",
+            "Une vulnérabilité inconnue de l'éditeur pour laquelle aucun correctif n'existe",
+            "Une faille affectant seulement les systèmes n'ayant pas redémarré récemment",
+            "Une attaque par force brute réseau qui réussit toujours à la première tentative"
         ],
-        "correct_answer": "Une vulnérabilité inconnue de l'éditeur du logiciel et pour laquelle aucun correctif n'existe"
+        "correct_answer": "Une vulnérabilité inconnue de l'éditeur pour laquelle aucun correctif n'existe"
     },
     {
         "question": "En quoi consiste l'attaque 'Kerberoasting' dans un environnement Active Directory ?",
         "options": [
-            "Une saturation du centre de distribution de clés (KDC) par des requêtes factices",
-            "L'extraction de tickets de service chiffrés pour tenter de craquer les mots de passe des comptes de service hors ligne",
-            "L'interception de hashs NTLM via le protocole LLMNR ou NetBIOS",
-            "L'usurpation d'un ticket TGT pour obtenir des privilèges d'administrateur du domaine"
+            "Une saturation complète du centre de distribution (KDC) par de multiples requêtes",
+            "L'extraction de tickets de service chiffrés pour craquer les mots de passe hors ligne",
+            "L'interception systématique des hashs NTLM transitant via les protocoles LLMNR",
+            "L'usurpation frauduleuse d'un ticket TGT pour obtenir les privilèges administrateur"
         ],
-        "correct_answer": "L'extraction de tickets de service chiffrés pour tenter de craquer les mots de passe des comptes de service hors ligne"
+        "correct_answer": "L'extraction de tickets de service chiffrés pour craquer les mots de passe hors ligne"
     },
     {
         "question": "À quoi sert l'algorithme de Diffie-Hellman ?",
         "options": [
-            "À chiffrer l'intégralité d'un disque dur avec une clé symétrique",
-            "À permettre à deux parties d'établir une clé secrète partagée sur un canal non sécurisé",
-            "À valider l'identité d'un utilisateur via un certificat numérique révocable",
-            "À compresser des données avant leur transmission sur un réseau à faible débit"
+            "À chiffrer l'intégralité d'un disque dur physique avec une clé symétrique unique",
+            "À permettre à deux parties d'établir une clé secrète partagée sur un canal non sûr",
+            "À valider cryptographiquement l'identité d'un utilisateur via un certificat web",
+            "À compresser efficacement des données avant transmission sur réseau à faible débit"
         ],
-        "correct_answer": "À permettre à deux parties d'établir une clé secrète partagée sur un canal non sécurisé"
+        "correct_answer": "À permettre à deux parties d'établir une clé secrète partagée sur un canal non sûr"
     },
     {
         "question": "Qu'est-ce qu'une 'Attaque par canal auxiliaire' (Side-channel attack) ?",
         "options": [
-            "Une attaque utilisant un canal de communication secondaire non surveillé (WiFi, Bluetooth)",
-            "Une attaque basée sur des informations physiques (temps d'exécution, consommation électrique, émanations électromagnétiques)",
-            "Une technique d'exfiltration de données via des requêtes ICMP ou DNS",
-            "Une attaque de type 'Man-in-the-Middle' sur un réseau local commuté"
+            "Une attaque utilisant un canal de communication secondaire non surveillé (Bluetooth)",
+            "Une attaque basée sur des fuites physiques (temps, consommation, ondes magnétiques)",
+            "Une technique avancée d'exfiltration de données via des requêtes ICMP ou DNS chiffrées",
+            "Une attaque de type 'Man-in-the-Middle' ciblant spécifiquement un réseau local commuté"
         ],
-        "correct_answer": "Une attaque basée sur des informations physiques (temps d'exécution, consommation électrique, émanations électromagnétiques)"
+        "correct_answer": "Une attaque basée sur des fuites physiques (temps, consommation, ondes magnétiques)"
     },
     {
         "question": "Quelle est la cause d'une vulnérabilité 'Format String' ?",
         "options": [
-            "L'utilisation d'une chaîne de caractères non vérifiée comme argument de format (ex: printf(user_input))",
-            "Un dépassement de tampon lors de la lecture d'un fichier de configuration mal formaté",
-            "L'absence de validation des types de données lors de la désérialisation d'un objet",
-            "L'utilisation de caractères spéciaux Unicode dans un formulaire d'inscription"
+            "L'utilisation d'une chaîne non vérifiée comme argument de format (ex: printf(input))",
+            "Un dépassement de tampon lors de la lecture d'un fichier de configuration altéré",
+            "L'absence totale de validation des types lors de la désérialisation d'un objet",
+            "L'utilisation de caractères spéciaux Unicode cachés dans un formulaire web standard"
         ],
-        "correct_answer": "L'utilisation d'une chaîne de caractères non vérifiée comme argument de format (ex: printf(user_input))"
+        "correct_answer": "L'utilisation d'une chaîne non vérifiée comme argument de format (ex: printf(input))"
     },
     {
         "question": "Qu'est-ce que le 'BGP Hijacking' ?",
         "options": [
-            "Le détournement physique d'un routeur de backbone internet",
-            "La manipulation des routes de routage Internet pour rediriger le trafic vers des réseaux malveillants",
-            "L'injection de fausses entrées dans le cache DNS d'un résolveur récursif",
-            "Le vol de session d'un administrateur réseau via un protocole non chiffré"
+            "Le détournement purement physique d'un routeur central du backbone de l'internet",
+            "La manipulation des annonces de routage pour rediriger le trafic vers des réseaux tiers",
+            "L'injection de fausses entrées malveillantes dans le cache d'un résolveur DNS récursif",
+            "Le vol furtif de la session d'un administrateur réseau via un protocole en clair non sécurisé"
         ],
-        "correct_answer": "La manipulation des routes de routage Internet pour rediriger le trafic vers des réseaux malveillants"
+        "correct_answer": "La manipulation des annonces de routage pour rediriger le trafic vers des réseaux tiers"
     },
     {
         "question": "Quelle est la particularité d'une attaque 'Pass-the-Hash' ?",
         "options": [
-            "Elle nécessite de capturer le mot de passe en clair via un keylogger",
-            "Elle permet de s'authentifier sur un serveur distant en utilisant uniquement le hachage du mot de passe",
-            "Elle consiste à envoyer des fichiers infectés contenant des scripts de hachage",
-            "Elle utilise une faille dans le protocole de chiffrement des emails"
+            "Elle nécessite de capturer le mot de passe en clair via un keylogger physique ou logiciel",
+            "Elle permet de s'authentifier sur un serveur en utilisant seulement le hachage du mot de passe",
+            "Elle consiste à envoyer des fichiers infectés contenant des scripts de hachage destructeurs",
+            "Elle exploite systématiquement une faille présente dans le protocole de chiffrement des emails"
         ],
-        "correct_answer": "Elle permet de s'authentifier sur un serveur distant en utilisant uniquement le hachage du mot de passe"
+        "correct_answer": "Elle permet de s'authentifier sur un serveur en utilisant seulement le hachage du mot de passe"
     },
     {
         "question": "Quelle est la différence entre une injection SQL 'Blind' (aveugle) et une injection SQL classique ?",
         "options": [
-            "L'injection 'Blind' ne fonctionne que si la base de données est chiffrée",
-            "Dans la version 'Blind', l'attaquant ne voit pas le résultat directement et doit déduire les données par des réponses Vrai/Faux ou des délais",
-            "L'injection classique nécessite un accès physique au serveur de base de données",
-            "Il n'y a aucune différence technique, ce sont deux noms pour la même attaque"
+            "L'injection 'Blind' ne fonctionne techniquement que si la base de données est déjà chiffrée",
+            "L'attaquant doit déduire les données par des réponses Vrai/Faux ou des délais d'exécution",
+            "L'injection classique nécessite obligatoirement un accès physique au serveur de la base",
+            "Il n'y a aucune différence technique majeure, ce sont simplement deux noms pour la même attaque"
         ],
-        "correct_answer": "Dans la version 'Blind', l'attaquant ne voit pas le résultat directement et doit déduire les données par des réponses Vrai/Faux ou des délais"
+        "correct_answer": "L'attaquant doit déduire les données par des réponses Vrai/Faux ou des délais d'exécution"
     },
     {
         "question": "Qu'est-ce qu'une 'Padding Oracle Attack' ?",
         "options": [
-            "Une attaque qui exploite les messages d'erreur liés au remplissage (padding) lors du déchiffrement",
-            "Une attaque distribuée contre les serveurs de noms racine (Root Servers)",
-            "Une technique pour deviner la longueur d'un champ de formulaire caché",
-            "Une vulnérabilité dans les algorithmes de compression de fichiers compressés (ZIP, GZIP)"
+            "Une attaque exploitant les messages d'erreur liés au remplissage lors du déchiffrement",
+            "Une attaque par déni de service distribuée contre les serveurs de noms racine (Root DNS)",
+            "Une technique sophistiquée pour deviner la longueur d'un champ de formulaire caché",
+            "Une vulnérabilité critique dans les algorithmes de compression de fichiers (ZIP, GZIP)"
         ],
-        "correct_answer": "Une attaque qui exploite les messages d'erreur liés au remplissage (padding) lors du déchiffrement"
+        "correct_answer": "Une attaque exploitant les messages d'erreur liés au remplissage lors du déchiffrement"
     },
     {
         "question": "Quelle vulnérabilité célèbre permettait de lire la mémoire du serveur via une extension OpenSSL ?",
         "options": [
-            "Shellshock",
-            "Heartbleed",
-            "Spectre",
-            "Meltdown"
+            "La vulnérabilité Shellshock de Bash",
+            "La faille de sécurité Heartbleed",
+            "L'exploitation matérielle Spectre",
+            "La faille processeur Meltdown"
         ],
-        "correct_answer": "Heartbleed"
+        "correct_answer": "La faille de sécurité Heartbleed"
     },
     {
         "question": "À quel composant s'attaquent les vulnérabilités Meltdown et Spectre ?",
         "options": [
-            "Aux algorithmes de chiffrement AES-NI des cartes graphiques",
-            "À l'exécution spéculative des processeurs (CPU)",
-            "Aux puces de gestion d'énergie des ordinateurs portables",
-            "Au firmware BIOS/UEFI de la carte mère"
+            "Aux algorithmes de chiffrement matériels intégrés aux cartes graphiques",
+            "À l'architecture d'exécution spéculative intégrée dans les processeurs",
+            "Aux puces de gestion d'énergie présentes dans les ordinateurs portables",
+            "Au firmware bas niveau (BIOS/UEFI) contrôlant la carte mère du système"
         ],
-        "correct_answer": "À l'exécution spéculative des processeurs (CPU)"
+        "correct_answer": "À l'architecture d'exécution spéculative intégrée dans les processeurs"
     },
     {
         "question": "Pourquoi le ver 'Stuxnet' est-il historiquement significatif ?",
         "options": [
-            "C'était le premier malware à se propager via les réseaux sociaux",
-            "Il a été conçu spécifiquement pour saboter des infrastructures industrielles physiques (centrifugeuses)",
-            "Il utilisait une intelligence artificielle pour muter et échapper aux antivirus",
-            "Il a réussi à paralyser l'intégralité du réseau électrique mondial pendant 2 heures"
+            "C'était le tout premier malware à se propager massivement via les réseaux sociaux mondiaux",
+            "Il a été conçu spécifiquement pour saboter des infrastructures industrielles (centrifugeuses)",
+            "Il utilisait une intelligence artificielle rudimentaire pour muter et échapper aux antivirus",
+            "Il a réussi l'exploit de paralyser l'intégralité du réseau électrique mondial pendant des heures"
         ],
-        "correct_answer": "Il a été conçu spécifiquement pour saboter des infrastructures industrielles physiques (centrifugeuses)"
+        "correct_answer": "Il a été conçu spécifiquement pour saboter des infrastructures industrielles (centrifugeuses)"
     },
     {
         "question": "Qu'est-ce que le 'Fuzzing' ?",
         "options": [
-            "Une technique pour obscurcir le code source (offuscation)",
-            "L'envoi automatique de données aléatoires ou invalides à un programme pour trouver des bugs ou des vulnérabilités",
-            "Une méthode de chiffrement asymétrique basée sur des courbes elliptiques",
-            "L'analyse des journaux système pour détecter des comportements anormaux"
+            "Une technique logicielle avancée visant à obscurcir le code source (offuscation complexe)",
+            "L'envoi automatique de données invalides à un programme pour trouver des vulnérabilités",
+            "Une méthode de chiffrement asymétrique moderne basée sur des courbes elliptiques",
+            "L'analyse comportementale des journaux système pour y détecter des anomalies réseau"
         ],
-        "correct_answer": "L'envoi automatique de données aléatoires ou invalides à un programme pour trouver des bugs ou des vulnérabilités"
+        "correct_answer": "L'envoi automatique de données invalides à un programme pour trouver des vulnérabilités"
     },
     {
-        "question": "Quel mécanisme de sécurité du compilateur insère une valeur aléatoire dans la pile avant le pointeur de retour pour éviter le 'Buffer Overflow' ?",
+        "question": "Quel mécanisme insère une valeur aléatoire dans la pile avant le pointeur de retour pour éviter le 'Buffer Overflow' ?",
         "options": [
-            "ASLR",
-            "Stack Canary (Canari)",
-            "DEP (Data Execution Prevention)",
-            "PIE (Position Independent Executable)"
+            "La randomisation de l'espace d'adressage (ASLR)",
+            "La protection par mot de contrôle (Stack Canary)",
+            "La prévention de l'exécution des données (DEP)",
+            "L'exécutable indépendant de la position (PIE)"
         ],
-        "correct_answer": "Stack Canary (Canari)"
+        "correct_answer": "La protection par mot de contrôle (Stack Canary)"
     },
     {
         "question": "Qu'est-ce que le système 'AppArmor' ou 'SELinux' sous Linux ?",
         "options": [
-            "Des environnements de bureau sécurisés",
-            "Des modules de sécurité du noyau fournissant un contrôle d'accès obligatoire (MAC)",
-            "Des antivirus open-source",
-            "Des utilitaires de récupération de données"
+            "Des environnements de bureau virtuels hautement sécurisés et isolés",
+            "Des modules noyaux fournissant un contrôle d'accès obligatoire (MAC)",
+            "Des solutions antivirus open-source intégrées par défaut au système",
+            "Des utilitaires avancés de récupération de données après un crash"
         ],
-        "correct_answer": "Des modules de sécurité du noyau fournissant un contrôle d'accès obligatoire (MAC)"
+        "correct_answer": "Des modules noyaux fournissant un contrôle d'accès obligatoire (MAC)"
     },
     {
         "question": "Qu'est-ce qu'une attaque 'Pass-the-Ticket' (PtT) ?",
         "options": [
-            "Une attaque consistant à voler et réutiliser un ticket d'authentification Kerberos (comme un TGT)",
-            "Une méthode pour contourner l'authentification multifacteur par SMS",
-            "L'interception d'un jeton JWT pour falsifier l'identité de l'utilisateur",
-            "Le vol physique d'une carte d'accès d'entreprise"
+            "Voler et réutiliser un ticket d'authentification Kerberos valide (comme un TGT)",
+            "Contourner techniquement l'authentification multifacteur basée sur les SMS",
+            "Intercepter un jeton web (JWT) pour falsifier durablement l'identité de l'utilisateur",
+            "Voler physiquement une carte d'accès d'entreprise pour s'introduire dans les locaux"
         ],
-        "correct_answer": "Une attaque consistant à voler et réutiliser un ticket d'authentification Kerberos (comme un TGT)"
+        "correct_answer": "Voler et réutiliser un ticket d'authentification Kerberos valide (comme un TGT)"
     },
     {
-        "question": "Qu'est-ce que le protocole 'OAuth 2.0' principalement utilisé pour ?",
+        "question": "À quoi sert principalement le protocole 'OAuth 2.0' ?",
         "options": [
-            "Chiffrer les e-mails de bout en bout",
-            "La délégation d'autorisation (Autorisation) sans partager les identifiants",
-            "Le transfert asynchrone de données médicales",
-            "Le hachage des mots de passe dans les bases de données SQL"
+            "À chiffrer les échanges d'e-mails de bout en bout avec des clés asymétriques",
+            "À déléguer l'autorisation d'accès sans jamais partager les identifiants réels",
+            "À transférer de manière asynchrone des données médicales hautement sensibles",
+            "À hacher et saler efficacement les mots de passe dans les bases de données SQL"
         ],
-        "correct_answer": "La délégation d'autorisation (Autorisation) sans partager les identifiants"
+        "correct_answer": "À déléguer l'autorisation d'accès sans jamais partager les identifiants réels"
     },
     {
-        "question": "En cryptologie crypto-asymétrique, que garantit la 'Confidentialité Persistante' (Perfect Forward Secrecy - PFS) ?",
+        "question": "En cryptographie, que garantit la 'Confidentialité Persistante' (Perfect Forward Secrecy - PFS) ?",
         "options": [
-            "Si une clé privée à long terme est compromise, les clés de session passées restent sécurisées",
-            "La clé privée ne peut jamais être exportée de la puce matérielle",
-            "L'algorithme résiste aux attaques menées par des ordinateurs quantiques",
-            "L'expiration automatique des certificats numériques après une heure"
+            "Si la clé privée à long terme est compromise, les clés de session passées restent sûres",
+            "La clé privée d'infrastructure ne peut absolument jamais être exportée de sa puce",
+            "L'algorithme de base résiste mathématiquement aux futures attaques quantiques",
+            "L'expiration automatique et irrévocable des certificats numériques après une heure"
         ],
-        "correct_answer": "Si une clé privée à long terme est compromise, les clés de session passées restent sécurisées"
+        "correct_answer": "Si la clé privée à long terme est compromise, les clés de session passées restent sûres"
     },
     {
-        "question": "Quelle est l'utilité du registre CR3 dans l'architecture x86 lors d'une attaque de type corruption de mémoire ?",
+        "question": "Quelle est l'utilité du registre CR3 dans l'architecture x86 lors d'une corruption de mémoire ?",
         "options": [
-            "Il stocke le pointeur d'instruction (EIP/RIP)",
-            "Il contient l'adresse de base de la table de pagination de niveau supérieur pour la traduction d'adresse virtuelle",
-            "Il sert à vérifier l'intégrité de la pile d'exécution",
-            "Il contient la clé de chiffrement matérielle sécurisée"
+            "Il stocke en permanence le pointeur d'instruction actuel du processeur (EIP/RIP)",
+            "Il contient l'adresse de base de la table de pagination pour la traduction d'adresse",
+            "Il sert de mécanisme de sécurité matériel pour vérifier l'intégrité de la pile locale",
+            "Il contient la clé de chiffrement matérielle sécurisée propre à la carte mère du PC"
         ],
-        "correct_answer": "Il contient l'adresse de base de la table de pagination de niveau supérieur pour la traduction d'adresse virtuelle"
+        "correct_answer": "Il contient l'adresse de base de la table de pagination pour la traduction d'adresse"
     },
     {
         "question": "Dans le contexte de l'exploitation binaire, qu'est-ce qu'un 'Nop Sled' (Glissade de NOP) ?",
         "options": [
-            "Une technique pour contourner le DEP",
-            "Une séquence d'instructions sans effet (No-Operation) visant à guider le flux d'exécution vers l'exploit",
-            "Un script permettant de nettoyer les fichiers journaux",
-            "L'erreur déclenchée par un dépassement de tampon dans le tas"
+            "Une technique logicielle avancée permettant de contourner efficacement le DEP",
+            "Une séquence d'instructions vides guidant le flux d'exécution vers l'exploit réel",
+            "Un script d'automatisation permettant de nettoyer rapidement les fichiers journaux",
+            "L'erreur spécifique déclenchée par un dépassement de tampon complexe dans le tas"
         ],
-        "correct_answer": "Une séquence d'instructions sans effet (No-Operation) visant à guider le flux d'exécution vers l'exploit"
+        "correct_answer": "Une séquence d'instructions vides guidant le flux d'exécution vers l'exploit réel"
     },
     {
         "question": "Qu'est-ce que la technique d'attaque par rebond 'DNS Rebinding' ?",
         "options": [
-            "Détourner la résolution DNS d'un nom de domaine vers une IP locale pour outrepasser les règles de Pare-feu (SOP)",
-            "Falsifier la signature DNSSEC d'une zone",
-            "Inonder un serveur DNS de requêtes malformées",
-            "Extraire des données en utilisant des sous-domaines (DNS Exfiltration)"
+            "Détourner la résolution DNS vers une IP locale pour outrepasser les règles (SOP)",
+            "Falsifier cryptographiquement la signature DNSSEC d'une zone de domaine public",
+            "Inonder un serveur DNS cible avec des milliers de requêtes réseau malformées",
+            "Extraire silencieusement des données internes en utilisant de multiples sous-domaines"
         ],
-        "correct_answer": "Détourner la résolution DNS d'un nom de domaine vers une IP locale pour outrepasser les règles de Pare-feu (SOP)"
+        "correct_answer": "Détourner la résolution DNS vers une IP locale pour outrepasser les règles (SOP)"
     },
     {
         "question": "Qu'est-ce qu'une attaque 'Rowhammer' dans le domaine matériel ?",
         "options": [
-            "Manipuler les micro-instructions d'un disque dur SSD",
-            "Modifier le comportement du ventilateur pour faire fondre le processeur",
-            "Une méthode d'extraction de clé de chiffrement depuis une carte mère",
-            "Exploiter un effet physique sur la mémoire DRAM matérielle en accédant répétitivement à des lignes, provoquant des basculements de bits dans les lignes adjacentes"
+            "Manipuler directement les micro-instructions internes d'un disque dur de type SSD",
+            "Modifier le comportement du ventilateur système pour faire fondre le processeur",
+            "Extraire une clé de chiffrement matérielle depuis le module TPM de la carte mère",
+            "Accéder répétitivement à la RAM pour provoquer des basculements de bits adjacents"
         ],
-        "correct_answer": "Exploiter un effet physique sur la mémoire DRAM matérielle en accédant répétitivement à des lignes, provoquant des basculements de bits dans les lignes adjacentes"
+        "correct_answer": "Accéder répétitivement à la RAM pour provoquer des basculements de bits adjacents"
     },
     {
         "question": "Quelle faille de Microsoft Exchange était connue sous le nom de ProxyLogon en 2021 ?",
         "options": [
-            "Un contournement de l'authentification (Pre-Auth SSRF) souvent suivi d'une exécution de code arbitraire",
-            "Une fuite de mémoire via un dépassement d'entier dans le traitement des pièces jointes",
-            "Un déni de service causé par une boucle infinie dans le parser de calendrier",
-            "Un exploit client-side ciblant Outlook via OWA"
+            "Un contournement de l'authentification (SSRF) suivi d'une exécution de code (RCE)",
+            "Une fuite de mémoire critique via un dépassement d'entier dans les pièces jointes",
+            "Un déni de service complet causé par une boucle infinie dans le parser de calendrier",
+            "Un exploit côté client (client-side) ciblant très spécifiquement Outlook via l'OWA"
         ],
-        "correct_answer": "Un contournement de l'authentification (Pre-Auth SSRF) souvent suivi d'une exécution de code arbitraire"
+        "correct_answer": "Un contournement de l'authentification (SSRF) suivi d'une exécution de code (RCE)"
     }
 ]

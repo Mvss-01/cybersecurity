@@ -152,12 +152,12 @@
     {
         "question": "Sur quel port écoute par défaut un serveur web sécurisé (HTTPS) ?",
         "options": [
-            "Le port 80, utilisé pour les requêtes HTTP classiques non chiffrées",
-            "Le port 445, utilisé principalement pour le partage de fichiers SMB",
-            "Le port 443, utilisé par défaut pour les communications web chiffrées",
-            "Le port 8443, utilisé comme alternative locale ou de test pour HTTPS"
+            "Le port 80",
+            "Le port 445",
+            "Le port 443",
+            "Le port 8443"
         ],
-        "correct_answer": "Le port 443, utilisé par défaut pour les communications web chiffrées"
+        "correct_answer": "Le port 443"
     },
     {
         "question": "Quelle est la différence entre un IDS et un IPS ?",
