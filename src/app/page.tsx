@@ -96,8 +96,11 @@ export default function StartPage() {
   };
 
   return (
-    <div className="absolute inset-0 z-40 flex flex-col items-center justify-center bg-black/90 p-4 sm:p-6 font-mono">
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
+    // Changed to min-h-screen and added overflow-y-auto for scrollability
+    <div className="min-h-screen w-full relative z-40 flex flex-col items-center justify-center bg-black/90 p-4 py-16 sm:p-6 font-mono overflow-y-auto overflow-x-hidden">
+
+      {/* Changed to fixed so it stays in place during scroll */}
+      <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50">
         <button
           onClick={() => { playSound("/abort.mp3"); setShowInstructions(true) }}
           className="p-2 text-cyan-500 hover:text-cyan-300 transition-colors bg-black/50 border border-cyan-500/30 rounded-full hover:bg-cyan-950/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
@@ -107,7 +110,7 @@ export default function StartPage() {
         </button>
       </div>
 
-      <Brain className="w-16 h-16 sm:w-24 sm:h-24 text-cyan-500 animate-pulse mb-4 sm:mb-6" />
+      <Brain className="w-16 h-16 sm:w-24 sm:h-24 text-cyan-500 animate-pulse mb-4 sm:mb-6 mt-8 sm:mt-0" />
 
       <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-3 sm:mb-4 text-center">
         NEURAL HEIST
@@ -149,15 +152,16 @@ export default function StartPage() {
 
       <button
         onClick={handleStart}
-        className="px-6 sm:px-8 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900 hover:text-cyan-200 transition-all uppercase tracking-widest text-sm sm:text-base shadow-[0_0_15px_rgba(6,182,212,0.4)] disabled:opacity-50"
+        className="px-6 sm:px-8 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900 hover:text-cyan-200 transition-all uppercase tracking-widest text-sm sm:text-base shadow-[0_0_15px_rgba(6,182,212,0.4)] disabled:opacity-50 mb-8 sm:mb-0"
         disabled={!name.trim() || isChecking}
       >
         {isChecking ? "VÉRIFICATION..." : "INITIALISER LA CONNEXION"}
       </button>
 
       {showInstructions && (
-        <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/95 p-4 sm:p-6 backdrop-blur-sm">
-          <div className="max-w-2xl w-full bg-black border border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.2)] p-6 sm:p-8 relative">
+        // Changed to fixed and added overflow-y-auto for tall mobile screens
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-4 sm:p-6 backdrop-blur-sm overflow-y-auto">
+          <div className="max-w-2xl w-full bg-black border border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.2)] p-6 sm:p-8 relative m-auto">
             <button
               onClick={() => { playSound("/abort.mp3"); setShowInstructions(false) }}
               className="absolute top-4 right-4 text-cyan-500 hover:text-red-500 transition-colors"
@@ -165,7 +169,7 @@ export default function StartPage() {
               <X className="w-6 h-6" />
             </button>
 
-            <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-6 border-b border-cyan-900/50 pb-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 mb-6 border-b border-cyan-900/50 pb-2 mt-4 sm:mt-0">
               TUTORIEL
             </h2>
 
@@ -212,8 +216,9 @@ export default function StartPage() {
       )}
 
       {errorMessage && (
-        <div className="absolute inset-0 z-[70] flex items-center justify-center bg-black/90 p-4 sm:p-6 backdrop-blur-sm">
-          <div className="max-w-md w-full bg-black border border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)] p-6 sm:p-8 relative">
+        // Changed to fixed and added overflow-y-auto
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/90 p-4 sm:p-6 backdrop-blur-sm overflow-y-auto">
+          <div className="max-w-md w-full bg-black border border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)] p-6 sm:p-8 relative m-auto">
             <button
               onClick={() => { playSound("/abort.mp3"); setErrorMessage('') }}
               className="absolute top-4 right-4 text-red-500 hover:text-red-400 transition-colors"
@@ -221,7 +226,7 @@ export default function StartPage() {
               <X className="w-6 h-6" />
             </button>
 
-            <h2 className="text-xl sm:text-2xl font-bold text-red-500 mb-4 border-b border-red-900/50 pb-2 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-red-500 mb-4 border-b border-red-900/50 pb-2 flex items-center gap-2 mt-4 sm:mt-0">
               <ShieldAlert className="w-6 h-6" />
               ACCÈS REFUSÉ
             </h2>
@@ -240,7 +245,8 @@ export default function StartPage() {
         </div>
       )}
 
-      <div className="pointer-events-none absolute inset-0 z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] opacity-40"></div>
+      {/* Changed absolute to fixed so the overlay doesn't cut off when scrolling down */}
+      <div className="pointer-events-none fixed inset-0 z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] opacity-40"></div>
     </div>
   );
 }
