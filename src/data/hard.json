@@ -158,5 +158,105 @@
             "L'analyse des journaux système pour détecter des comportements anormaux"
         ],
         "correct_answer": "L'envoi automatique de données aléatoires ou invalides à un programme pour trouver des bugs ou des vulnérabilités"
+    },
+    {
+        "question": "Quel mécanisme de sécurité du compilateur insère une valeur aléatoire dans la pile avant le pointeur de retour pour éviter le 'Buffer Overflow' ?",
+        "options": [
+            "ASLR",
+            "Stack Canary (Canari)",
+            "DEP (Data Execution Prevention)",
+            "PIE (Position Independent Executable)"
+        ],
+        "correct_answer": "Stack Canary (Canari)"
+    },
+    {
+        "question": "Qu'est-ce que le système 'AppArmor' ou 'SELinux' sous Linux ?",
+        "options": [
+            "Des environnements de bureau sécurisés",
+            "Des modules de sécurité du noyau fournissant un contrôle d'accès obligatoire (MAC)",
+            "Des antivirus open-source",
+            "Des utilitaires de récupération de données"
+        ],
+        "correct_answer": "Des modules de sécurité du noyau fournissant un contrôle d'accès obligatoire (MAC)"
+    },
+    {
+        "question": "Qu'est-ce qu'une attaque 'Pass-the-Ticket' (PtT) ?",
+        "options": [
+            "Une attaque consistant à voler et réutiliser un ticket d'authentification Kerberos (comme un TGT)",
+            "Une méthode pour contourner l'authentification multifacteur par SMS",
+            "L'interception d'un jeton JWT pour falsifier l'identité de l'utilisateur",
+            "Le vol physique d'une carte d'accès d'entreprise"
+        ],
+        "correct_answer": "Une attaque consistant à voler et réutiliser un ticket d'authentification Kerberos (comme un TGT)"
+    },
+    {
+        "question": "Qu'est-ce que le protocole 'OAuth 2.0' principalement utilisé pour ?",
+        "options": [
+            "Chiffrer les e-mails de bout en bout",
+            "La délégation d'autorisation (Autorisation) sans partager les identifiants",
+            "Le transfert asynchrone de données médicales",
+            "Le hachage des mots de passe dans les bases de données SQL"
+        ],
+        "correct_answer": "La délégation d'autorisation (Autorisation) sans partager les identifiants"
+    },
+    {
+        "question": "En cryptologie crypto-asymétrique, que garantit la 'Confidentialité Persistante' (Perfect Forward Secrecy - PFS) ?",
+        "options": [
+            "Si une clé privée à long terme est compromise, les clés de session passées restent sécurisées",
+            "La clé privée ne peut jamais être exportée de la puce matérielle",
+            "L'algorithme résiste aux attaques menées par des ordinateurs quantiques",
+            "L'expiration automatique des certificats numériques après une heure"
+        ],
+        "correct_answer": "Si une clé privée à long terme est compromise, les clés de session passées restent sécurisées"
+    },
+    {
+        "question": "Quelle est l'utilité du registre CR3 dans l'architecture x86 lors d'une attaque de type corruption de mémoire ?",
+        "options": [
+            "Il stocke le pointeur d'instruction (EIP/RIP)",
+            "Il contient l'adresse de base de la table de pagination de niveau supérieur pour la traduction d'adresse virtuelle",
+            "Il sert à vérifier l'intégrité de la pile d'exécution",
+            "Il contient la clé de chiffrement matérielle sécurisée"
+        ],
+        "correct_answer": "Il contient l'adresse de base de la table de pagination de niveau supérieur pour la traduction d'adresse virtuelle"
+    },
+    {
+        "question": "Dans le contexte de l'exploitation binaire, qu'est-ce qu'un 'Nop Sled' (Glissade de NOP) ?",
+        "options": [
+            "Une technique pour contourner le DEP",
+            "Une séquence d'instructions sans effet (No-Operation) visant à guider le flux d'exécution vers l'exploit",
+            "Un script permettant de nettoyer les fichiers journaux",
+            "L'erreur déclenchée par un dépassement de tampon dans le tas"
+        ],
+        "correct_answer": "Une séquence d'instructions sans effet (No-Operation) visant à guider le flux d'exécution vers l'exploit"
+    },
+    {
+        "question": "Qu'est-ce que la technique d'attaque par rebond 'DNS Rebinding' ?",
+        "options": [
+            "Détourner la résolution DNS d'un nom de domaine vers une IP locale pour outrepasser les règles de Pare-feu (SOP)",
+            "Falsifier la signature DNSSEC d'une zone",
+            "Inonder un serveur DNS de requêtes malformées",
+            "Extraire des données en utilisant des sous-domaines (DNS Exfiltration)"
+        ],
+        "correct_answer": "Détourner la résolution DNS d'un nom de domaine vers une IP locale pour outrepasser les règles de Pare-feu (SOP)"
+    },
+    {
+        "question": "Qu'est-ce qu'une attaque 'Rowhammer' dans le domaine matériel ?",
+        "options": [
+            "Manipuler les micro-instructions d'un disque dur SSD",
+            "Modifier le comportement du ventilateur pour faire fondre le processeur",
+            "Une méthode d'extraction de clé de chiffrement depuis une carte mère",
+            "Exploiter un effet physique sur la mémoire DRAM matérielle en accédant répétitivement à des lignes, provoquant des basculements de bits dans les lignes adjacentes"
+        ],
+        "correct_answer": "Exploiter un effet physique sur la mémoire DRAM matérielle en accédant répétitivement à des lignes, provoquant des basculements de bits dans les lignes adjacentes"
+    },
+    {
+        "question": "Quelle faille de Microsoft Exchange était connue sous le nom de ProxyLogon en 2021 ?",
+        "options": [
+            "Un contournement de l'authentification (Pre-Auth SSRF) souvent suivi d'une exécution de code arbitraire",
+            "Une fuite de mémoire via un dépassement d'entier dans le traitement des pièces jointes",
+            "Un déni de service causé par une boucle infinie dans le parser de calendrier",
+            "Un exploit client-side ciblant Outlook via OWA"
+        ],
+        "correct_answer": "Un contournement de l'authentification (Pre-Auth SSRF) souvent suivi d'une exécution de code arbitraire"
     }
 ]

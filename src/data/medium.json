@@ -198,5 +198,105 @@
             "Réduire la puissance de calcul allouée aux services non critiques"
         ],
         "correct_answer": "N'accorder que les droits strictement nécessaires à l'accomplissement d'une tâche"
+    },
+    {
+        "question": "Que cible principalement une attaque 'Man-in-the-Middle' (MitM) ?",
+        "options": [
+            "Les disques durs locaux",
+            "L'interception des communications entre deux parties",
+            "Les mots de passe stockés en cache",
+            "Les paramètres du BIOS"
+        ],
+        "correct_answer": "L'interception des communications entre deux parties"
+    },
+    {
+        "question": "En cryptographie, qu'est-ce qu'une fonction de hachage comme SHA-256 produit-elle ?",
+        "options": [
+            "Une clé symétrique",
+            "Une empreinte numérique (hash) de taille fixe",
+            "Un texte chiffré déchiffrable avec une clé privée",
+            "Un certificat numérique"
+        ],
+        "correct_answer": "Une empreinte numérique (hash) de taille fixe"
+    },
+    {
+        "question": "Quel port est utilisé par défaut par le protocole SSH ?",
+        "options": [
+            "21",
+            "22",
+            "23",
+            "80"
+        ],
+        "correct_answer": "22"
+    },
+    {
+        "question": "Quelle est l'utilité du fichier '/etc/shadow' sous Linux ?",
+        "options": [
+            "Stocker la liste des utilisateurs",
+            "Stocker la configuration réseau",
+            "Stocker les hachages de mots de passe des utilisateurs de manière sécurisée",
+            "Stocker les logs du système d'exploitation"
+        ],
+        "correct_answer": "Stocker les hachages de mots de passe des utilisateurs de manière sécurisée"
+    },
+    {
+        "question": "Qu'est-ce que l'\"Élévation de privilèges\" (Privilege Escalation) ?",
+        "options": [
+            "Obtenir des droits d'accès supérieurs à ceux initialement accordés",
+            "Accéder physiquement à un centre de données",
+            "Transférer des données sur un serveur non sécurisé",
+            "Désactiver les comptes utilisateurs standards"
+        ],
+        "correct_answer": "Obtenir des droits d'accès supérieurs à ceux initialement accordés"
+    },
+    {
+        "question": "Dans le contexte de la sécurité web, que fait l'entête HTTP 'Strict-Transport-Security' (HSTS) ?",
+        "options": [
+            "Il force le navigateur à utiliser uniquement des connexions HTTPS",
+            "Il bloque l'exécution de tout code JavaScript",
+            "Il masque l'adresse IP du client",
+            "Il autorise le partage des ressources entre origines multiples (CORS)"
+        ],
+        "correct_answer": "Il force le navigateur à utiliser uniquement des connexions HTTPS"
+    },
+    {
+        "question": "Quel type d'outil est 'John The Ripper' ?",
+        "options": [
+            "Un scanner de vulnérabilités réseau",
+            "Un outil de cassage de mots de passe (Password Cracker)",
+            "Un pare-feu applicatif web (WAF)",
+            "Un outil d'analyse de malwares"
+        ],
+        "correct_answer": "Un outil de cassage de mots de passe (Password Cracker)"
+    },
+    {
+        "question": "Qu'est-ce que le 'Salting' dans le stockage des mots de passe ?",
+        "options": [
+            "Chiffrer le mot de passe avec une clé asymétrique",
+            "Tronquer le mot de passe s'il est trop long",
+            "Ajouter une chaîne de caractères aléatoire avant de hacher le mot de passe",
+            "Convertir le mot de passe en base64"
+        ],
+        "correct_answer": "Ajouter une chaîne de caractères aléatoire avant de hacher le mot de passe"
+    },
+    {
+        "question": "Quel protocole réseau utilise l'UDP au lieu de TCP par défaut ?",
+        "options": [
+            "HTTP",
+            "SSH",
+            "DNS",
+            "FTP"
+        ],
+        "correct_answer": "DNS"
+    },
+    {
+        "question": "Quelle est la fonction d'un WAF (Web Application Firewall) comparé à un pare-feu réseau classique ?",
+        "options": [
+            "Il est plus rapide",
+            "Il fonctionne uniquement sur les adresses IP privées",
+            "Il sécurise la base de données interne",
+            "Il analyse spécifiquement le trafic HTTPS/HTTP pour protéger les applications web des attaques comme l'injection SQL ou le XSS"
+        ],
+        "correct_answer": "Il analyse spécifiquement le trafic HTTPS/HTTP pour protéger les applications web des attaques comme l'injection SQL ou le XSS"
     }
 ]
