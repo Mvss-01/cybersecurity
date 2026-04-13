@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import EASY_QUESTIONS from '../data/easy.json';
 import MEDIUM_QUESTIONS from '../data/medium.json';
 import HARD_QUESTIONS from '../data/hard.json';
+import { supabase } from '../lib/supabase';
 
 type NodeStatus = 'secure' | 'virus';
 type NodeDifficulty = 'easy' | 'medium' | 'hard';
@@ -136,8 +137,11 @@ export default function IntegratedNeuralHeist() {
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [gameComplete, setGameComplete] = useState(false);
     const [finalTime, setFinalTime] = useState(0);
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+    // --- NOUVEAU : Verrou pour empêcher les doubles envois ---
+    const scoreSavedRef = useRef<boolean>(false);
+
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
     const [showBossWarning, setShowBossWarning] = useState<boolean>(false);
     const warningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -188,8 +192,9 @@ export default function IntegratedNeuralHeist() {
     }, [router]);
 
     useEffect(() => {
+        // Usernames persist across games so the user can continue as themselves
         if (isGameOver || gameComplete) {
-            localStorage.removeItem('neural_heist_user');
+            // localStorage.removeItem('neural_heist_user');
         }
     }, [isGameOver, gameComplete]);
 
@@ -236,15 +241,82 @@ export default function IntegratedNeuralHeist() {
         return () => clearInterval(healthDrainTimer);
     }, [isGameOver, gameComplete]);
 
-    const checkWinCondition = useCallback((map: HexMap) => {
+    // --- MISE À JOUR : Logique de victoire sécurisée avec verrou ---
+    const checkWinCondition = useCallback(async (map: HexMap) => {
         const allSecure = map.flat().every(node => node.status === 'secure');
-        if (allSecure) {
-            setFinalTime(elapsedRef.current);
+
+        if (allSecure && !scoreSavedRef.current) {
+            scoreSavedRef.current = true; // Verrouille immédiatement
+
+            const finalTimeSeconds = elapsedRef.current;
+            setFinalTime(finalTimeSeconds);
             setGameComplete(true);
             playSound("/Network Secured.wav");
             if (timerRef.current) clearInterval(timerRef.current);
+
+            try {
+                const { data: existingData, error: fetchError } = await supabase
+                    .from('scores')
+                    .select('time')
+                    .eq('username', username);
+
+                if (fetchError) {
+                    console.error('Error fetching score:', fetchError);
+                    setLogMessage("ERREUR LORS DE LA VÉRIFICATION DU SCORE.");
+                    scoreSavedRef.current = false;
+                    return;
+                }
+
+                let saveError = null;
+
+                if (existingData && existingData.length > 0) {
+                    const bestTime = existingData[0].time;
+                    if (finalTimeSeconds < bestTime) {
+                        const { error } = await supabase
+                            .from('scores')
+                            .update({ time: finalTimeSeconds })
+                            .eq('username', username);
+                        saveError = error;
+                    } else {
+                        console.log('Score not updated: previous time was better');
+                    }
+                } else {
+                    const { error } = await supabase
+                        .from('scores')
+                        .insert([
+                            {
+                                username: username,
+                                time: finalTimeSeconds
+                            }
+                        ]);
+                    saveError = error;
+                }
+
+                if (saveError) {
+                    console.error('Error saving score:', saveError);
+                    setLogMessage("ERREUR LORS DE LA SAUVEGARDE DU SCORE.");
+                    scoreSavedRef.current = false; // Déverrouille en cas d'erreur
+                } else {
+                    console.log('Score handled successfully');
+                    setLogMessage("RÉSEAU SÉCURISÉ. SCORE ENREGISTRÉ.");
+                }
+            } catch (err) {
+                console.error('Unexpected error saving score:', err);
+                setLogMessage("ERREUR CRITIQUE SYSTÈME.");
+                scoreSavedRef.current = false; // Déverrouille en cas d'erreur
+            }
         }
-    }, []);
+    }, [username]);
+
+    // --- NOUVEAU : Observer les changements de mapNodes pour déclencher la victoire ---
+    useEffect(() => {
+        if (!gameComplete && mapNodes.length > 0) {
+            const allSecure = mapNodes.flat().every(node => node.status === 'secure');
+            if (allSecure) {
+                checkWinCondition(mapNodes);
+            }
+        }
+    }, [mapNodes, gameComplete, checkWinCondition]);
 
     const handleNodeClick = useCallback((node: MapNode): void => {
         if (node.status === 'secure') {
@@ -319,12 +391,11 @@ export default function IntegratedNeuralHeist() {
                 return newHealth;
             });
 
+            // --- MISE À JOUR : On met à jour uniquement l'état, sans effet de bord ---
             setMapNodes(prevMap => {
-                const newMap = prevMap.map(row =>
+                return prevMap.map(row =>
                     row.map((n): MapNode => n.id === nodeId ? { ...n, status: 'secure' } : n)
                 );
-                checkWinCondition(newMap);
-                return newMap;
             });
         } else {
             playSound('/error.mp3');
@@ -340,7 +411,7 @@ export default function IntegratedNeuralHeist() {
         }
 
         setActiveQuiz(null);
-    }, [activeQuiz, checkWinCondition]);
+    }, [activeQuiz]);
 
     const rebootSystem = useCallback(() => {
         playSound("/abort.mp3");
@@ -353,6 +424,7 @@ export default function IntegratedNeuralHeist() {
         setElapsedSeconds(0);
         setFinalTime(0);
         setShowBossWarning(false);
+        scoreSavedRef.current = false; // --- NOUVEAU : Réinitialiser le verrou ---
         if (warningTimeoutRef.current) clearTimeout(warningTimeoutRef.current);
     }, [router]);
 
@@ -627,11 +699,18 @@ export default function IntegratedNeuralHeist() {
 
                             <div className="flex flex-col sm:flex-row gap-3 justify-center">
                                 <button
-                                    onClick={() => { playSound("/abort.mp3"); router.push('/') }}
+                                    onClick={rebootSystem}
                                     className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-green-950/50 border border-green-500 text-green-400 hover:bg-green-900/50 hover:text-green-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(34,197,94,0.3)] rounded"
                                 >
                                     <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                     Rejouer
+                                </button>
+                                <button
+                                    onClick={() => { playSound("/abort.mp3"); router.push('/'); }}
+                                    className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900/50 hover:text-cyan-200 transition-all uppercase tracking-widest text-xs sm:text-sm shadow-[0_0_15px_rgba(6,182,212,0.3)] rounded"
+                                >
+                                    <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    Menu
                                 </button>
                             </div>
                         </div>

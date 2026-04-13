@@ -268,5 +268,105 @@
             "Pour nettoyer l'écran automatiquement"
         ],
         "correct_answer": "Pour empêcher un accès physique non autorisé à vos données"
+    },
+    {
+        "question": "Que signifie le 'S' dans HTTPS ?",
+        "options": [
+            "System",
+            "Secure (Sécurisé)",
+            "Standard",
+            "Speed"
+        ],
+        "correct_answer": "Secure (Sécurisé)"
+    },
+    {
+        "question": "Quel est l'outil principal utilisé pour naviguer anonymement sur le Dark Web ?",
+        "options": [
+            "Chrome",
+            "Tor Browser",
+            "Firefox",
+            "VPN"
+        ],
+        "correct_answer": "Tor Browser"
+    },
+    {
+        "question": "Quel type de sauvegarde consiste à stocker des données sur un serveur distant via Internet ?",
+        "options": [
+            "Sauvegarde sur clé USB",
+            "Sauvegarde sur disque dur externe",
+            "Sauvegarde dans le Cloud (Nuage)",
+            "Sauvegarde sur CD-ROM"
+        ],
+        "correct_answer": "Sauvegarde dans le Cloud (Nuage)"
+    },
+    {
+        "question": "Qu'est-ce qu'un \"Cheval de Troie\" en sécurité informatique ?",
+        "options": [
+            "Un puissant antivirus",
+            "Un programme malveillant caché dans un logiciel apparemment inoffensif",
+            "Un type d'attaque réseau",
+            "Un périphérique de stockage"
+        ],
+        "correct_answer": "Un programme malveillant caché dans un logiciel apparemment inoffensif"
+    },
+    {
+        "question": "Qu'est-ce que le 'SPAM' ?",
+        "options": [
+            "Un virus informatique très dangereux",
+            "Des courriers électroniques indésirables envoyés en masse",
+            "Un logiciel de protection",
+            "Le piratage d'une webcam"
+        ],
+        "correct_answer": "Des courriers électroniques indésirables envoyés en masse"
+    },
+    {
+        "question": "Pourquoi est-il déconseillé d'utiliser la même adresse e-mail et le même mot de passe sur tous les sites ?",
+        "options": [
+            "Pour ne pas ralentir le navigateur",
+            "Car si un site est piraté, tous les autres comptes sont en danger",
+            "Parce que c'est interdit par la loi",
+            "Pour éviter de recevoir trop de messages"
+        ],
+        "correct_answer": "Car si un site est piraté, tous les autres comptes sont en danger"
+    },
+    {
+        "question": "Quel est l'objectif d'un logiciel 'Spyware' ?",
+        "options": [
+            "Améliorer les performances du PC",
+            "Supprimer les fichiers système",
+            "Espionner l'utilisateur et collecter ses données à son insu",
+            "Crypter les données pour demander une rançon"
+        ],
+        "correct_answer": "Espionner l'utilisateur et collecter ses données à son insu"
+    },
+    {
+        "question": "Qu'est-ce qu'une 'Mise en quarantaine' dans un antivirus ?",
+        "options": [
+            "La suppression définitive du fichier infecté",
+            "L'isolation du fichier malveillant pour l'empêcher d'agir",
+            "L'envoi du fichier à la police",
+            "La réparation immédiate du système"
+        ],
+        "correct_answer": "L'isolation du fichier malveillant pour l'empêcher d'agir"
+    },
+    {
+        "question": "Que signifie \"MFA\" ?",
+        "options": [
+            "Multi-Factor Authentication (Authentification multifactorielle)",
+            "Main Firewall Access",
+            "Multiple File Analysis",
+            "Malware Filtering Application"
+        ],
+        "correct_answer": "Multi-Factor Authentication (Authentification multifactorielle)"
+    },
+    {
+        "question": "Qui est un 'Hacker White Hat' (Chapeau blanc) ?",
+        "options": [
+            "Un pirate qui vole des données bancaires",
+            "Un expert en sécurité qui aide les entreprises à trouver et corriger des failles",
+            "Un créateur de virus informatique",
+            "Un programmeur qui écrit des jeux"
+        ],
+        "correct_answer": "Un expert en sécurité qui aide les entreprises à trouver et corriger des failles"
     }
 ]
