@@ -49,7 +49,6 @@ export default function StartPage() {
       setSavedName(stored);
     }
 
-    // Check if tutorial has been seen
     const tutorialSeen = localStorage.getItem('neural_heist_tutorial_seen');
     if (!tutorialSeen) {
       setShowInstructions(true);
@@ -96,10 +95,8 @@ export default function StartPage() {
   };
 
   return (
-    // Changed to min-h-screen and added overflow-y-auto for scrollability
     <div className="min-h-screen w-full relative z-40 flex flex-col items-center justify-center bg-black/90 p-4 py-16 sm:p-6 font-mono overflow-y-auto overflow-x-hidden">
 
-      {/* Changed to fixed so it stays in place during scroll */}
       <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50">
         <button
           onClick={() => { playSound("/abort.mp3"); setShowInstructions(true) }}
@@ -159,7 +156,6 @@ export default function StartPage() {
       </button>
 
       {showInstructions && (
-        // Changed to fixed and added overflow-y-auto for tall mobile screens
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-4 sm:p-6 backdrop-blur-sm overflow-y-auto">
           <div className="max-w-2xl w-full bg-black border border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.2)] p-6 sm:p-8 relative m-auto">
             <button
@@ -216,7 +212,6 @@ export default function StartPage() {
       )}
 
       {errorMessage && (
-        // Changed to fixed and added overflow-y-auto
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/90 p-4 sm:p-6 backdrop-blur-sm overflow-y-auto">
           <div className="max-w-md w-full bg-black border border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)] p-6 sm:p-8 relative m-auto">
             <button
@@ -245,7 +240,6 @@ export default function StartPage() {
         </div>
       )}
 
-      {/* Changed absolute to fixed so the overlay doesn't cut off when scrolling down */}
       <div className="pointer-events-none fixed inset-0 z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] opacity-40"></div>
     </div>
   );
