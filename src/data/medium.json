@@ -222,12 +222,12 @@
     {
         "question": "Quel port est utilisé par défaut par le protocole SSH ?",
         "options": [
-            "Le port 21, dédié spécifiquement aux transferts de fichiers",
-            "Le port 22, dédié à ce protocole de communication sécurisée",
-            "Le port 23, dédié au service de communication en clair Telnet",
-            "Le port 80, dédié par défaut au trafic de la navigation HTTP"
+            "Le port 21",
+            "Le port 22",
+            "Le port 23",
+            "Le port 80"
         ],
-        "correct_answer": "Le port 22, dédié à ce protocole de communication sécurisée"
+        "correct_answer": "Le port 22"
     },
     {
         "question": "Quelle est l'utilité du fichier '/etc/shadow' sous Linux ?",
