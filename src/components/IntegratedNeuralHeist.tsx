@@ -401,7 +401,7 @@ export default function IntegratedNeuralHeist() {
             playSound('/error.mp3');
             setLogMessage(`ERREUR. DÉGÂTS SUBIS.`);
             setHealth(prev => {
-                const newHealth = prev - 10;
+                const newHealth = prev - 5;
                 if (newHealth <= 0) {
                     setIsGameOver(true);
                     return 0;
