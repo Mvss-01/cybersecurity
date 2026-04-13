@@ -192,8 +192,9 @@ export default function IntegratedNeuralHeist() {
     }, [router]);
 
     useEffect(() => {
+        // Usernames persist across games so the user can continue as themselves
         if (isGameOver || gameComplete) {
-            localStorage.removeItem('neural_heist_user');
+            // localStorage.removeItem('neural_heist_user');
         }
     }, [isGameOver, gameComplete]);
 

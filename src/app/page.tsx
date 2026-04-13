@@ -1,12 +1,16 @@
 'use client'
-import { Brain, HelpCircle, X } from 'lucide-react';
+import { Brain, HelpCircle, X, ShieldAlert } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
 
 export default function StartPage() {
   const router = useRouter();
   const [name, setName] = useState('');
+  const [savedName, setSavedName] = useState('');
+  const [isChecking, setIsChecking] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const playSound = (path: string) => {
     const audio = new Audio(path);
@@ -39,14 +43,49 @@ export default function StartPage() {
     };
   }, []);
 
-  const handleStart = () => {
-    if (name.trim()) {
-      localStorage.setItem('neural_heist_user', name);
-      playSound("/abort.mp3");
-      router.push('/main');
-    } else {
-      alert("Identifiez-vous, Agent.");
+  useEffect(() => {
+    const stored = localStorage.getItem('neural_heist_user');
+    if (stored) {
+      setSavedName(stored);
     }
+  }, []);
+
+  const handleContinue = () => {
+    playSound("/abort.mp3");
+    router.push('/main');
+  };
+
+  const handleStart = async () => {
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      setErrorMessage("Identifiez-vous.");
+      return;
+    }
+
+    if (trimmedName !== savedName) {
+      setIsChecking(true);
+      const { data, error } = await supabase
+        .from('scores')
+        .select('username')
+        .eq('username', trimmedName)
+        .limit(1);
+
+      setIsChecking(false);
+
+      if (error) {
+        setErrorMessage("Erreur de connexion au serveur.");
+        return;
+      }
+
+      if (data && data.length > 0) {
+        setErrorMessage("Ce nom d'utilisateur est déjà utilisé. Veuillez en choisir un autre.");
+        return;
+      }
+    }
+
+    localStorage.setItem('neural_heist_user', trimmedName);
+    playSound("/abort.mp3");
+    router.push('/main');
   };
 
   return (
@@ -73,13 +112,30 @@ export default function StartPage() {
         Éliminez les virus et sécurisez les nœuds pour survivre.
       </p>
 
+      {savedName && (
+        <div className="flex flex-col items-center mb-8 w-full">
+          <button
+            onClick={handleContinue}
+            className="px-6 sm:px-8 py-2.5 sm:py-3 bg-green-950/50 border border-green-500 text-green-400 hover:bg-green-900 hover:text-green-200 transition-all tracking-widest text-sm sm:text-base shadow-[0_0_15px_rgba(34,197,94,0.4)]"
+          >
+            <span className="uppercase">CONTINUER EN TANT QUE</span> <span className="normal-case">[{savedName}]</span>
+          </button>
+          
+          <div className="flex items-center justify-center mt-6 w-full max-w-xs">
+            <div className="flex-grow border-t border-cyan-800/50"></div>
+            <span className="mx-4 text-cyan-700 text-xs tracking-widest uppercase">OU</span>
+            <div className="flex-grow border-t border-cyan-800/50"></div>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col mb-6 sm:mb-8 w-full max-w-xs">
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleStart()}
-          placeholder="NOM D'UTILISATEUR..."
+          placeholder={savedName ? "NOUVEAU NOM D'UTILISATEUR..." : "NOM D'UTILISATEUR..."}
           className="bg-black/50 border-b border-cyan-500/50 p-2 text-cyan-400 focus:outline-none focus:border-cyan-400 transition-colors text-center"
         />
       </div>
@@ -87,9 +143,9 @@ export default function StartPage() {
       <button
         onClick={handleStart}
         className="px-6 sm:px-8 py-2.5 sm:py-3 bg-cyan-950/50 border border-cyan-500 text-cyan-400 hover:bg-cyan-900 hover:text-cyan-200 transition-all uppercase tracking-widest text-sm sm:text-base shadow-[0_0_15px_rgba(6,182,212,0.4)] disabled:opacity-50"
-        disabled={!name.trim()}
+        disabled={!name.trim() || isChecking}
       >
-        INITIALISER LA CONNEXION
+        {isChecking ? "VÉRIFICATION..." : "INITIALISER LA CONNEXION"}
       </button>
 
       {showInstructions && (
@@ -143,6 +199,35 @@ export default function StartPage() {
               className="mt-6 w-full py-2 bg-cyan-950/30 border border-cyan-500/50 text-cyan-400 hover:bg-cyan-900/50 transition-colors uppercase tracking-widest text-sm"
             >
               COMPRIS
+            </button>
+          </div>
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className="absolute inset-0 z-[70] flex items-center justify-center bg-black/90 p-4 sm:p-6 backdrop-blur-sm">
+          <div className="max-w-md w-full bg-black border border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)] p-6 sm:p-8 relative">
+            <button
+              onClick={() => { playSound("/abort.mp3"); setErrorMessage('') }}
+              className="absolute top-4 right-4 text-red-500 hover:text-red-400 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <h2 className="text-xl sm:text-2xl font-bold text-red-500 mb-4 border-b border-red-900/50 pb-2 flex items-center gap-2">
+              <ShieldAlert className="w-6 h-6" />
+              ACCÈS REFUSÉ
+            </h2>
+
+            <p className="text-red-200 text-sm sm:text-base leading-relaxed mb-6">
+              {errorMessage}
+            </p>
+
+            <button
+              onClick={() => { playSound("/abort.mp3"); setErrorMessage('') }}
+              className="w-full py-2 bg-red-950/30 border border-red-500/50 text-red-400 hover:bg-red-900/50 transition-colors uppercase tracking-widest text-sm"
+            >
+              FERMER
             </button>
           </div>
         </div>
