@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import EASY_QUESTIONS from '../data/easy.json';
 import MEDIUM_QUESTIONS from '../data/medium.json';
 import HARD_QUESTIONS from '../data/hard.json';
+import { supabase } from '../lib/supabase';
 
 type NodeStatus = 'secure' | 'virus';
 type NodeDifficulty = 'easy' | 'medium' | 'hard';
@@ -236,15 +237,39 @@ export default function IntegratedNeuralHeist() {
         return () => clearInterval(healthDrainTimer);
     }, [isGameOver, gameComplete]);
 
-    const checkWinCondition = useCallback((map: HexMap) => {
+    const checkWinCondition = useCallback(async (map: HexMap) => {
         const allSecure = map.flat().every(node => node.status === 'secure');
         if (allSecure) {
-            setFinalTime(elapsedRef.current);
+            const finalTimeSeconds = elapsedRef.current;
+            setFinalTime(finalTimeSeconds);
             setGameComplete(true);
             playSound("/Network Secured.wav");
             if (timerRef.current) clearInterval(timerRef.current);
+
+            // Send score to Supabase
+            try {
+                const { error } = await supabase
+                    .from('scores')
+                    .insert([
+                        {
+                            username: username,
+                            time: finalTimeSeconds
+                        }
+                    ]);
+
+                if (error) {
+                    console.error('Error saving score:', error);
+                    setLogMessage("ERREUR LORS DE LA SAUVEGARDE DU SCORE.");
+                } else {
+                    console.log('Score saved successfully');
+                    setLogMessage("RÉSEAU SÉCURISÉ. SCORE ENREGISTRÉ.");
+                }
+            } catch (err) {
+                console.error('Unexpected error saving score:', err);
+                setLogMessage("ERREUR CRITIQUE SYSTÈME.");
+            }
         }
-    }, []);
+    }, [username]);
 
     const handleNodeClick = useCallback((node: MapNode): void => {
         if (node.status === 'secure') {
