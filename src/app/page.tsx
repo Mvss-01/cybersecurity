@@ -48,6 +48,13 @@ export default function StartPage() {
     if (stored) {
       setSavedName(stored);
     }
+
+    // Check if tutorial has been seen
+    const tutorialSeen = localStorage.getItem('neural_heist_tutorial_seen');
+    if (!tutorialSeen) {
+      setShowInstructions(true);
+      localStorage.setItem('neural_heist_tutorial_seen', 'true');
+    }
   }, []);
 
   const handleContinue = () => {
