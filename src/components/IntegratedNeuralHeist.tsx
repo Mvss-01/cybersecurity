@@ -281,10 +281,15 @@ export default function IntegratedNeuralHeist() {
                         console.log('Score not updated: previous time was better');
                     }
                 } else {
-                    const { error: saveError } = await supabase.rpc('submit_game_score', {
-                        user_name: username,
-                        final_time: finalTimeSeconds
-                    });
+                    const { error } = await supabase
+                        .from('scores')
+                        .insert([
+                            {
+                                username: username,
+                                time: finalTimeSeconds
+                            }
+                        ]);
+                    saveError = error;
                 }
 
                 if (saveError) {
