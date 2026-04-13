@@ -35,9 +35,6 @@ function formatTime(totalSeconds: number): string {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
-/**
- * Shuffles an array using the Fisher-Yates algorithm.
- */
 function shuffleArray<T>(array: T[]): T[] {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -138,7 +135,6 @@ export default function IntegratedNeuralHeist() {
     const [gameComplete, setGameComplete] = useState(false);
     const [finalTime, setFinalTime] = useState(0);
 
-    // --- NOUVEAU : Verrou pour empêcher les doubles envois ---
     const scoreSavedRef = useRef<boolean>(false);
 
     const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -192,7 +188,6 @@ export default function IntegratedNeuralHeist() {
     }, [router]);
 
     useEffect(() => {
-        // Usernames persist across games so the user can continue as themselves
         if (isGameOver || gameComplete) {
             // localStorage.removeItem('neural_heist_user');
         }
@@ -241,12 +236,11 @@ export default function IntegratedNeuralHeist() {
         return () => clearInterval(healthDrainTimer);
     }, [isGameOver, gameComplete]);
 
-    // --- MISE À JOUR : Logique de victoire sécurisée avec verrou ---
     const checkWinCondition = useCallback(async (map: HexMap) => {
         const allSecure = map.flat().every(node => node.status === 'secure');
 
         if (allSecure && !scoreSavedRef.current) {
-            scoreSavedRef.current = true; // Verrouille immédiatement
+            scoreSavedRef.current = true;
 
             const finalTimeSeconds = elapsedRef.current;
             setFinalTime(finalTimeSeconds);
@@ -295,7 +289,7 @@ export default function IntegratedNeuralHeist() {
                 if (saveError) {
                     console.error('Error saving score:', saveError);
                     setLogMessage("ERREUR LORS DE LA SAUVEGARDE DU SCORE.");
-                    scoreSavedRef.current = false; // Déverrouille en cas d'erreur
+                    scoreSavedRef.current = false;
                 } else {
                     console.log('Score handled successfully');
                     setLogMessage("RÉSEAU SÉCURISÉ. SCORE ENREGISTRÉ.");
@@ -303,12 +297,11 @@ export default function IntegratedNeuralHeist() {
             } catch (err) {
                 console.error('Unexpected error saving score:', err);
                 setLogMessage("ERREUR CRITIQUE SYSTÈME.");
-                scoreSavedRef.current = false; // Déverrouille en cas d'erreur
+                scoreSavedRef.current = false;
             }
         }
     }, [username]);
 
-    // --- NOUVEAU : Observer les changements de mapNodes pour déclencher la victoire ---
     useEffect(() => {
         if (!gameComplete && mapNodes.length > 0) {
             const allSecure = mapNodes.flat().every(node => node.status === 'secure');
@@ -391,7 +384,6 @@ export default function IntegratedNeuralHeist() {
                 return newHealth;
             });
 
-            // --- MISE À JOUR : On met à jour uniquement l'état, sans effet de bord ---
             setMapNodes(prevMap => {
                 return prevMap.map(row =>
                     row.map((n): MapNode => n.id === nodeId ? { ...n, status: 'secure' } : n)
@@ -424,7 +416,7 @@ export default function IntegratedNeuralHeist() {
         setElapsedSeconds(0);
         setFinalTime(0);
         setShowBossWarning(false);
-        scoreSavedRef.current = false; // --- NOUVEAU : Réinitialiser le verrou ---
+        scoreSavedRef.current = false;
         if (warningTimeoutRef.current) clearTimeout(warningTimeoutRef.current);
     }, [router]);
 
