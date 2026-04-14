@@ -97,6 +97,16 @@ export default function StartPage() {
   return (
     <div className="min-h-screen w-full relative z-40 flex flex-col items-center justify-center bg-black/90 p-4 py-16 sm:p-6 font-mono overflow-y-auto overflow-x-hidden">
 
+      <div className="fixed top-4 left-4 sm:top-6 sm:left-6 z-50">
+        <button
+          onClick={() => { playSound("/abort.mp3"); router.push('/leaderboard') }}
+          className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-xl sm:text-2xl text-cyan-500 hover:text-cyan-300 transition-colors bg-black/50 border border-cyan-500/30 rounded-full hover:bg-cyan-950/50 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+          title="Leaderboard"
+        >
+          🏆
+        </button>
+      </div>
+
       <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50">
         <button
           onClick={() => { playSound("/abort.mp3"); setShowInstructions(true) }}
