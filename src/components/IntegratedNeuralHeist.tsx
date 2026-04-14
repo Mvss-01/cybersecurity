@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import EASY_QUESTIONS from '../data/easy.json';
 import MEDIUM_QUESTIONS from '../data/medium.json';
-import HARD_QUESTIONS from '../data/hard.json';
+import HARD_QUESTIONS from '../data/medium.json';
 import { supabase } from '../lib/supabase';
 
 type NodeStatus = 'secure' | 'virus';
