@@ -2,301 +2,301 @@
     {
         "question": "Que permet de faire une attaque 'XSS' (Cross-Site Scripting) ?",
         "options": [
-            "Injecter des commandes SQL pour extraire des données sensibles du serveur",
-            "Exécuter des scripts malveillants dans le navigateur d'une victime cible",
-            "Détourner un certificat SSL/TLS pour intercepter le trafic web chiffré",
-            "Désactiver le pare-feu d'un hôte distant pour ouvrir une brèche réseau"
+            "Modifier la base de données du serveur directement",
+            "Exécuter des scripts malveillants dans le navigateur d'une victime",
+            "Intercepter les ondes Wi-Fi à proximité",
+            "Éteindre l'ordinateur de la cible à distance"
         ],
-        "correct_answer": "Exécuter des scripts malveillants dans le navigateur d'une victime cible"
+        "correct_answer": "Exécuter des scripts malveillants dans le navigateur d'une victime"
     },
     {
         "question": "Quelle est la différence entre le 'Hachage' (Hashing) et le 'Chiffrement' (Encryption) ?",
         "options": [
-            "Le hachage est utilisé pour la compression, le chiffrement pour la sécurité",
-            "Le hachage est un processus à sens unique, le chiffrement est réversible",
-            "Le hachage utilise des clés asymétriques, le chiffrement des symétriques",
-            "Le hachage modifie la taille des données, le chiffrement la garde identique"
+            "Le hachage compresse les fichiers, le chiffrement les protège",
+            "Le hachage est définitif (sens unique), le chiffrement peut être inversé",
+            "Le hachage est payant, le chiffrement est gratuit",
+            "Il n'y a aucune différence, ce sont des synonymes"
         ],
-        "correct_answer": "Le hachage est un processus à sens unique, le chiffrement est réversible"
+        "correct_answer": "Le hachage est définitif (sens unique), le chiffrement peut être inversé"
     },
     {
         "question": "Dans un 'TCP handshake', quel est l'ordre correct des paquets ?",
         "options": [
-            "Envoi du paquet SYN, réception du paquet ACK, puis envoi de SYN-ACK",
-            "Envoi du paquet SYN, réception du paquet SYN-ACK, puis envoi de ACK",
-            "Envoi du paquet FIN, réception du paquet ACK, puis envoi de FIN-ACK",
-            "Envoi du paquet RST, réception du paquet SYN, puis envoi final de ACK"
+            "ACK, puis SYN, puis SYN-ACK",
+            "SYN, puis SYN-ACK, puis ACK",
+            "HELLO, puis WAIT, puis GO",
+            "START, puis DATA, puis STOP"
         ],
-        "correct_answer": "Envoi du paquet SYN, réception du paquet SYN-ACK, puis envoi de ACK"
+        "correct_answer": "SYN, puis SYN-ACK, puis ACK"
     },
     {
         "question": "Qu'est-ce qu'un 'Reverse Shell' ?",
         "options": [
-            "Un terminal réseau qui exécute toutes les commandes dans l'ordre inverse",
-            "Une connexion où la machine cible se connecte au système de l'attaquant",
-            "Un système de sauvegarde chiffré utilisé par les administrateurs réseau",
-            "Une méthode avancée de contournement de l'authentification biométrique"
+            "Un virus qui écrit les fichiers à l'envers",
+            "Une connexion où la cible appelle l'attaquant pour lui donner l'accès",
+            "Un système de protection pour les serveurs web",
+            "Un mot de passe crypté très complexe"
         ],
-        "correct_answer": "Une connexion où la machine cible se connecte au système de l'attaquant"
+        "correct_answer": "Une connexion où la cible appelle l'attaquant pour lui donner l'accès"
     },
     {
         "question": "Quelle est la principale différence entre le chiffrement symétrique et asymétrique ?",
         "options": [
-            "Le chiffrement asymétrique utilise deux clés distinctes (publique et privée)",
-            "Le chiffrement symétrique est utilisé uniquement pour les réseaux sans fil",
-            "Le chiffrement asymétrique est beaucoup plus rapide pour de gros volumes",
-            "Le chiffrement symétrique nécessite une validation par certificat externe"
+            "L'asymétrique utilise deux clés différentes (publique et privée)",
+            "Le symétrique ne fonctionne que sur les vieux ordinateurs",
+            "L'asymétrique est utilisé uniquement pour les emails",
+            "Le symétrique est impossible à déchiffrer"
         ],
-        "correct_answer": "Le chiffrement asymétrique utilise deux clés distinctes (publique et privée)"
+        "correct_answer": "L'asymétrique utilise deux clés différentes (publique et privée)"
     },
     {
         "question": "Qu'est-ce qu'une attaque CSRF (Cross-Site Request Forgery) ?",
         "options": [
-            "Une attaque par force brute ciblant les formulaires de connexion d'un site",
-            "Une attaque forçant un utilisateur authentifié à exécuter des actions à son insu",
-            "Une technique de réseau pour intercepter le trafic entre deux routeurs clés",
-            "Une méthode cryptographique pour craquer les clés WPA2 d'un réseau Wi-Fi"
+            "Une tentative de deviner un mot de passe par la force",
+            "Forcer un utilisateur connecté à faire une action sans qu'il le sache",
+            "Voler le matériel physique dans un bureau",
+            "Une panne générale du réseau Internet"
         ],
-        "correct_answer": "Une attaque forçant un utilisateur authentifié à exécuter des actions à son insu"
+        "correct_answer": "Forcer un utilisateur connecté à faire une action sans qu'il le sache"
     },
     {
         "question": "Que signifie IDOR (Insecure Direct Object Reference) ?",
         "options": [
-            "Falsification d'un identifiant dans une requête pour accéder aux données d'autrui",
-            "Vulnérabilité liée à l'utilisation de protocoles réseau obsolètes comme Telnet",
-            "Erreur de configuration serveur exposant publiquement le fichier web.config",
-            "Débordement de tampon mémoire survenant dans le noyau du système d'exploitation"
+            "Changer un ID dans une URL pour voir les données d'un autre utilisateur",
+            "Avoir un mot de passe trop court ou trop simple",
+            "Utiliser un vieux navigateur qui n'est plus à jour",
+            "Laisser son ordinateur allumé sans surveillance"
         ],
-        "correct_answer": "Falsification d'un identifiant dans une requête pour accéder aux données d'autrui"
+        "correct_answer": "Changer un ID dans une URL pour voir les données d'un autre utilisateur"
     },
     {
         "question": "Dans le modèle OSI, à quelle couche travaille le protocole IP ?",
         "options": [
-            "Couche 2 (Liaison de données)",
+            "Couche 1 (Physique)",
             "Couche 3 (Réseau)",
             "Couche 4 (Transport)",
-            "Couche 5 (Session)"
+            "Couche 7 (Application)"
         ],
         "correct_answer": "Couche 3 (Réseau)"
     },
     {
         "question": "À quoi sert principalement l'outil 'Nmap' ?",
         "options": [
-            "À analyser le code source d'une application pour trouver des vulnérabilités",
-            "À scanner des réseaux informatiques pour découvrir des hôtes et services",
-            "À chiffrer les communications réseau entre plusieurs serveurs distants",
-            "À simuler des attaques par déni de service distribué sur un serveur web"
+            "À créer des sites web rapidement",
+            "À scanner un réseau pour trouver des appareils et des ports ouverts",
+            "À réparer les erreurs de Windows automatiquement",
+            "À envoyer des messages anonymes sur Internet"
         ],
-        "correct_answer": "À scanner des réseaux informatiques pour découvrir des hôtes et services"
+        "correct_answer": "À scanner un réseau pour trouver des appareils et des ports ouverts"
     },
     {
         "question": "Qu'est-ce que 'Metasploit' ?",
         "options": [
-            "Un framework conçu pour le développement et l'exécution d'exploits ciblés",
-            "Un logiciel antivirus spécialisé dans la détection avancée de rootkits",
-            "Un protocole de communication ultra-sécurisé pour l'Internet des Objets",
-            "Un outil de supervision réseau pour l'analyse de trafic web en temps réel"
+            "Un outil pour tester et lancer des exploits contre des cibles",
+            "Un navigateur web ultra-sécurisé",
+            "Une marque d'antivirus très connue",
+            "Un réseau social pour les experts en sécurité"
         ],
-        "correct_answer": "Un framework conçu pour le développement et l'exécution d'exploits ciblés"
+        "correct_answer": "Un outil pour tester et lancer des exploits contre des cibles"
     },
     {
-        "question": "Pourquoi ajoute-t-on un 'Sel' (Salt) lors du hachage des mots de passe ?",
+        "question": "Pourquoi ajoute-t-on un 'Sel' (Salt) au hachage des mots de passe ?",
         "options": [
-            "Pour augmenter drastiquement la vitesse de calcul de l'algorithme de hachage",
-            "Pour contrecarrer l'utilisation de Rainbow Tables lors d'attaques par dictionnaire",
-            "Pour compresser et réduire la longueur finale de la chaîne de caractères hachée",
-            "Pour autoriser la récupération facile du mot de passe en cas d'oubli de l'utilisateur"
+            "Pour rendre le mot de passe plus facile à mémoriser",
+            "Pour empêcher l'utilisation de listes de hachages pré-calculés",
+            "Pour réduire la taille du fichier sur le disque",
+            "Pour que le mot de passe expire après 30 jours"
         ],
-        "correct_answer": "Pour contrecarrer l'utilisation de Rainbow Tables lors d'attaques par dictionnaire"
+        "correct_answer": "Pour empêcher l'utilisation de listes de hachages pré-calculés"
     },
     {
         "question": "Quelle est la meilleure technique pour prévenir les injections SQL ?",
         "options": [
-            "Filtrer manuellement tous les caractères spéciaux suspects dans les formulaires",
-            "Utiliser systématiquement des requêtes préparées avec un paramétrage strict",
-            "Chiffrer toutes les données sensibles des utilisateurs avant insertion en base",
-            "Migrer vers des serveurs de bases de données NoSQL pour éviter les injections"
+            "Interdire les claviers étrangers sur le site",
+            "Utiliser des requêtes préparées (paramétrées)",
+            "Changer le nom de la base de données tous les jours",
+            "Supprimer le bouton 'Valider' des formulaires"
         ],
-        "correct_answer": "Utiliser systématiquement des requêtes préparées avec un paramétrage strict"
+        "correct_answer": "Utiliser des requêtes préparées (paramétrées)"
     },
     {
         "question": "Quelle est la différence fondamentale entre une adresse MAC et une adresse IP ?",
         "options": [
-            "L'adresse MAC sert uniquement au réseau local, tandis que l'IP sert sur Internet",
-            "L'adresse MAC identifie le matériel de façon fixe, l'IP identifie la connexion logique",
-            "L'adresse MAC change de façon dynamique, alors que l'IP est gravée dans la puce",
-            "L'adresse IP appartient à la couche physique, et la MAC à la couche de transport"
+            "L'adresse MAC est liée au matériel, l'IP est liée au réseau",
+            "L'adresse MAC est payante, l'IP est gratuite",
+            "L'adresse MAC n'existe que sur les ordinateurs Apple",
+            "L'IP est fixe à vie, la MAC change toutes les heures"
         ],
-        "correct_answer": "L'adresse MAC identifie le matériel de façon fixe, l'IP identifie la connexion logique"
+        "correct_answer": "L'adresse MAC est liée au matériel, l'IP est liée au réseau"
     },
     {
         "question": "Qu'est-ce qu'une attaque DDoS ?",
         "options": [
-            "Une technique cryptographique pour craquer des archives protégées par mot de passe",
-            "Une attaque distribuée ciblant un serveur réseau pour rendre son service indisponible",
-            "Une exfiltration massive de base de données réalisée via une injection de commandes",
-            "Une compromission matérielle via la mise à jour forcée d'un pilote système malveillant"
+            "Une méthode pour deviner un code Wi-Fi",
+            "Surcharger un serveur pour le faire planter",
+            "Envoyer un virus par email à une seule personne",
+            "Voler les coordonnées bancaires sur un site"
         ],
-        "correct_answer": "Une attaque distribuée ciblant un serveur réseau pour rendre son service indisponible"
+        "correct_answer": "Surcharger un serveur pour le faire planter"
     },
     {
         "question": "À quoi sert l'outil 'Burp Suite' ?",
         "options": [
-            "À orchestrer et gérer l'ensemble de l'infrastructure cloud d'une grande entreprise",
-            "À réaliser des tests d'intrusion avancés sur des applications web via un proxy local",
-            "À recompiler des exécutables malveillants pour de multiples architectures processeur",
-            "À automatiser la collecte et la sauvegarde centralisée des journaux d'événements"
+            "À nettoyer les fichiers inutiles du système",
+            "À intercepter et analyser le trafic entre le navigateur et le serveur",
+            "À créer des graphiques pour les présentations",
+            "À bloquer les publicités sur les réseaux sociaux"
         ],
-        "correct_answer": "À réaliser des tests d'intrusion avancés sur des applications web via un proxy local"
+        "correct_answer": "À intercepter et analyser le trafic entre le navigateur et le serveur"
     },
     {
         "question": "Sur quel port écoute par défaut un serveur web sécurisé (HTTPS) ?",
         "options": [
-            "Le port 80",
-            "Le port 445",
-            "Le port 443",
-            "Le port 8443"
+            "Port 80",
+            "Port 443",
+            "Port 21",
+            "Port 22"
         ],
-        "correct_answer": "Le port 443"
+        "correct_answer": "Port 443"
     },
     {
         "question": "Quelle est la différence entre un IDS et un IPS ?",
         "options": [
-            "L'IDS se contente de détecter l'intrusion, l'IPS peut également la bloquer activement",
-            "L'IDS est réservé au trafic du réseau interne, l'IPS protège le périmètre web externe",
-            "L'IPS est exclusivement une solution logicielle, tandis que l'IDS est un boîtier matériel",
-            "L'IDS s'appuie uniquement sur des bases de signatures, l'IPS utilise exclusivement l'IA"
+            "L'IDS prévient, l'IPS ne fait que regarder",
+            "L'IDS détecte, l'IPS détecte et bloque l'attaque",
+            "L'IDS est pour le Wi-Fi, l'IPS pour le câble",
+            "Il n'y a aucune différence réelle"
         ],
-        "correct_answer": "L'IDS se contente de détecter l'intrusion, l'IPS peut également la bloquer activement"
+        "correct_answer": "L'IDS détecte, l'IPS détecte et bloque l'attaque"
     },
     {
         "question": "Que permet de faire 'Wireshark' ?",
         "options": [
-            "Analyser en profondeur le trafic réseau en capturant les paquets de données",
-            "Automatiser l'envoi massif de courriels de hameçonnage vers une liste de cibles",
-            "Auditer la robustesse des mots de passe des utilisateurs dans l'Active Directory",
-            "Chiffrer l'intégralité des partitions d'un disque dur pour protéger les données"
+            "Capturer et lire les paquets qui circulent sur le réseau",
+            "Générer des mots de passe très compliqués",
+            "Trouver l'identité physique d'un hacker",
+            "Bloquer les accès non autorisés au pare-feu"
         ],
-        "correct_answer": "Analyser en profondeur le trafic réseau en capturant les paquets de données"
+        "correct_answer": "Capturer et lire les paquets qui circulent sur le réseau"
     },
     {
         "question": "Qu'est-ce que la 'SOP' (Same-Origin Policy) ?",
         "options": [
-            "Règle de sécurité empêchant les scripts d'un domaine d'accéder aux données d'un autre",
-            "Standard de chiffrement asymétrique utilisé lors des transactions bancaires en ligne",
-            "Politique stricte de sécurité d'entreprise régissant l'utilisation des clés USB locales",
-            "Protocole de routage réseau permettant la résolution dynamique des adresses physiques"
+            "Une règle qui empêche un site d'accéder aux données d'un autre site",
+            "Une loi sur la protection des données personnelles (RGPD)",
+            "Un logiciel qui vérifie la qualité du code",
+            "Un système de sauvegarde automatique"
         ],
-        "correct_answer": "Règle de sécurité empêchant les scripts d'un domaine d'accéder aux données d'un autre"
+        "correct_answer": "Une règle qui empêche un site d'accéder aux données d'un autre site"
     },
     {
         "question": "Que stipule le Principe du Moindre Privilège ?",
         "options": [
-            "Restreindre le groupe des administrateurs système à une seule personne physique",
-            "Accorder uniquement les permissions strictement requises pour accomplir une tâche",
-            "Réduire la complexité des mots de passe pour faciliter l'accès des comptes standard",
-            "Limiter la bande passante et la puissance de calcul allouées aux services non critiques"
+            "Donner les droits d'administrateur à tout le monde",
+            "Donner uniquement les accès nécessaires pour faire son travail",
+            "Utiliser le mot de passe le plus court possible",
+            "Toujours travailler avec le compte 'Invité'"
         ],
-        "correct_answer": "Accorder uniquement les permissions strictement requises pour accomplir une tâche"
+        "correct_answer": "Donner uniquement les accès nécessaires pour faire son travail"
     },
     {
         "question": "Que cible principalement une attaque 'Man-in-the-Middle' (MitM) ?",
         "options": [
-            "Le chiffrement des disques durs locaux d'un poste de travail compromis",
-            "L'interception secrète des communications réseau entre deux parties",
-            "Le vol direct des mots de passe stockés en cache dans le navigateur",
-            "La modification malveillante des paramètres du BIOS de la carte mère"
+            "Le processeur de l'ordinateur",
+            "L'interception des messages entre deux personnes",
+            "La destruction physique du serveur",
+            "Le vol des câbles réseau"
         ],
-        "correct_answer": "L'interception secrète des communications réseau entre deux parties"
+        "correct_answer": "L'interception des messages entre deux personnes"
     },
     {
-        "question": "En cryptographie, qu'est-ce qu'une fonction de hachage comme SHA-256 produit-elle ?",
+        "question": "En cryptographie, que produit une fonction de hachage comme SHA-256 ?",
         "options": [
-            "Une clé de chiffrement symétrique réutilisable pour l'algorithme AES",
-            "Une empreinte numérique unique (hash) générée avec une longueur fixe",
-            "Un bloc de texte chiffré entièrement réversible via une clé privée",
-            "Un certificat de sécurité numérique validé pour les serveurs HTTPS"
+            "Un fichier texte lisible",
+            "Une empreinte numérique unique de taille fixe",
+            "Une image de sauvegarde du disque dur",
+            "Une clé USB de sécurité"
         ],
-        "correct_answer": "Une empreinte numérique unique (hash) générée avec une longueur fixe"
+        "correct_answer": "Une empreinte numérique unique de taille fixe"
     },
     {
         "question": "Quel port est utilisé par défaut par le protocole SSH ?",
         "options": [
-            "Le port 21",
-            "Le port 22",
-            "Le port 23",
-            "Le port 80"
+            "Port 21",
+            "Port 22",
+            "Port 23",
+            "Port 443"
         ],
-        "correct_answer": "Le port 22"
+        "correct_answer": "Port 22"
     },
     {
         "question": "Quelle est l'utilité du fichier '/etc/shadow' sous Linux ?",
         "options": [
-            "Conserver la liste publique de tous les utilisateurs du système d'exploitation",
-            "Sauvegarder les paramètres de configuration des interfaces réseau de la machine",
-            "Stocker de manière sécurisée les empreintes hachées des mots de passe utilisateurs",
-            "Archiver chronologiquement les journaux d'événements critiques du système Linux"
+            "Il contient les fonds d'écran des utilisateurs",
+            "Il stocke les versions hachées des mots de passe",
+            "Il liste les sites web interdits",
+            "Il sert à éteindre le système proprement"
         ],
-        "correct_answer": "Stocker de manière sécurisée les empreintes hachées des mots de passe utilisateurs"
+        "correct_answer": "Il stocke les versions hachées des mots de passe"
     },
     {
-        "question": "Qu'est-ce que l'\"Élévation de privilèges\" (Privilege Escalation) ?",
+        "question": "Qu'est-ce que l'\"Élévation de privilèges\" ?",
         "options": [
-            "Exploiter une faille pour obtenir des droits d'accès supérieurs à ceux accordés",
-            "S'introduire physiquement de manière illégitime dans un centre de données privé",
-            "Exfiltrer massivement des données sensibles vers un serveur distant non sécurisé",
-            "Verrouiller ou supprimer intentionnellement tous les comptes d'utilisateurs standards"
+            "Acheter une version plus chère d'un logiciel",
+            "Passer d'un compte utilisateur simple à un compte administrateur par une faille",
+            "Augmenter la vitesse de sa connexion Internet",
+            "Obtenir un badge d'accès pour un bâtiment"
         ],
-        "correct_answer": "Exploiter une faille pour obtenir des droits d'accès supérieurs à ceux accordés"
+        "correct_answer": "Passer d'un compte utilisateur simple à un compte administrateur par une faille"
     },
     {
-        "question": "Dans le contexte de la sécurité web, que fait l'entête HTTP 'Strict-Transport-Security' (HSTS) ?",
+        "question": "Que fait l'entête HTTP 'Strict-Transport-Security' (HSTS) ?",
         "options": [
-            "Il oblige de manière stricte le navigateur web à utiliser des connexions HTTPS",
-            "Il empêche préventivement l'exécution de tout code JavaScript sur la page web",
-            "Il anonymise la requête HTTP en masquant l'adresse IP publique du client final",
-            "Il gère les autorisations de partage des ressources entre des origines multiples"
+            "Il accélère le chargement des images",
+            "Il force le navigateur à utiliser uniquement le HTTPS",
+            "Il cache l'historique de navigation",
+            "Il vérifie si l'utilisateur est majeur"
         ],
-        "correct_answer": "Il oblige de manière stricte le navigateur web à utiliser des connexions HTTPS"
+        "correct_answer": "Il force le navigateur à utiliser uniquement le HTTPS"
     },
     {
         "question": "Quel type d'outil est 'John The Ripper' ?",
         "options": [
-            "Un scanner automatisé conçu pour identifier les vulnérabilités du réseau",
-            "Un logiciel spécialisé dans le cassage de mots de passe par force brute ou dictionnaire",
-            "Un pare-feu applicatif web conçu pour filtrer le trafic malveillant entrant en temps réel",
-            "Un environnement de sandboxing utilisé pour l'analyse comportementale de malwares"
+            "Un logiciel pour casser les mots de passe",
+            "Un outil de montage vidéo",
+            "Un pare-feu pour les téléphones",
+            "Un système d'exploitation sécurisé"
         ],
-        "correct_answer": "Un logiciel spécialisé dans le cassage de mots de passe par force brute ou dictionnaire"
+        "correct_answer": "Un logiciel pour casser les mots de passe"
     },
     {
         "question": "Qu'est-ce que le 'Salting' dans le stockage des mots de passe ?",
         "options": [
-            "Chiffrer préalablement le mot de passe utilisateur avec une clé RSA asymétrique",
-            "Tronquer automatiquement les mots de passe dépassant la limite maximale de caractères",
-            "Concaténer une donnée aléatoire unique avant de calculer l'empreinte de hachage",
-            "Encoder systématiquement le mot de passe en base64 pour faciliter son stockage"
+            "Ajouter des caractères aléatoires avant de hacher le mot de passe",
+            "Demander à l'utilisateur de changer son mot de passe",
+            "Supprimer les voyelles du mot de passe",
+            "Envoyer le mot de passe par SMS"
         ],
-        "correct_answer": "Concaténer une donnée aléatoire unique avant de calculer l'empreinte de hachage"
+        "correct_answer": "Ajouter des caractères aléatoires avant de hacher le mot de passe"
     },
     {
         "question": "Quel protocole réseau utilise l'UDP au lieu de TCP par défaut ?",
         "options": [
-            "Le protocole HTTP, pour le chargement des pages web",
-            "Le protocole SSH, pour l'accès sécurisé en ligne de commande",
-            "Le protocole DNS, pour la résolution des noms de domaine",
-            "Le protocole FTP, pour le transfert de fichiers volumineux"
+            "Le protocole HTTP",
+            "Le protocole DNS",
+            "Le protocole SSH",
+            "Le protocole FTP"
         ],
-        "correct_answer": "Le protocole DNS, pour la résolution des noms de domaine"
+        "correct_answer": "Le protocole DNS"
     },
     {
-        "question": "Quelle est la fonction d'un WAF (Web Application Firewall) comparé à un pare-feu réseau classique ?",
+        "question": "Quelle est la fonction d'un WAF (Web Application Firewall) ?",
         "options": [
-            "Il opère au niveau matériel pour être nettement plus rapide qu'un pare-feu standard",
-            "Il restreint son analyse exclusivement au trafic transitant sur des adresses IP privées",
-            "Il chiffre en temps réel les requêtes SQL envoyées vers la base de données interne",
-            "Il analyse les flux HTTP/HTTPS afin de bloquer les attaques web de type XSS ou SQLi"
+            "Protéger spécifiquement les sites web contre les attaques comme l'injection SQL",
+            "Empêcher les employés de regarder des vidéos au travail",
+            "Refroidir les serveurs dans les data centers",
+            "Améliorer la qualité du Wi-Fi dans les bureaux"
         ],
-        "correct_answer": "Il analyse les flux HTTP/HTTPS afin de bloquer les attaques web de type XSS ou SQLi"
+        "correct_answer": "Protéger spécifiquement les sites web contre les attaques comme l'injection SQL"
     }
 ]
